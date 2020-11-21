@@ -1,5 +1,6 @@
 package com.commercialeater.controllers;
 
+import com.commercialeater.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,11 +41,11 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        File logoFile = new File("imgs/pinterest_board_photo.png");
-        logoImage.setImage(new Image(logoFile.toURI().toString()));
+        URL logoUrl = this.getClass().getClassLoader().getResource("imgs/pinterest_board_photo.png");
+        logoImage.setImage(new Image(logoUrl.toString()));
 
-        File padlockFile = new File("imgs/padlock.png");
-        padlockImage.setImage(new Image(padlockFile.toURI().toString()));
+        URL padlockUrl = this.getClass().getClassLoader().getResource("imgs/padlock.png");
+        padlockImage.setImage(new Image(padlockUrl.toString()));
     }
 
     public void loginButtonOnAction(ActionEvent event) {
@@ -65,5 +66,14 @@ public class LoginController implements Initializable {
 
     public void validateLogin() {
 
+        boolean correctCredential= User.checkUserExistence(
+                usernameTextField.getText(), passwordPasswordField.getText());
+
+        if (correctCredential) {
+            loginMessageLabel.setText("Successfully logged :D");
+        }
+        else {
+            loginMessageLabel.setText("Incorrect login or password");
+        }
     }
 }

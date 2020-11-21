@@ -2,11 +2,12 @@ package com.commercialeater.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
 
-    public static DatabaseConnector databaseLink;
+    private static DatabaseConnector databaseLink;
 
     private Connection conn;
 
@@ -15,7 +16,7 @@ public class DatabaseConnector {
 
             DatabaseConfig dbConfig = new DatabaseConfig();
 
-            this.conn = DriverManager.getConnection(
+            conn = DriverManager.getConnection(
                     dbConfig.getDbUrl(), dbConfig.getDbUsername(), dbConfig.getDbPassword()
             );
         }
@@ -24,12 +25,13 @@ public class DatabaseConnector {
         }
     }
 
-    public static synchronized DatabaseConnector getDatabaseLink() {
+    public static synchronized Connection getDatabaseConn() {
 
         if (databaseLink == null) {
             databaseLink = new DatabaseConnector();
         }
 
-        return databaseLink;
+        return databaseLink.conn;
     }
+
 }

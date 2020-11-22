@@ -1,29 +1,17 @@
 package com.commercialeater;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import com.commercialeater.views.Login;
+import com.commercialeater.views.MainPage;
 
-import java.io.IOException;
-import java.util.Objects;
+import java.awt.*;
 
-public class Main extends Application {
+public class Main {
 
     public static void main(String[] args) {
-        launch(args);
+
+        EventQueue.invokeLater(() -> {
+            new MainPage().setVisible(true);
+        });
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("view/login.fxml"))
-        );
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setScene(new Scene(root, 520, 400));
-        primaryStage.show();
-    }
 }

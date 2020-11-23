@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            new MainPage().setVisible(true);
+            new Login().setVisible(true);
         });
     }
 

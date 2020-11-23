@@ -1,5 +1,6 @@
 package com.commercialeater.views;
 
+import com.commercialeater.Main;
 import com.commercialeater.models.User;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class LoginPage extends JFrame {
+public class LoginWindow extends JFrame {
 
     private JPanel cancelButton;
     private JTextField emailTextField;
@@ -27,7 +28,7 @@ public class LoginPage extends JFrame {
     private JPasswordField passwdPasswordField;
     private JPanel signInButton;
 
-    public LoginPage() {
+    public LoginWindow() {
         initComponents();
     }
 
@@ -244,7 +245,10 @@ public class LoginPage extends JFrame {
                 emailTextField.getText(), new String(passwdPasswordField.getPassword()));
 
         if (correctCredential) {
-            errorMessageLabel.setText("Successfully logged :D");
+            //errorMessageLabel.setText("Successfully logged :D");
+
+            this.dispose();
+            Main.openMainApplication(emailTextField.getText());
         }
         else {
             errorMessageLabel.setText("Incorrect login or password");

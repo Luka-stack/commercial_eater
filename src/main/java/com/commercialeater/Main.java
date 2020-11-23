@@ -1,16 +1,27 @@
 package com.commercialeater;
 
-import com.commercialeater.views.MainPage;
-
-import java.awt.*;
+import com.commercialeater.views.LoginWindow;
+import com.commercialeater.views.MainWindow;
 
 public class Main {
 
+    public static MainWindow mainWindow;
+
     public static void main(String[] args) {
 
-        EventQueue.invokeLater(() -> {
-            new MainPage().setVisible(true);
-        });
+        openLoginWindow();
+    }
+
+    public static void openMainApplication(String email) {
+
+        mainWindow = new MainWindow();
+        mainWindow.setVisible(true);
+        mainWindow.setBottomInformation("Logged as " + email);
+    }
+
+    public static void openLoginWindow() {
+
+        new LoginWindow().setVisible(true);
     }
 
 }

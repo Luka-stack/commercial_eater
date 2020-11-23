@@ -1,13 +1,18 @@
 package com.commercialeater.views;
 
+import com.commercialeater.Main;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class MainPage extends JFrame {
+public class MainWindow extends JFrame {
+
+    private JLabel bottomInfLabel;
 
     private JPanel background;
-    private JLabel bottomInfLabel;
     private JLabel jLabel10;
     private JLabel jLabel11;
     private JLabel jLabel12;
@@ -30,7 +35,7 @@ public class MainPage extends JFrame {
     private JPanel main;
     private JPanel sidebar;
 
-    public MainPage() {
+    public MainWindow() {
         initComponents();
     }
 
@@ -71,6 +76,22 @@ public class MainPage extends JFrame {
         sidebar.setBackground(new Color(153, 194, 93));
 
         jPanel2.setBackground(new Color(153, 194, 93));
+        jPanel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuEntryHover(jPanel2);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuEntryStdBackground(jPanel2);
+            }
+        });
 
         jLabel3.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/restauratns.png"))));
@@ -100,6 +121,22 @@ public class MainPage extends JFrame {
         );
 
         jPanel3.setBackground(new Color(153, 194, 93));
+        jPanel3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TODO
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuEntryHover(jPanel3);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuEntryStdBackground(jPanel3);
+            }
+        });
 
         jLabel4.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/users.png"))));
@@ -129,6 +166,22 @@ public class MainPage extends JFrame {
         );
 
         jPanel4.setBackground(new Color(153, 194, 93));
+        jPanel4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TODO
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuEntryHover(jPanel4);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuEntryStdBackground(jPanel4);
+            }
+        });
 
         jLabel5.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/payments.png"))));
@@ -158,6 +211,22 @@ public class MainPage extends JFrame {
         );
 
         jPanel5.setBackground(new Color(153, 194, 93));
+        jPanel5.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TODO
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuEntryHover(jPanel5);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuEntryStdBackground(jPanel5);
+            }
+        });
 
         jLabel6.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/settings.png"))));
@@ -187,6 +256,22 @@ public class MainPage extends JFrame {
         );
 
         jPanel6.setBackground(new Color(153, 194, 93));
+        jPanel6.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                logOutButtonClicked();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuEntryHover(jPanel6);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuEntryStdBackground(jPanel6);
+            }
+        });
 
         jLabel7.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/logout.png"))));
@@ -270,20 +355,6 @@ public class MainPage extends JFrame {
                         .addGap(0, 580, Short.MAX_VALUE)
         );
 
-//        GroupLayout backgroundLayout = new GroupLayout(background);
-//        background.setLayout(backgroundLayout);
-//        backgroundLayout.setHorizontalGroup(
-//                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGroup(backgroundLayout.createSequentialGroup()
-//                                .addComponent(sidebar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-//                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//                                .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                                        .addComponent(bottomInfLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                                        .addGroup(backgroundLayout.createSequentialGroup()
-//                                                .addGap(0, 0, Short.MAX_VALUE)
-//                                                .addComponent(main, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-//        );
-
         GroupLayout backgroundLayout = new GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
@@ -325,5 +396,23 @@ public class MainPage extends JFrame {
         );
 
         pack();
+    }
+
+    private void menuEntryStdBackground(JPanel panel) {
+        panel.setBackground(new Color(153, 194, 93));
+    }
+
+    private void menuEntryHover(JPanel panel) {
+        panel.setBackground(new Color(125, 166, 63));
+    }
+
+    private void logOutButtonClicked() {
+
+        this.dispose();
+        Main.openLoginWindow();
+    }
+
+    public void setBottomInformation(String information) {
+        bottomInfLabel.setText(information);
     }
 }

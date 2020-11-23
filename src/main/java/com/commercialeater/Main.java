@@ -1,6 +1,5 @@
 package com.commercialeater;
 
-import com.commercialeater.views.Login;
 import com.commercialeater.views.MainPage;
 
 import java.awt.*;

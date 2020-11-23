@@ -9,7 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class Login extends JFrame {
+public class LoginPage extends JFrame {
 
     private JPanel cancelButton;
     private JTextField emailTextField;
@@ -27,7 +27,7 @@ public class Login extends JFrame {
     private JPasswordField passwdPasswordField;
     private JPanel signInButton;
 
-    public Login() {
+    public LoginPage() {
         initComponents();
     }
 

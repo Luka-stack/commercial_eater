@@ -108,6 +108,16 @@ public class LoginWindow extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 System.exit(0);
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                buttonEntryHover(cancelButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                buttonStdBackground(cancelButton);
+            }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
@@ -132,6 +142,16 @@ public class LoginWindow extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 singInButtonOnAction();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                buttonEntryHover(signInButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                buttonStdBackground(signInButton);
             }
         });
 
@@ -245,7 +265,6 @@ public class LoginWindow extends JFrame {
                 emailTextField.getText(), new String(passwdPasswordField.getPassword()));
 
         if (correctCredential) {
-            //errorMessageLabel.setText("Successfully logged :D");
 
             this.dispose();
             Main.openMainApplication(emailTextField.getText());
@@ -253,5 +272,13 @@ public class LoginWindow extends JFrame {
         else {
             errorMessageLabel.setText("Incorrect login or password");
         }
+    }
+
+    private void buttonStdBackground(JPanel panel) {
+        panel.setBackground(new Color(153, 194, 93));
+    }
+
+    private void buttonEntryHover(JPanel panel) {
+        panel.setBackground(new Color(125, 166, 63));
     }
 }

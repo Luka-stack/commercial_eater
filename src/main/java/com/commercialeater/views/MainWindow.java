@@ -16,7 +16,6 @@ public class MainWindow extends JFrame {
     private JLabel jLabel10;
     private JLabel jLabel11;
     private JLabel jLabel12;
-    private JLabel jLabel2;
     private JLabel jLabel3;
     private JLabel jLabel4;
     private JLabel jLabel5;
@@ -24,16 +23,21 @@ public class MainWindow extends JFrame {
     private JLabel jLabel7;
     private JLabel jLabel8;
     private JLabel jLabel9;
-    private JMenu jMenu1;
-    private JMenu jMenu2;
-    private JMenuBar jMenuBar1;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JPanel jPanel5;
-    private JPanel jPanel6;
+    private JPanel logOutButton;
     private JPanel main;
+    private JPanel restaurantsButton;
+    private JPanel restaurantsCard;
+    private JPanel settingsButton;
+    private JPanel settingsCard;
     private JPanel sidebar;
+    private JLabel sidebarLogo;
+    private JPanel transactionsButton;
+    private JPanel transactionsCard;
+    private JPanel usersButton;
+    private JPanel usersCard;
+
+    private JMenu addMenu;
+    private JMenuBar jMenuBar1;
 
     public MainWindow() {
         initComponents();
@@ -43,53 +47,59 @@ public class MainWindow extends JFrame {
 
         background = new JPanel();
         sidebar = new JPanel();
-        jPanel2 = new JPanel();
+        restaurantsButton = new JPanel();
         jLabel3 = new JLabel();
         jLabel8 = new JLabel();
-        jPanel3 = new JPanel();
+        usersButton = new JPanel();
         jLabel4 = new JLabel();
         jLabel9 = new JLabel();
-        jPanel4 = new JPanel();
+        transactionsButton = new JPanel();
         jLabel5 = new JLabel();
         jLabel10 = new JLabel();
-        jPanel5 = new JPanel();
+        settingsButton = new JPanel();
         jLabel6 = new JLabel();
         jLabel11 = new JLabel();
-        jPanel6 = new JPanel();
+        logOutButton = new JPanel();
         jLabel7 = new JLabel();
         jLabel12 = new JLabel();
-        jLabel2 = new JLabel();
-        bottomInfLabel = new JLabel();
+        sidebarLogo = new JLabel();
+
         main = new JPanel();
+        restaurantsCard = new RestaurantPage();
+        usersCard = new JPanel();
+        transactionsCard = new JPanel();
+        settingsCard = new JPanel();
+
+        bottomInfLabel = new JLabel();
+
         jMenuBar1 = new JMenuBar();
-        jMenu1 = new JMenu();
-        jMenu2 = new JMenu();
+        addMenu = new JMenu();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new Dimension(1070, 664));
-        setMinimumSize(new Dimension(1070, 664));
-        setPreferredSize(new Dimension(1070, 664));
+        setMaximumSize(new Dimension(1150, 620));
+        setMinimumSize(new Dimension(1150, 620));
+        setPreferredSize(new Dimension(1150, 620));
         setResizable(true);
 
         background.setBackground(new Color(238, 233, 212));
 
         sidebar.setBackground(new Color(153, 194, 93));
 
-        jPanel2.setBackground(new Color(153, 194, 93));
-        jPanel2.addMouseListener(new MouseAdapter() {
+        restaurantsButton.setBackground(new Color(153, 194, 93));
+        restaurantsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO
+                super.mouseClicked(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(jPanel2);
+                menuEntryHover(restaurantsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(jPanel2);
+                menuEntryStdBackground(restaurantsButton);
             }
         });
 
@@ -100,131 +110,131 @@ public class MainWindow extends JFrame {
         jLabel8.setForeground(new Color(255, 255, 255));
         jLabel8.setText("Restaurants");
 
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+        GroupLayout restaurantsButtonLayout = new GroupLayout(restaurantsButton);
+        restaurantsButton.setLayout(restaurantsButtonLayout);
+        restaurantsButtonLayout.setHorizontalGroup(
+                restaurantsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(restaurantsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        restaurantsButtonLayout.setVerticalGroup(
+                restaurantsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel3)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, restaurantsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel8)
                                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new Color(153, 194, 93));
-        jPanel3.addMouseListener(new MouseAdapter() {
+        usersButton.setBackground(new Color(153, 194, 93));
+        usersButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TODO
+                super.mouseClicked(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(jPanel3);
+                menuEntryHover(usersButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(jPanel3);
+                menuEntryStdBackground(usersButton);
             }
         });
 
         jLabel4.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/users.png"))));
 
-        jLabel9.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setFont(new Font("Segoe UI", 1, 18));
         jLabel9.setForeground(new Color(255, 255, 255));
         jLabel9.setText("Users");
 
-        javax.swing.GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
+        GroupLayout usersButtonLayout = new GroupLayout(usersButton);
+        usersButton.setLayout(usersButtonLayout);
+        usersButtonLayout.setHorizontalGroup(
+                usersButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(usersButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        usersButtonLayout.setVerticalGroup(
+                usersButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel4)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, usersButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel9)
                                 .addContainerGap())
         );
 
-        jPanel4.setBackground(new Color(153, 194, 93));
-        jPanel4.addMouseListener(new MouseAdapter() {
+        transactionsButton.setBackground(new Color(153, 194, 93));
+        transactionsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TODO
+                super.mouseClicked(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(jPanel4);
+                menuEntryHover(transactionsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(jPanel4);
+                menuEntryStdBackground(transactionsButton);
             }
         });
 
         jLabel5.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/payments.png"))));
 
-        jLabel10.setFont(new Font("Segoe UI", 1, 18));
+        jLabel10.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new Color(255, 255, 255));
         jLabel10.setText("Transactions");
 
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
+        GroupLayout transactionsButtonLayout = new GroupLayout(transactionsButton);
+        transactionsButton.setLayout(transactionsButtonLayout);
+        transactionsButtonLayout.setHorizontalGroup(
+                transactionsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(transactionsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        transactionsButtonLayout.setVerticalGroup(
+                transactionsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel5)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, transactionsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel10)
                                 .addContainerGap())
         );
 
-        jPanel5.setBackground(new Color(153, 194, 93));
-        jPanel5.addMouseListener(new MouseAdapter() {
+        settingsButton.setBackground(new Color(153, 194, 93));
+        settingsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TODO
+                super.mouseClicked(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(jPanel5);
+                menuEntryHover(settingsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(jPanel5);
+                menuEntryStdBackground(settingsButton);
             }
         });
 
@@ -235,153 +245,187 @@ public class MainWindow extends JFrame {
         jLabel11.setForeground(new Color(255, 255, 255));
         jLabel11.setText("Settings");
 
-        GroupLayout jPanel5Layout = new GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-                jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
+        GroupLayout settingsButtonLayout = new GroupLayout(settingsButton);
+        settingsButton.setLayout(settingsButtonLayout);
+        settingsButtonLayout.setHorizontalGroup(
+                settingsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(settingsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-                jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        settingsButtonLayout.setVerticalGroup(
+                settingsButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel6)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, settingsButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel11)
                                 .addContainerGap())
         );
 
-        jPanel6.setBackground(new Color(153, 194, 93));
-        jPanel6.addMouseListener(new MouseAdapter() {
+        logOutButton.setBackground(new Color(153, 194, 93));
+        logOutButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                logOutButtonClicked();
+                super.mouseClicked(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(jPanel6);
+                menuEntryHover(logOutButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(jPanel6);
+                menuEntryStdBackground(logOutButton);
             }
         });
 
         jLabel7.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/logout.png"))));
 
-        jLabel12.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setFont(new Font("Segoe UI", 1, 18));
         jLabel12.setForeground(new Color(255, 255, 255));
         jLabel12.setText("Log Out");
 
-        GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-                jPanel6Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
+        GroupLayout logOutButtonLayout = new GroupLayout(logOutButton);
+        logOutButton.setLayout(logOutButtonLayout);
+        logOutButtonLayout.setHorizontalGroup(
+                logOutButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(logOutButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel12)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-                jPanel6Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        logOutButtonLayout.setVerticalGroup(
+                logOutButtonLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel7)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, logOutButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel12)
                                 .addContainerGap())
         );
 
-        jLabel2.setIcon(new ImageIcon(Objects.requireNonNull(
+        sidebarLogo.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/name2.png"))));
 
         GroupLayout sidebarLayout = new GroupLayout(sidebar);
         sidebar.setLayout(sidebarLayout);
         sidebarLayout.setHorizontalGroup(
                 sidebarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(restaurantsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usersButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(transactionsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(settingsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logOutButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(sidebarLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel2)
+                                .addComponent(sidebarLogo)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         sidebarLayout.setVerticalGroup(
                 sidebarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(sidebarLayout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(jLabel2)
+                                .addComponent(sidebarLogo)
                                 .addGap(55, 55, 55)
-                                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(restaurantsButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(usersButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(transactionsButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(settingsButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(logOutButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        main.setLayout(new CardLayout());
+
+        main.add(restaurantsCard, "card2");
+
+        usersCard.setBackground(new Color(204, 255, 204));
+
+        GroupLayout usersCardLayout = new GroupLayout(usersCard);
+        usersCard.setLayout(usersCardLayout);
+        usersCardLayout.setHorizontalGroup(
+                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 800, Short.MAX_VALUE)
+        );
+        usersCardLayout.setVerticalGroup(
+                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 573, Short.MAX_VALUE)
+        );
+
+        main.add(usersCard, "card3");
+
+        transactionsCard.setBackground(new Color(0, 51, 204));
+
+        GroupLayout transactionsCardLayout = new GroupLayout(transactionsCard);
+        transactionsCard.setLayout(transactionsCardLayout);
+        transactionsCardLayout.setHorizontalGroup(
+                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 800, Short.MAX_VALUE)
+        );
+        transactionsCardLayout.setVerticalGroup(
+                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 573, Short.MAX_VALUE)
+        );
+
+        main.add(transactionsCard, "card4");
+
+        settingsCard.setBackground(new Color(0, 51, 51));
+
+        GroupLayout settingsCardLayout = new GroupLayout(settingsCard);
+        settingsCard.setLayout(settingsCardLayout);
+        settingsCardLayout.setHorizontalGroup(
+                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 800, Short.MAX_VALUE)
+        );
+        settingsCardLayout.setVerticalGroup(
+                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGap(0, 573, Short.MAX_VALUE)
+        );
+
+        main.add(settingsCard, "card5");
 
         bottomInfLabel.setFont(new Font("Segoe UI", 0, 12));
         bottomInfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         bottomInfLabel.setText("Bottom Information");
 
-        main.setBackground(new Color(255, 255, 255));
-        main.setMaximumSize(new Dimension(800, 580));
-        main.setMinimumSize(new Dimension(800, 580));
-        main.setName("");
-
-        GroupLayout mainLayout = new GroupLayout(main);
-        main.setLayout(mainLayout);
-        mainLayout.setHorizontalGroup(
-                mainLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 800, Short.MAX_VALUE)
-        );
-        mainLayout.setVerticalGroup(
-                mainLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 580, Short.MAX_VALUE)
-        );
-
         GroupLayout backgroundLayout = new GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
-                backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(backgroundLayout.createSequentialGroup()
                                 .addComponent(sidebar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                //.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(main, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(bottomInfLabel, GroupLayout.PREFERRED_SIZE, 782, GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(main, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(backgroundLayout.createSequentialGroup()
+                                                .addComponent(bottomInfLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addContainerGap())))
         );
         backgroundLayout.setVerticalGroup(
                 backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(sidebar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(main, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
+                                .addComponent(main, GroupLayout.PREFERRED_SIZE, 530, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bottomInfLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        addMenu.setText("New Entity");
+        addMenu.add("Restaurant");
+        addMenu.add("User");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
+        jMenuBar1.add(addMenu);
         setJMenuBar(jMenuBar1);
 
         GroupLayout layout = new GroupLayout(getContentPane());

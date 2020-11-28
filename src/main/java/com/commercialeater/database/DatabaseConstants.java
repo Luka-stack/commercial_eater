@@ -9,4 +9,10 @@ public class DatabaseConstants {
     public static final String USER_PASSWORD = "password";
     public static final String USER_ROLE     = "role";
 
+    // Restaurants Table Column Names
+//    public static final String REST_TABLE = "restaurants";
+//    public static final String REST_TABLE = "restaurants";
+//    public static final String REST_TABLE = "restaurants";
+//    public static final String REST_TABLE = "restaurants";
+//    public static final String REST_TABLE = "restaurants";
 }

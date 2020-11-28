@@ -9,7 +9,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        openLoginWindow();
+        // TMP
+        openMainApplication("New");
+
+        //openLoginWindow();
     }
 
     public static void openMainApplication(String email) {

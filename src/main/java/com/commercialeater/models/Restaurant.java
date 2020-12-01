@@ -23,8 +23,8 @@ public class Restaurant {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
             result = stm.executeQuery();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
         return result;
@@ -50,8 +50,8 @@ public class Restaurant {
             stm.setString(2, addressFilter.toLowerCase() + "%");
             result = stm.executeQuery();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
         return result;
@@ -67,8 +67,8 @@ public class Restaurant {
             stm.setLong(1, id);
             result = stm.executeQuery();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
         return result;
@@ -87,8 +87,8 @@ public class Restaurant {
             stm.setString(3, description.toLowerCase());
             result = stm.executeUpdate();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
         return result;
@@ -97,18 +97,38 @@ public class Restaurant {
     public static int update(Long id, String name, String address, String description) {
 
         int result = 0;
-        String query = "UPDATE "+ TABLE +" SET "+ NAME +" = ?, " + ADDRESS +" = ?, "+ DESCRIPTION +" = ? WHERE id = ?";
+        String query = "UPDATE "+ TABLE +" SET "+ NAME +"=?, " + ADDRESS +"=?, "+ DESCRIPTION +"=? WHERE "+ ID +"=?";
+
+        try {
+            PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
+            stm.setString(1, name.toLowerCase());
+            stm.setString(2, address.toLowerCase());
+            stm.setString(3, description.toLowerCase());
+            stm.setLong(4, id);
+
+            System.out.println(stm);
+
+            result = stm.executeUpdate();
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static int delete(Long id) {
+
+        int result = 0;
+        String query = "DELETE FROM "+ TABLE +" WHERE "+ ID +"=?";
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
             stm.setLong(1, id);
-            stm.setString(2, name.toLowerCase());
-            stm.setString(3, address.toLowerCase());
-            stm.setString(4, description.toLowerCase());
             result = stm.executeUpdate();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
         return result;

@@ -1,5 +1,6 @@
 package com.commercialeater.views;
 
+import com.commercialeater.Main;
 import com.commercialeater.models.Restaurant;
 
 import javax.swing.*;
@@ -39,14 +40,13 @@ public class RestaurantDetailPage extends JPanel {
 
     public RestaurantDetailPage() {
         initComponents();
-        titleLabel.setText("Editing Restaurant");
+        titleLabel.setText("Creating New Restaurant");
 
         this.entityID = -1L;
     }
 
-    public RestaurantDetailPage(long entityID) {
+    public RestaurantDetailPage(Long entityID) {
         initComponents();
-        titleLabel.setText("Creating New Restaurant");
 
         this.entityID = entityID;
         getRestaurantFields();
@@ -128,7 +128,7 @@ public class RestaurantDetailPage extends JPanel {
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TODO
+                descriptionArea.setText("");
             }
 
             @Override
@@ -193,7 +193,7 @@ public class RestaurantDetailPage extends JPanel {
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(67, Short.MAX_VALUE)
+                                .addContainerGap(40, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel2))
@@ -212,7 +212,7 @@ public class RestaurantDetailPage extends JPanel {
                                         .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))
+                                .addGap(30, 30, 30))
         );
 
         jPanel3.setBackground(new Color(244, 244, 244));
@@ -301,11 +301,11 @@ public class RestaurantDetailPage extends JPanel {
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(19, Short.MAX_VALUE)
+                                .addGap(20, 20, 20)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(21, 21, 21))
+                                .addGap(20, 20, 20))
         );
 
         GroupLayout backgroundLayout = new GroupLayout(background);
@@ -322,8 +322,8 @@ public class RestaurantDetailPage extends JPanel {
                                 .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(this);
@@ -339,13 +339,33 @@ public class RestaurantDetailPage extends JPanel {
     }
 
     private void cancelButtonAction() {
+
+        if (entityID < 0) {
+            descriptionArea.setText("");
+            addressField.setText("");
+            nameField.setText("");
+        }
+        else {
+            getRestaurantFields();
+        }
     }
 
     private void saveOrUpdateRestaurant() {
+
+        if (entityID < 0) {
+            Restaurant.create(nameField.getText(), addressField.getText(), descriptionArea.getText());
+
+            Main.mainWindow.setBottomInformation("Created new restaurant '"+ nameField +"'");
+        }
+        else {
+            Restaurant.update(entityID, nameField.getText(), addressField.getText(), descriptionArea.getText());
+
+            String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
+            Main.mainWindow.setBottomInformation("Restaurant at row #"+ rowID +" updated");
+        }
     }
 
     private void getRestaurantFields() {
-
         ResultSet restaurant = Restaurant.getById(entityID);
 
         try {
@@ -354,6 +374,8 @@ public class RestaurantDetailPage extends JPanel {
                 nameField.setText(restaurant.getString(Restaurant.NAME));
                 addressField.setText(restaurant.getString(Restaurant.ADDRESS));
                 descriptionArea.setText(restaurant.getString(Restaurant.DESCRIPTION));
+
+                titleLabel.setText("Editing " + restaurant.getString(Restaurant.NAME));
             }
         } catch (SQLException e) {
             e.printStackTrace();

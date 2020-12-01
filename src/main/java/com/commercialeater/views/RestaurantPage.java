@@ -6,6 +6,7 @@ import com.commercialeater.models.Restaurant;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 public class RestaurantPage extends JPanel {
 
     private JPanel background;
-    private JPanel clearButton;
+
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
@@ -24,13 +25,21 @@ public class RestaurantPage extends JPanel {
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JPanel jPanel3;
-    private JScrollPane jScrollPane1;
+
     private JSeparator jSeparator1;
     private JSeparator jSeparator2;
+
+    private JPanel clearButton;
     private JPanel searchButton;
 
-    private DefaultTableModel tableModel;
+
+    private JScrollPane jScrollPane1;
     private JTable jTable1;
+    private DefaultTableModel tableModel;
+
+    private JPopupMenu popupMenu;
+    private JMenuItem popupItemEdit;
+    private JMenuItem popupItemRemove;
 
     private JTextField nameFilter;
     private JTextField addressFilter;
@@ -59,9 +68,6 @@ public class RestaurantPage extends JPanel {
         jScrollPane1 = new JScrollPane();
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
-
-//        setMaximumSize(new Dimension(800, 100));
-//        setMinimumSize(new Dimension(800, 100));
 
         background.setBackground(new Color(255, 255, 255));
         background.setForeground(new Color(255, 255, 255));
@@ -213,34 +219,50 @@ public class RestaurantPage extends JPanel {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                                         .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-                                .addGap(41, 41, 41))
+                                .addGap(35, 35, 35))
         );
 
+        popupItemEdit = new JMenuItem("Edit Current Row");
+        popupItemEdit.addActionListener(event -> editSelectedRow());
+
+        popupItemRemove = new JMenuItem("Remove Current Row");
+        popupItemRemove.addActionListener(event -> removeSelectedRow());
+
+        popupMenu = new JPopupMenu();
+        popupMenu.add(popupItemEdit);
+        popupMenu.add(popupItemRemove);
+
         jScrollPane1.setBackground(new Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
 
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jTable1.getTableHeader().setBackground(new Color(255, 255, 255));
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
+        ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.LEFT);
+        ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEtchedBorder());
 
         tableModel.setColumnIdentifiers(new String [] {
-                "Name", "Address", "Description"
+                "Id", "Name", "Address", "Description"
         });
+
         jTable1.setModel(tableModel);
+        jTable1.setDefaultEditor(Object.class, null);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
         jTable1.setFocusable(false);
-        jTable1.setGridColor(new Color(255, 255, 255));
+        jTable1.setGridColor(new Color(153, 194, 93));
         jTable1.setIntercellSpacing(new Dimension(0, 0));
-        jTable1.setRowHeight(30);
+        jTable1.setRowHeight(40);
         jTable1.setSelectionBackground(new Color(153, 194, 93));
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -250,6 +272,16 @@ public class RestaurantPage extends JPanel {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
+
+        jTable1.setComponentPopupMenu(popupMenu);
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                int selectedRow = jTable1.getSelectedRow();
+                Main.mainWindow.setBottomInformation("Selected Row #"+ (selectedRow+1));
+            }
+        });
 
         GroupLayout backgroundLayout = new GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -266,7 +298,8 @@ public class RestaurantPage extends JPanel {
                         .addGroup(backgroundLayout.createSequentialGroup()
                                 .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                                .addGap(9, 9, 9))
         );
 
         GroupLayout layout = new GroupLayout(this);
@@ -281,18 +314,39 @@ public class RestaurantPage extends JPanel {
         );
     }
 
-    private void getRestaurantsData(boolean onLoad) {
+    private void removeSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        String restaurant = tableModel.getValueAt(selectedRow, 1).toString();
+        int deleteResult = Restaurant.delete(rowID);
+
+        if (deleteResult > 0) {
+            tableModel.removeRow(selectedRow);
+            Main.mainWindow.setBottomInformation("Restaurant '"+ restaurant +"'  was deleted");
+        }
+        else {
+            Main.mainWindow.setBottomInformation("Couldn't '"+ restaurant +"'delete Restaurant on row ");
+        }
+    }
+
+    //TODO change the argument after testing
+    public void getRestaurantsData(boolean onLoad) {
+
+        tableModel.setRowCount(0);
 
         ResultSet restaurants = Restaurant.getAll();
-        String[] rows = new String[3]; // Name, Address, Description
+        String[] rows = new String[4]; // Name, Address, Description
         int rowsCount = 0;
 
         try {
             while (restaurants.next()) {
 
-                rows[0] = restaurants.getString(Restaurant.NAME);
-                rows[1] = restaurants.getString(Restaurant.ADDRESS);
-                rows[2] = restaurants.getString(Restaurant.DESCRIPTION);
+                rows[0] = restaurants.getString(Restaurant.ID);
+                rows[1] = restaurants.getString(Restaurant.NAME);
+                rows[2] = restaurants.getString(Restaurant.ADDRESS);
+                rows[3] = restaurants.getString(Restaurant.DESCRIPTION);
 
                 tableModel.addRow(rows);
                 ++rowsCount;
@@ -305,6 +359,15 @@ public class RestaurantPage extends JPanel {
         if (!onLoad) {
             Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants");
         }
+    }
+
+    private void editSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        Main.mainWindow.setBottomInformation("Editing Row #"+ (selectedRow+1));
+        Main.mainWindow.loadRestaurantCreationPage(rowID);
     }
 
     private void filterRestaurants() {

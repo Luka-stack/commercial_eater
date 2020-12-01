@@ -24,9 +24,9 @@ public class MainWindow extends JFrame {
     private JLabel jLabel8;
     private JLabel jLabel9;
     private JPanel logOutButton;
-    private JPanel main;
+    private JPanel mainCardPanel;
     private JPanel restaurantsButton;
-    private JPanel restaurantsCard;
+    private RestaurantPage restaurantsCard;
     private JPanel settingsButton;
     private JPanel settingsCard;
     private JPanel sidebar;
@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
     private JPanel usersButton;
     private JPanel usersCard;
 
-    private JMenu addMenu;
+    private JMenu newEntityMenu;
     private JMenuBar jMenuBar1;
 
     public MainWindow() {
@@ -64,7 +64,8 @@ public class MainWindow extends JFrame {
         jLabel12 = new JLabel();
         sidebarLogo = new JLabel();
 
-        main = new JPanel();
+        mainCardPanel = new JPanel();
+
         restaurantsCard = new RestaurantPage();
         usersCard = new JPanel();
         transactionsCard = new JPanel();
@@ -73,7 +74,7 @@ public class MainWindow extends JFrame {
         bottomInfLabel = new JLabel();
 
         jMenuBar1 = new JMenuBar();
-        addMenu = new JMenu();
+        newEntityMenu = new JMenu();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new Dimension(1150, 620));
@@ -89,7 +90,14 @@ public class MainWindow extends JFrame {
         restaurantsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+
+                CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+                cardLayout.show(mainCardPanel, "Restaurants");
+
+                restaurantsCard.getRestaurantsData(false);
+
+                try { mainCardPanel.remove(1); }
+                catch (Exception exc) {}
             }
 
             @Override
@@ -269,7 +277,7 @@ public class MainWindow extends JFrame {
         logOutButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                logOutButtonClicked();
             }
 
             @Override
@@ -345,54 +353,54 @@ public class MainWindow extends JFrame {
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        main.setLayout(new CardLayout());
+        mainCardPanel.setLayout(new CardLayout());
 
-        main.add(restaurantsCard, "card2");
+        mainCardPanel.add(restaurantsCard, "Restaurants");
 
-        usersCard.setBackground(new Color(204, 255, 204));
+//        usersCard.setBackground(new Color(204, 255, 204));
+//
+//        GroupLayout usersCardLayout = new GroupLayout(usersCard);
+//        usersCard.setLayout(usersCardLayout);
+//        usersCardLayout.setHorizontalGroup(
+//                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 800, Short.MAX_VALUE)
+//        );
+//        usersCardLayout.setVerticalGroup(
+//                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 573, Short.MAX_VALUE)
+//        );
+//
+//        main.add(usersCard, "card3");
 
-        GroupLayout usersCardLayout = new GroupLayout(usersCard);
-        usersCard.setLayout(usersCardLayout);
-        usersCardLayout.setHorizontalGroup(
-                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 800, Short.MAX_VALUE)
-        );
-        usersCardLayout.setVerticalGroup(
-                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 573, Short.MAX_VALUE)
-        );
-
-        main.add(usersCard, "card3");
-
-        transactionsCard.setBackground(new Color(0, 51, 204));
-
-        GroupLayout transactionsCardLayout = new GroupLayout(transactionsCard);
-        transactionsCard.setLayout(transactionsCardLayout);
-        transactionsCardLayout.setHorizontalGroup(
-                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 800, Short.MAX_VALUE)
-        );
-        transactionsCardLayout.setVerticalGroup(
-                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 573, Short.MAX_VALUE)
-        );
-
-        main.add(transactionsCard, "card4");
-
-        settingsCard.setBackground(new Color(0, 51, 51));
-
-        GroupLayout settingsCardLayout = new GroupLayout(settingsCard);
-        settingsCard.setLayout(settingsCardLayout);
-        settingsCardLayout.setHorizontalGroup(
-                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 800, Short.MAX_VALUE)
-        );
-        settingsCardLayout.setVerticalGroup(
-                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 573, Short.MAX_VALUE)
-        );
-
-        main.add(settingsCard, "card5");
+//        transactionsCard.setBackground(new Color(0, 51, 204));
+//
+//        GroupLayout transactionsCardLayout = new GroupLayout(transactionsCard);
+//        transactionsCard.setLayout(transactionsCardLayout);
+//        transactionsCardLayout.setHorizontalGroup(
+//                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 800, Short.MAX_VALUE)
+//        );
+//        transactionsCardLayout.setVerticalGroup(
+//                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 573, Short.MAX_VALUE)
+//        );
+//
+//        main.add(transactionsCard, "card4");
+//
+//        settingsCard.setBackground(new Color(0, 51, 51));
+//
+//        GroupLayout settingsCardLayout = new GroupLayout(settingsCard);
+//        settingsCard.setLayout(settingsCardLayout);
+//        settingsCardLayout.setHorizontalGroup(
+//                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 800, Short.MAX_VALUE)
+//        );
+//        settingsCardLayout.setVerticalGroup(
+//                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                        .addGap(0, 573, Short.MAX_VALUE)
+//        );
+//
+//        main.add(settingsCard, "card5");
 
         bottomInfLabel.setFont(new Font("Segoe UI", 0, 12));
         bottomInfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -406,7 +414,7 @@ public class MainWindow extends JFrame {
                                 .addComponent(sidebar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 //.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(main, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(mainCardPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(backgroundLayout.createSequentialGroup()
                                                 .addComponent(bottomInfLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addContainerGap())))
@@ -415,17 +423,23 @@ public class MainWindow extends JFrame {
                 backgroundLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(sidebar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(main, GroupLayout.PREFERRED_SIZE, 530, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mainCardPanel, GroupLayout.PREFERRED_SIZE, 530, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bottomInfLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        addMenu.setText("New Entity");
-        addMenu.add("Restaurant");
-        addMenu.add("User");
+        newEntityMenu.setText("New Entity");
 
-        jMenuBar1.add(addMenu);
+        JMenuItem newRestaurantMenuItem = new JMenuItem("Restaurant");
+        newRestaurantMenuItem.addActionListener(e -> loadRestaurantCreationPage(-1L) );
+        newEntityMenu.add(newRestaurantMenuItem);
+
+        JMenuItem newUserMenuItem = new JMenuItem("User");
+        newUserMenuItem.addActionListener(e -> System.out.println("User Clicked"));
+        newEntityMenu.add(newUserMenuItem);
+
+        jMenuBar1.add(newEntityMenu);
         setJMenuBar(jMenuBar1);
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -442,6 +456,25 @@ public class MainWindow extends JFrame {
         pack();
     }
 
+    public void loadRestaurantCreationPage(Long entityID) {
+
+        if (entityID < 0) {
+            mainCardPanel.add(new RestaurantDetailPage(), "RestaurantDetail");
+        }
+        else {
+            mainCardPanel.add(new RestaurantDetailPage(entityID), "RestaurantDetail");
+        }
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "RestaurantDetail");
+    }
+
+    public void setBottomInformation(String information) {
+        bottomInfLabel.setText(information);
+    }
+
+    public String getBottomInformation() { return bottomInfLabel.getText(); }
+
     private void menuEntryStdBackground(JPanel panel) {
         panel.setBackground(new Color(153, 194, 93));
     }
@@ -454,9 +487,5 @@ public class MainWindow extends JFrame {
 
         this.dispose();
         Main.openLoginWindow();
-    }
-
-    public void setBottomInformation(String information) {
-        bottomInfLabel.setText(information);
     }
 }

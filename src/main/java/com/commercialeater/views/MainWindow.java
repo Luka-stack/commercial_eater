@@ -90,14 +90,7 @@ public class MainWindow extends JFrame {
         restaurantsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
-                cardLayout.show(mainCardPanel, "Restaurants");
-
-                restaurantsCard.getRestaurantsData(false);
-
-                try { mainCardPanel.remove(1); }
-                catch (Exception exc) {}
+                loadRestaurantsView(true);
             }
 
             @Override
@@ -454,6 +447,16 @@ public class MainWindow extends JFrame {
         );
 
         pack();
+    }
+
+    public void loadRestaurantsView(boolean changeInformation) {
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "Restaurants");
+
+        restaurantsCard.getRestaurantsData(changeInformation);
+
+        try { mainCardPanel.remove(1); }
+        catch (Exception exc) {}
     }
 
     public void loadRestaurantCreationPage(Long entityID) {

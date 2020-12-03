@@ -46,7 +46,7 @@ public class RestaurantPage extends JPanel {
 
     public RestaurantPage() {
         initComponents();
-        getRestaurantsData(true);
+        getRestaurantsData(false);
     }
 
     private void initComponents() {
@@ -131,11 +131,7 @@ public class RestaurantPage extends JPanel {
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                getRestaurantsData(false);
-                nameFilter.setText("All");
-                addressFilter.setText("All");
-            }
+            public void mouseClicked(MouseEvent e) { clearButtonClicked(); }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -314,6 +310,12 @@ public class RestaurantPage extends JPanel {
         );
     }
 
+    private void clearButtonClicked() {
+        getRestaurantsData(true);
+        nameFilter.setText("All");
+        addressFilter.setText("All");
+    }
+
     private void removeSelectedRow() {
 
         int selectedRow = jTable1.getSelectedRow();
@@ -332,7 +334,7 @@ public class RestaurantPage extends JPanel {
     }
 
     //TODO change the argument after testing
-    public void getRestaurantsData(boolean onLoad) {
+    public void getRestaurantsData(boolean changeInformation) {
 
         tableModel.setRowCount(0);
 
@@ -356,7 +358,7 @@ public class RestaurantPage extends JPanel {
             e.printStackTrace();
         }
 
-        if (!onLoad) {
+        if (changeInformation) {
             Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants");
         }
     }
@@ -373,7 +375,7 @@ public class RestaurantPage extends JPanel {
     private void filterRestaurants() {
 
         ResultSet restaurants = Restaurant.getQueryData(nameFilter.getText(), addressFilter.getText());
-        String[] rows = new String[3];
+        String[] rows = new String[4];
         int rowsCount = 0;
 
         tableModel.setRowCount(0);
@@ -381,9 +383,10 @@ public class RestaurantPage extends JPanel {
         try {
             while (restaurants.next()) {
 
-                rows[0] = restaurants.getString(Restaurant.NAME);
-                rows[1] = restaurants.getString(Restaurant.ADDRESS);
-                rows[2] = restaurants.getString(Restaurant.DESCRIPTION);
+                rows[0] = restaurants.getString(Restaurant.ID);
+                rows[1] = restaurants.getString(Restaurant.NAME);
+                rows[2] = restaurants.getString(Restaurant.ADDRESS);
+                rows[3] = restaurants.getString(Restaurant.DESCRIPTION);
                 ++rowsCount;
 
                 tableModel.addRow(rows);

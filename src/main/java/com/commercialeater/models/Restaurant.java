@@ -105,9 +105,6 @@ public class Restaurant {
             stm.setString(2, address.toLowerCase());
             stm.setString(3, description.toLowerCase());
             stm.setLong(4, id);
-
-            System.out.println(stm);
-
             result = stm.executeUpdate();
         }
         catch (SQLException exception) {

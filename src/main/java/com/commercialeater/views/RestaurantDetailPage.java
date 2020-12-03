@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -65,6 +68,7 @@ public class RestaurantDetailPage extends JPanel {
         jLabel4 = new JLabel();
         jScrollPane1 = new JScrollPane();
         descriptionArea = new JTextArea();
+
         clearButton = new JPanel();
         jLabel5 = new JLabel();
         jSeparator1 = new JSeparator();
@@ -101,23 +105,56 @@ public class RestaurantDetailPage extends JPanel {
 
         jPanel2.setBackground(new Color(255, 255, 255));
 
-        jLabel2.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Name");
 
-        nameField.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        nameField.setFont(new Font("Segoe UI", 0, 14));
         nameField.setBorder(null);
+        nameField.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+                if ((getLength() + str.length()) <= 45) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
 
-        jLabel3.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Address");
 
-        addressField.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        addressField.setFont(new Font("Segoe UI", 0, 14));
         addressField.setBorder(null);
+        addressField.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+                if ((getLength() + str.length()) <= 45) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
 
-        jLabel4.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("Description");
 
+        descriptionArea.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+                if ((getLength() + str.length()) <= 255) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
         descriptionArea.setColumns(20);
-        descriptionArea.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        descriptionArea.setFont(new Font("Segoe UI", 0, 14));
         descriptionArea.setLineWrap(true);
         descriptionArea.setRows(5);
         descriptionArea.setBorder(new LineBorder(new Color(153, 194, 93), 1, true));
@@ -142,7 +179,7 @@ public class RestaurantDetailPage extends JPanel {
             }
         });
 
-        jLabel5.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new Font("Segoe UI", 1, 14));
         jLabel5.setForeground(new Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("Clear");
@@ -355,7 +392,7 @@ public class RestaurantDetailPage extends JPanel {
         if (entityID < 0) {
             Restaurant.create(nameField.getText(), addressField.getText(), descriptionArea.getText());
 
-            Main.mainWindow.setBottomInformation("Created new restaurant '"+ nameField +"'");
+            Main.mainWindow.setBottomInformation("Created new restaurant '"+ nameField.getText() +"'");
         }
         else {
             Restaurant.update(entityID, nameField.getText(), addressField.getText(), descriptionArea.getText());
@@ -363,6 +400,8 @@ public class RestaurantDetailPage extends JPanel {
             String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
             Main.mainWindow.setBottomInformation("Restaurant at row #"+ rowID +" updated");
         }
+
+        Main.mainWindow.loadRestaurantsView(false);
     }
 
     private void getRestaurantFields() {

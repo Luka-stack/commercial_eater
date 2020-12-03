@@ -13,10 +13,8 @@ import java.awt.event.MouseEvent;
 
 public class TransactionsPage extends JPanel {
 
-    private JTextField addressFilter;
     private JPanel background;
-    private JPanel clearButton;
-    private JComboBox<String> jComboBox1;
+
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
@@ -30,14 +28,24 @@ public class TransactionsPage extends JPanel {
     private JSeparator jSeparator2;
     private JSeparator jSeparator3;
     private JSeparator jSeparator4;
-    private JTable jTable1;
-    private JTextField nameFilter;
-    private JTextField nameFilter1;
+
+    private JPanel clearButton;
     private JPanel searchButton;
+
+    private JComboBox<String> transactionFilter;
+    private JTextField endDateFilter;
+    private JTextField startDateFilter;
+    private JTextField userFilter;
+
+    private JTable jTable1;
     private JPopupMenu popupMenu;
     private JMenuItem popupItemEdit;
     private JMenuItem popupItemRemove;
     private DefaultTableModel tableModel;
+
+    public TransactionsPage() {
+        initComponents();
+    }
 
     private void initComponents() {
 
@@ -45,9 +53,9 @@ public class TransactionsPage extends JPanel {
         jPanel3 = new JPanel();
         jLabel2 = new JLabel();
         jLabel3 = new JLabel();
-        nameFilter = new JTextField();
+        startDateFilter = new JTextField();
         jLabel4 = new JLabel();
-        addressFilter = new JTextField();
+        endDateFilter = new JTextField();
         searchButton = new JPanel();
         jLabel5 = new JLabel();
         clearButton = new JPanel();
@@ -55,11 +63,11 @@ public class TransactionsPage extends JPanel {
         jSeparator1 = new JSeparator();
         jSeparator2 = new JSeparator();
         jLabel6 = new JLabel();
-        nameFilter1 = new JTextField();
+        userFilter = new JTextField();
         jSeparator3 = new JSeparator();
         jLabel7 = new JLabel();
         jSeparator4 = new JSeparator();
-        jComboBox1 = new JComboBox<>();
+        transactionFilter = new JComboBox<>();
         jScrollPane1 = new JScrollPane();
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
@@ -75,16 +83,16 @@ public class TransactionsPage extends JPanel {
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Start Date");
 
-        nameFilter.setFont(new Font("Segoe UI", 0, 14));
-        nameFilter.setText("All");
-        nameFilter.setBorder(null);
+        startDateFilter.setFont(new Font("Segoe UI", 0, 14));
+        startDateFilter.setText("All");
+        startDateFilter.setBorder(null);
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("End Date");
 
-        addressFilter.setFont(new Font("Segoe UI", 0, 14));
-        addressFilter.setText("All");
-        addressFilter.setBorder(null);
+        endDateFilter.setFont(new Font("Segoe UI", 0, 14));
+        endDateFilter.setText("All");
+        endDateFilter.setBorder(null);
 
         searchButton.setBackground(new Color(153, 194, 93));
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
@@ -135,9 +143,9 @@ public class TransactionsPage extends JPanel {
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
         jLabel6.setText("User");
 
-        nameFilter1.setFont(new Font("Segoe UI", 0, 14));
-        nameFilter1.setText("All");
-        nameFilter1.setBorder(null);
+        userFilter.setFont(new Font("Segoe UI", 0, 14));
+        userFilter.setText("All");
+        userFilter.setBorder(null);
 
         jSeparator3.setBackground(new Color(153, 194, 93));
         jSeparator3.setForeground(new Color(153, 194, 93));
@@ -148,12 +156,12 @@ public class TransactionsPage extends JPanel {
         jSeparator4.setBackground(new Color(153, 194, 93));
         jSeparator4.setForeground(new Color(153, 194, 93));
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setFont(new Font("Segoe UI", 0, 14));
-        jComboBox1.setMaximumRowCount(3);
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] { "All", "TopUp", "Order" }));
-        jComboBox1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
-        jComboBox1.setMinimumSize(new Dimension(72, 25));
+        transactionFilter.setEditable(true);
+        transactionFilter.setFont(new Font("Segoe UI", 0, 14));
+        transactionFilter.setMaximumRowCount(3);
+        transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "TopUp", "Order" }));
+        transactionFilter.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        transactionFilter.setMinimumSize(new Dimension(72, 25));
 
         GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -165,7 +173,7 @@ public class TransactionsPage extends JPanel {
                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(nameFilter1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
@@ -174,7 +182,7 @@ public class TransactionsPage extends JPanel {
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                                 .addComponent(jLabel3)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(nameFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(startDateFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
                                                         .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))))
                                 .addGap(40, 40, 40)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -183,13 +191,13 @@ public class TransactionsPage extends JPanel {
                                                 .addGap(24, 24, 24)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(addressFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel7)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(jSeparator4, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                                        .addComponent(jComboBox1, 0, 1, Short.MAX_VALUE))))
+                                                        .addComponent(transactionFilter, 0, 1, Short.MAX_VALUE))))
                                 .addGap(108, 108, 108)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -208,13 +216,13 @@ public class TransactionsPage extends JPanel {
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                                 .addGap(35, 35, 35)
                                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(nameFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(startDateFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(jLabel3))
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(nameFilter1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(jLabel6))
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
@@ -222,7 +230,7 @@ public class TransactionsPage extends JPanel {
                                                 .addGap(35, 35, 35)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabel4)
-                                                        .addComponent(addressFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
@@ -232,7 +240,7 @@ public class TransactionsPage extends JPanel {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel7)
-                                                                        .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
+                                                                        .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))

@@ -1,6 +1,9 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.Restaurant;
+import com.commercialeater.models.User;
+import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -10,14 +13,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class UsersPage extends JPanel {
+public class UserPage extends JPanel {
 
-    private JPanel background;
-    private JTextField cityFilter;
-    private JPanel clearButton;
-    private JTextField emailFilter;
-    private JTextField firstNameFilter;
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
@@ -33,14 +33,29 @@ public class UsersPage extends JPanel {
     private JSeparator jSeparator3;
     private JSeparator jSeparator4;
     private JSeparator jSeparator5;
-    private JTable jTable1;
+
+    private JPanel background;
+
+    private JTextField cityFilter;
+    private JTextField emailFilter;
+    private JTextField firstNameFilter;
     private JTextField lastNameFilter;
     private JComboBox<String> roleFilter;
+
     private JPanel searchButton;
+    private JPanel clearButton;
+
+    private JTable jTable1;
+    private DefaultTableModel tableModel;
+
     private JPopupMenu popupMenu;
     private JMenuItem popupItemEdit;
     private JMenuItem popupItemRemove;
-    private DefaultTableModel tableModel;
+
+    public UserPage() {
+        initComponents();
+        getUsersData(false);
+    }
 
     private void initComponents() {
 
@@ -133,6 +148,22 @@ public class UsersPage extends JPanel {
 
         clearButton.setBackground(new Color(153, 194, 93));
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        clearButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(clearButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(clearButton);
+            }
+        });
 
         jLabel1.setBackground(new Color(255, 255, 255));
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
@@ -153,6 +184,22 @@ public class UsersPage extends JPanel {
 
         searchButton.setBackground(new Color(153, 194, 93));
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(searchButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(searchButton);
+            }
+        });
 
         jLabel5.setBackground(new Color(255, 255, 255));
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
@@ -300,28 +347,23 @@ public class UsersPage extends JPanel {
         jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setEnabled(false);
         jTable1.setFocusable(false);
-        jTable1.setGridColor(new Color(255, 255, 255));
+        jTable1.setGridColor(new Color(153, 194, 93));
         jTable1.setIntercellSpacing(new Dimension(0, 0));
-        jTable1.setName("");
         jTable1.setRowHeight(40);
         jTable1.setSelectionBackground(new Color(153, 194, 93));
         jTable1.setShowGrid(true);
-        jTable1.setShowHorizontalLines(false);
-        jTable1.setShowVerticalLines(true);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(5);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(15);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(5);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jTable1.setComponentPopupMenu(popupMenu);
@@ -362,5 +404,36 @@ public class UsersPage extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(background, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+    }
+
+    public void getUsersData(boolean changeInformation) {
+
+        tableModel.setRowCount(0);
+
+        ResultSet users = User.getAll();
+        String[] rows = new String[6]; // Id, First Name, Last Name, City, Email, Role
+        int rowsCount = 0;
+
+        try {
+            while (users.next()) {
+
+                rows[0] = users.getString(User.ID);
+                rows[1] = users.getString(User.FIRST_NAME);
+                rows[2] = users.getString(User.LAST_NAME);
+                rows[3] = users.getString(User.CITY);
+                rows[4] = users.getString(User.EMAIL);
+                rows[5] = users.getString(User.ROLE);
+
+                tableModel.addRow(rows);
+                ++rowsCount;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (changeInformation) {
+            Main.mainWindow.setBottomInformation("Found " + rowsCount + " users");
+        }
     }
 }

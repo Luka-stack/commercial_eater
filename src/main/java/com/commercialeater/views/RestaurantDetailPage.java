@@ -2,6 +2,7 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Restaurant;
+import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -170,12 +171,12 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonHoverEntered(clearButton);
+                UIUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonHoverExited(clearButton);
+                UIUtilities.buttonHoverExited(clearButton);
             }
         });
 
@@ -264,12 +265,12 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonHoverEntered(cancelButton);
+                UIUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonHoverExited(cancelButton);
+                UIUtilities.buttonHoverExited(cancelButton);
             }
         });
 
@@ -299,12 +300,12 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonHoverEntered(saveButton);
+                UIUtilities.buttonHoverEntered(saveButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonHoverExited(saveButton);
+                UIUtilities.buttonHoverExited(saveButton);
             }
         });
 
@@ -421,11 +422,4 @@ public class RestaurantDetailPage extends JPanel {
         }
     }
 
-    private void buttonHoverExited(JPanel panel) {
-        panel.setBackground(new Color(153, 194, 93));
-    }
-
-    private void buttonHoverEntered(JPanel panel) {
-        panel.setBackground(new Color(125, 166, 63));
-    }
 }

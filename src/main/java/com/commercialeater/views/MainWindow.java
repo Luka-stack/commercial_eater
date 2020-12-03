@@ -1,6 +1,7 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
+import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,18 +24,20 @@ public class MainWindow extends JFrame {
     private JLabel jLabel7;
     private JLabel jLabel8;
     private JLabel jLabel9;
-    private JPanel logOutButton;
+
     private JPanel mainCardPanel;
-    private JPanel restaurantsButton;
     private RestaurantPage restaurantsCard;
-    private JPanel settingsButton;
+    private UserPage usersCard;
+    private TransactionsPage transactionsCard;
     private JPanel settingsCard;
+
+    private JPanel logOutButton;
+    private JPanel restaurantsButton;
+    private JPanel settingsButton;
     private JPanel sidebar;
     private JLabel sidebarLogo;
     private JPanel transactionsButton;
-    private JPanel transactionsCard;
     private JPanel usersButton;
-    private JPanel usersCard;
 
     private JMenu newEntityMenu;
     private JMenuBar jMenuBar1;
@@ -47,28 +50,29 @@ public class MainWindow extends JFrame {
 
         background = new JPanel();
         sidebar = new JPanel();
-        restaurantsButton = new JPanel();
+
         jLabel3 = new JLabel();
         jLabel8 = new JLabel();
-        usersButton = new JPanel();
         jLabel4 = new JLabel();
         jLabel9 = new JLabel();
-        transactionsButton = new JPanel();
         jLabel5 = new JLabel();
         jLabel10 = new JLabel();
-        settingsButton = new JPanel();
         jLabel6 = new JLabel();
         jLabel11 = new JLabel();
-        logOutButton = new JPanel();
         jLabel7 = new JLabel();
         jLabel12 = new JLabel();
         sidebarLogo = new JLabel();
 
-        mainCardPanel = new JPanel();
+        restaurantsButton = new JPanel();
+        usersButton = new JPanel();
+        transactionsButton = new JPanel();
+        settingsButton = new JPanel();
+        logOutButton = new JPanel();
 
+        mainCardPanel = new JPanel();
         restaurantsCard = new RestaurantPage();
-        usersCard = new JPanel();
-        transactionsCard = new JPanel();
+        usersCard = new UserPage();
+        transactionsCard = new TransactionsPage();
         settingsCard = new JPanel();
 
         bottomInfLabel = new JLabel();
@@ -95,12 +99,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(restaurantsButton);
+                UIUtilities.buttonHoverEntered(restaurantsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(restaurantsButton);
+                UIUtilities.buttonHoverExited(restaurantsButton);
             }
         });
 
@@ -135,17 +139,17 @@ public class MainWindow extends JFrame {
         usersButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                loadUsersView(true);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(usersButton);
+                UIUtilities.buttonHoverEntered(usersButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(usersButton);
+                UIUtilities.buttonHoverExited(usersButton);
             }
         });
 
@@ -180,17 +184,17 @@ public class MainWindow extends JFrame {
         transactionsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                loadTransactionsView(true);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(transactionsButton);
+                UIUtilities.buttonHoverEntered(transactionsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(transactionsButton);
+                UIUtilities.buttonHoverExited(transactionsButton);
             }
         });
 
@@ -230,12 +234,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(settingsButton);
+                UIUtilities.buttonHoverEntered(settingsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(settingsButton);
+                UIUtilities.buttonHoverExited(settingsButton);
             }
         });
 
@@ -275,12 +279,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuEntryHover(logOutButton);
+                UIUtilities.buttonHoverEntered(logOutButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuEntryStdBackground(logOutButton);
+                UIUtilities.buttonHoverExited(logOutButton);
             }
         });
 
@@ -349,51 +353,8 @@ public class MainWindow extends JFrame {
         mainCardPanel.setLayout(new CardLayout());
 
         mainCardPanel.add(restaurantsCard, "Restaurants");
-
-//        usersCard.setBackground(new Color(204, 255, 204));
-//
-//        GroupLayout usersCardLayout = new GroupLayout(usersCard);
-//        usersCard.setLayout(usersCardLayout);
-//        usersCardLayout.setHorizontalGroup(
-//                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 800, Short.MAX_VALUE)
-//        );
-//        usersCardLayout.setVerticalGroup(
-//                usersCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 573, Short.MAX_VALUE)
-//        );
-//
-//        main.add(usersCard, "card3");
-
-//        transactionsCard.setBackground(new Color(0, 51, 204));
-//
-//        GroupLayout transactionsCardLayout = new GroupLayout(transactionsCard);
-//        transactionsCard.setLayout(transactionsCardLayout);
-//        transactionsCardLayout.setHorizontalGroup(
-//                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 800, Short.MAX_VALUE)
-//        );
-//        transactionsCardLayout.setVerticalGroup(
-//                transactionsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 573, Short.MAX_VALUE)
-//        );
-//
-//        main.add(transactionsCard, "card4");
-//
-//        settingsCard.setBackground(new Color(0, 51, 51));
-//
-//        GroupLayout settingsCardLayout = new GroupLayout(settingsCard);
-//        settingsCard.setLayout(settingsCardLayout);
-//        settingsCardLayout.setHorizontalGroup(
-//                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 800, Short.MAX_VALUE)
-//        );
-//        settingsCardLayout.setVerticalGroup(
-//                settingsCardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 573, Short.MAX_VALUE)
-//        );
-//
-//        main.add(settingsCard, "card5");
+        mainCardPanel.add(usersCard, "Users");
+        mainCardPanel.add(transactionsCard, "Transactions");
 
         bottomInfLabel.setFont(new Font("Segoe UI", 0, 12));
         bottomInfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -429,7 +390,7 @@ public class MainWindow extends JFrame {
         newEntityMenu.add(newRestaurantMenuItem);
 
         JMenuItem newUserMenuItem = new JMenuItem("User");
-        newUserMenuItem.addActionListener(e -> System.out.println("User Clicked"));
+        newUserMenuItem.addActionListener(e -> loadUsersCreationPage(-1L) );
         newEntityMenu.add(newUserMenuItem);
 
         jMenuBar1.add(newEntityMenu);
@@ -449,20 +410,38 @@ public class MainWindow extends JFrame {
         pack();
     }
 
+    public void loadTransactionsView(boolean changeInformation) {
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "Transactions");
+
+        //transactionsCard.getTransactionsData(changeInformation);
+    }
+
+    public void loadUsersView(boolean changeInformation) {
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "Users");
+
+        usersCard.getUsersData(changeInformation);
+    }
+
     public void loadRestaurantsView(boolean changeInformation) {
+
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Restaurants");
 
         restaurantsCard.getRestaurantsData(changeInformation);
 
-        try { mainCardPanel.remove(1); }
-        catch (Exception exc) {}
+//        try { mainCardPanel.remove(1); }
+//        catch (Exception exc) {}
     }
 
     public void loadRestaurantCreationPage(Long entityID) {
 
         if (entityID < 0) {
             mainCardPanel.add(new RestaurantDetailPage(), "RestaurantDetail");
+            Main.mainWindow.setBottomInformation("");
         }
         else {
             mainCardPanel.add(new RestaurantDetailPage(entityID), "RestaurantDetail");
@@ -472,19 +451,25 @@ public class MainWindow extends JFrame {
         cardLayout.show(mainCardPanel, "RestaurantDetail");
     }
 
+    public void loadUsersCreationPage(Long entityId) {
+
+        if (entityId < 0) {
+            mainCardPanel.add(new UserDetailPage(), "UserDetails");
+            Main.mainWindow.setBottomInformation("");
+        }
+        else {
+            mainCardPanel.add(new UserDetailPage(entityId), "UserDetails");
+        }
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "UserDetails");
+    }
+
     public void setBottomInformation(String information) {
         bottomInfLabel.setText(information);
     }
 
     public String getBottomInformation() { return bottomInfLabel.getText(); }
-
-    private void menuEntryStdBackground(JPanel panel) {
-        panel.setBackground(new Color(153, 194, 93));
-    }
-
-    private void menuEntryHover(JPanel panel) {
-        panel.setBackground(new Color(125, 166, 63));
-    }
 
     private void logOutButtonClicked() {
 

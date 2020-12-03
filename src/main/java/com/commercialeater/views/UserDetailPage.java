@@ -1,18 +1,18 @@
 package com.commercialeater.views;
 
+import com.commercialeater.utilities.UIUtilities;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserDetailPage extends JPanel {
 
     private JPanel background;
-    private JLabel balanceLabel;
-    private JPanel cancelButton;
-    private JTextField cityField;
-    private JTextField emailField;
-    private JTextField firstNameField;
+
     private JLabel jLabel1;
     private JLabel jLabel10;
     private JLabel jLabel12;
@@ -34,11 +34,34 @@ public class UserDetailPage extends JPanel {
     private JSeparator jSeparator6;
     private JSeparator jSeparator7;
     private JSeparator jSeparator8;
+    private JLabel titleLabel;
+
+    private JPanel cancelButton;
+    private JPanel saveButton;
+    private JPanel topUpButton;
+
+    private JTextField cityField;
+    private JTextField emailField;
+    private JTextField firstNameField;
     private JTextField lastNameField;
     private JComboBox<String> roleField;
-    private JPanel saveButton;
-    private JLabel titleLabel;
-    private JPanel topUpButton;
+    private JLabel balanceLabel;
+
+    private Long entityId;
+
+    public UserDetailPage() {
+        initComponents();
+        titleLabel.setText("Creating New User");
+
+        this.entityId = -1L;
+    }
+
+    public UserDetailPage(Long entityID) {
+        initComponents();
+
+        this.entityId = entityID;
+        getUserFields();
+    }
 
     private void initComponents() {
 
@@ -187,6 +210,22 @@ public class UserDetailPage extends JPanel {
 
         topUpButton.setBackground(new Color(153, 194, 93));
         topUpButton.setPreferredSize(new Dimension(172, 25));
+        topUpButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(topUpButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(topUpButton);
+            }
+        });
 
         jLabel12.setFont(new Font("Segoe UI", 1, 14));
         jLabel12.setForeground(new Color(255, 255, 255));
@@ -302,6 +341,22 @@ public class UserDetailPage extends JPanel {
 
         cancelButton.setBackground(new Color(153, 194, 93));
         cancelButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        cancelButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(cancelButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(cancelButton);
+            }
+        });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14));
         jLabel7.setForeground(new Color(255, 255, 255));
@@ -321,6 +376,22 @@ public class UserDetailPage extends JPanel {
 
         saveButton.setBackground(new Color(153, 194, 93));
         saveButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        saveButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(saveButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(saveButton);
+            }
+        });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
         jLabel6.setForeground(new Color(255, 255, 255));
@@ -387,6 +458,9 @@ public class UserDetailPage extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(background, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+    }
+
+    private void getUserFields() {
     }
 
 }

@@ -2,6 +2,7 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Restaurant;
+import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -101,12 +102,12 @@ public class RestaurantPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonHoverEntered(searchButton);
+                UIUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonHoverExited(searchButton);
+                UIUtilities.buttonHoverExited(searchButton);
             }
         });
 
@@ -135,12 +136,12 @@ public class RestaurantPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonHoverEntered(clearButton);
+                UIUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonHoverExited(clearButton);
+                UIUtilities.buttonHoverExited(clearButton);
             }
         });
 
@@ -398,13 +399,5 @@ public class RestaurantPage extends JPanel {
 
         Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants for name: " +
                 nameFilter.getText() + ", address: " + addressFilter.getText());
-    }
-
-    private void buttonHoverExited(JPanel panel) {
-        panel.setBackground(new Color(153, 194, 93));
-    }
-
-    private void buttonHoverEntered(JPanel panel) {
-        panel.setBackground(new Color(125, 166, 63));
     }
 }

@@ -2,6 +2,7 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.User;
+import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -111,12 +112,12 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonEntryHover(cancelButton);
+                UIUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonStdBackground(cancelButton);
+                UIUtilities.buttonHoverExited(cancelButton);
             }
         });
 
@@ -146,12 +147,12 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                buttonEntryHover(signInButton);
+                UIUtilities.buttonHoverEntered(signInButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                buttonStdBackground(signInButton);
+                UIUtilities.buttonHoverExited(signInButton);
             }
         });
 
@@ -261,7 +262,7 @@ public class LoginWindow extends JFrame {
 
     private void validateLogin() {
 
-        boolean correctCredential = User.checkUserExistence(
+        boolean correctCredential = User.checkExistence(
                 emailTextField.getText(), new String(passwdPasswordField.getPassword()));
 
         if (correctCredential) {
@@ -272,13 +273,5 @@ public class LoginWindow extends JFrame {
         else {
             errorMessageLabel.setText("Incorrect login or password");
         }
-    }
-
-    private void buttonStdBackground(JPanel panel) {
-        panel.setBackground(new Color(153, 194, 93));
-    }
-
-    private void buttonEntryHover(JPanel panel) {
-        panel.setBackground(new Color(125, 166, 63));
     }
 }

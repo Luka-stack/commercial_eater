@@ -151,7 +151,7 @@ public class UserPage extends JPanel {
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                clearAndSearch();
             }
 
             @Override
@@ -187,7 +187,7 @@ public class UserPage extends JPanel {
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                filterUsers();
             }
 
             @Override
@@ -313,10 +313,10 @@ public class UserPage extends JPanel {
         );
 
         popupItemEdit = new JMenuItem("Edit Current Row");
-        //popupItemEdit.addActionListener(event -> editSelectedRow());
+        popupItemEdit.addActionListener(event -> editSelectedRow());
 
         popupItemRemove = new JMenuItem("Remove Current Row");
-        //popupItemRemove.addActionListener(event -> removeSelectedRow());
+        popupItemRemove.addActionListener(event -> removeSelectedRow());
 
         popupMenu = new JPopupMenu();
         popupMenu.add(popupItemEdit);
@@ -435,5 +435,75 @@ public class UserPage extends JPanel {
         if (changeInformation) {
             Main.mainWindow.setBottomInformation("Found " + rowsCount + " users");
         }
+    }
+
+    private void editSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        Main.mainWindow.setBottomInformation("Editing Row #"+ (selectedRow+1));
+        Main.mainWindow.loadUsersCreationPage(rowID);
+    }
+
+    private void removeSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        String user = tableModel.getValueAt(selectedRow, 1).toString();
+        int deleteResult = User.delete(rowID);
+
+        if (deleteResult > 0) {
+            tableModel.removeRow(selectedRow);
+            Main.mainWindow.setBottomInformation("User '"+ user +"'  was deleted");
+        }
+        else {
+            Main.mainWindow.setBottomInformation("Couldn't delete User on row #"+ rowID);
+        }
+    }
+
+    private void filterUsers() {
+
+        ResultSet users = User.getQueryData(emailFilter.getText(), firstNameFilter.getText(), lastNameFilter.getText(),
+                cityFilter.getText(), roleFilter.getSelectedItem().toString());
+        String[] rows = new String[6];
+        int rowsCount = 0;
+
+        tableModel.setRowCount(0);
+
+        try {
+            while (users.next()) {
+
+                rows[0] = users.getString(User.ID);
+                rows[1] = users.getString(User.FIRST_NAME);
+                rows[2] = users.getString(User.LAST_NAME);
+                rows[3] = users.getString(User.CITY);
+                rows[4] = users.getString(User.EMAIL);
+                rows[5] = users.getString(User.ROLE);
+
+                tableModel.addRow(rows);
+                ++rowsCount;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Main.mainWindow.setBottomInformation("Found " + rowsCount + " users for email: '" +
+                emailFilter.getText() + "', role: '" + roleFilter.getSelectedItem().toString() +
+                "', first name: '" + firstNameFilter.getText() +"', last name: '" + lastNameFilter.getText() +
+                "', city: '"+ cityFilter.getText() +"'");
+    }
+
+    private void clearAndSearch() {
+
+        emailFilter.setText("All");
+        cityFilter.setText("All");
+        firstNameFilter.setText("All");
+        lastNameFilter.setText("All");
+        roleFilter.setSelectedIndex(0);
+
+        getUsersData(true);
     }
 }

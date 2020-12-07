@@ -330,7 +330,7 @@ public class RestaurantPage extends JPanel {
             Main.mainWindow.setBottomInformation("Restaurant '"+ restaurant +"'  was deleted");
         }
         else {
-            Main.mainWindow.setBottomInformation("Couldn't '"+ restaurant +"'delete Restaurant on row ");
+            Main.mainWindow.setBottomInformation("Couldn't delete Restaurant on row #"+ rowID);
         }
     }
 

@@ -415,7 +415,7 @@ public class MainWindow extends JFrame {
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Transactions");
 
-        //transactionsCard.getTransactionsData(changeInformation);
+        transactionsCard.getTransactionsData(changeInformation);
     }
 
     public void loadUsersView(boolean changeInformation) {
@@ -433,8 +433,6 @@ public class MainWindow extends JFrame {
 
         restaurantsCard.getRestaurantsData(changeInformation);
 
-//        try { mainCardPanel.remove(1); }
-//        catch (Exception exc) {}
     }
 
     public void loadRestaurantCreationPage(Long entityID) {

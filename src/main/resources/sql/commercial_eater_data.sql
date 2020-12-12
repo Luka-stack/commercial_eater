@@ -9,6 +9,8 @@ INSERT INTO users (email, password, firstName, lastName, city, role, balance) VA
 ('user6@comeater.pl', 'qwerty', 'Emma', 'Last Name 2', 'In', 'User', 0.23),
 ('user7@comeater.pl', 'qwerty', 'Ava', 'Last Name 2', 'Las Vegas', 'User', 20.00);
 
+---------------------------------------------------------------------------------------
+
 INSERT INTO restaurants (name, description, address) VALUES 
 ('Restaurant 1', 'Here is description', 'City, Street and Numer'),
 ('Restaurant 2', 'Here is description', 'City, Street and Numer'),
@@ -30,3 +32,15 @@ INSERT INTO restaurants (name, description, address) VALUES
 ('Restaurant 88', 'Here is description', 'City, Street and Numer'),
 ('Restaurant 99', 'Here is description', 'City, Street and Numer'),
 ('Restaurant 100', 'Here is description', 'City, Street and Numer'),
+
+---------------------------------------------------------------------------------------
+
+INSERT INTO transactions (dateTime, transactionType, amount, userId) VALUES
+('2020-12-12', 'TOP_UP', 10.0, 1),
+('2020-12-10', 'TOP_UP', 15.0, 4),
+('2020-12-05', 'TOP_UP', 10.0, 5),
+('2020-10-20', 'TOP_UP', 20.0, 10),
+('2020-09-25', 'TOP_UP', 55.0, 12),
+('2020-12-10', 'ORDER', 20.0, 12),
+('2020-11-10', 'ORDER', 25.0, 5),
+('2020-10-10', 'ORDER', 30.0, 1);

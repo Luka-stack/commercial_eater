@@ -1,6 +1,12 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.Restaurant;
+import com.commercialeater.models.Transaction;
+import com.commercialeater.utilities.CustomComboBoxUI;
+import com.commercialeater.utilities.UIUtilities;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -10,6 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.DayOfWeek;
 
 public class TransactionsPage extends JPanel {
 
@@ -33,18 +42,16 @@ public class TransactionsPage extends JPanel {
     private JPanel searchButton;
 
     private JComboBox<String> transactionFilter;
-    private JTextField endDateFilter;
-    private JTextField startDateFilter;
+    private DatePicker endDateFilter;
+    private DatePicker startDateFilter;
     private JTextField userFilter;
 
     private JTable jTable1;
-    private JPopupMenu popupMenu;
-    private JMenuItem popupItemEdit;
-    private JMenuItem popupItemRemove;
     private DefaultTableModel tableModel;
 
     public TransactionsPage() {
         initComponents();
+        getTransactionsData(false);
     }
 
     private void initComponents() {
@@ -53,9 +60,8 @@ public class TransactionsPage extends JPanel {
         jPanel3 = new JPanel();
         jLabel2 = new JLabel();
         jLabel3 = new JLabel();
-        startDateFilter = new JTextField();
+
         jLabel4 = new JLabel();
-        endDateFilter = new JTextField();
         searchButton = new JPanel();
         jLabel5 = new JLabel();
         clearButton = new JPanel();
@@ -83,19 +89,39 @@ public class TransactionsPage extends JPanel {
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Start Date");
 
-        startDateFilter.setFont(new Font("Segoe UI", 0, 14));
-        startDateFilter.setText("All");
-        startDateFilter.setBorder(null);
+        DatePickerSettings startDateSettings = new DatePickerSettings();
+        startDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        startDateFilter = new DatePicker(startDateSettings);
+        startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        startDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
+
+        DatePickerSettings endDateSettings = new DatePickerSettings();
+        endDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        endDateFilter = new DatePicker(endDateSettings);
+        endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        endDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("End Date");
 
-        endDateFilter.setFont(new Font("Segoe UI", 0, 14));
-        endDateFilter.setText("All");
-        endDateFilter.setBorder(null);
-
         searchButton.setBackground(new Color(153, 194, 93));
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        searchButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                filterTransactions();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(searchButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(searchButton);
+            }
+        });
 
         jLabel5.setBackground(new Color(255, 255, 255));
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
@@ -116,6 +142,22 @@ public class TransactionsPage extends JPanel {
 
         clearButton.setBackground(new Color(153, 194, 93));
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
+        clearButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                clearButtonClicked();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(clearButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(clearButton);
+            }
+        });
 
         jLabel1.setBackground(new Color(255, 255, 255));
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
@@ -156,12 +198,14 @@ public class TransactionsPage extends JPanel {
         jSeparator4.setBackground(new Color(153, 194, 93));
         jSeparator4.setForeground(new Color(153, 194, 93));
 
-        transactionFilter.setEditable(true);
+        transactionFilter.setEditable(false);
         transactionFilter.setFont(new Font("Segoe UI", 0, 14));
         transactionFilter.setMaximumRowCount(3);
-        transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "TopUp", "Order" }));
+        transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Top_Up", "Order" }));
         transactionFilter.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         transactionFilter.setMinimumSize(new Dimension(72, 25));
+
+        transactionFilter.setUI(new CustomComboBoxUI());
 
         GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -171,99 +215,84 @@ public class TransactionsPage extends JPanel {
                                 .addContainerGap()
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(20, 20, 20)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addComponent(jLabel3)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(startDateFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))))
-                                .addGap(40, 40, 40)
-                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addGap(24, 24, 24)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                                .addGap(38, 38, 38)
+                                                .addComponent(jLabel3))
+                                        .addComponent(jLabel6))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(startDateFilter, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+                                .addGap(70, 70, 70)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel7)
+                                                .addGap(10, 10, 10)
+                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(8, 8, 8)
+                                                .addComponent(jLabel4)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jSeparator4, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                                        .addComponent(transactionFilter, 0, 1, Short.MAX_VALUE))))
-                                .addGap(108, 108, 108)
+                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(96, Short.MAX_VALUE))
+                                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(jLabel2))
-                                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addGap(35, 35, 35)
+                                                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(startDateFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(jLabel3))
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel6))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addGap(35, 35, 35)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jLabel4)
-                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(jLabel7)
-                                                                        .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
+                                                                        .addComponent(userFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel6)
+                                                                        .addComponent(jLabel7))
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
+                                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(jLabel4)
+                                                                        .addComponent(endDateFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                                                                .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                                                .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))))
                                 .addContainerGap())
         );
-
-        popupItemEdit = new JMenuItem("Edit Current Row");
-        //popupItemEdit.addActionListener(event -> editSelectedRow());
-
-        popupItemRemove = new JMenuItem("Remove Current Row");
-        //popupItemRemove.addActionListener(event -> removeSelectedRow());
-
-        popupMenu = new JPopupMenu();
-        popupMenu.add(popupItemEdit);
-        popupMenu.add(popupItemRemove);
 
         jScrollPane1.setBackground(new Color(255, 255, 255));
         jScrollPane1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
 
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -276,22 +305,19 @@ public class TransactionsPage extends JPanel {
         ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEtchedBorder());
 
         tableModel.setColumnIdentifiers(new String [] {
-                "Id", "Timestamp", "User", "Transaction"
+                "Timestamp", "Transaction", "User"
         });
 
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setEnabled(false);
+        jTable1.setModel(tableModel);
+        jTable1.setDefaultEditor(Object.class, null);
+
         jTable1.setFocusable(false);
-        jTable1.setGridColor(new Color(255, 255, 255));
+        jTable1.setGridColor(new Color(153, 194, 93));
         jTable1.setIntercellSpacing(new Dimension(0,0));
-        jTable1.setName("");
         jTable1.setRowHeight(40);
         jTable1.setSelectionBackground(new Color(153, 194, 93));
         jTable1.setShowGrid(true);
-        jTable1.setShowHorizontalLines(false);
-        jTable1.setShowVerticalLines(true);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
@@ -303,7 +329,6 @@ public class TransactionsPage extends JPanel {
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(15);
         }
 
-        jTable1.setComponentPopupMenu(popupMenu);
         jTable1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -341,5 +366,73 @@ public class TransactionsPage extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(background, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+    }
+
+    public void getTransactionsData(boolean changeInformation) {
+
+        tableModel.setRowCount(0);
+
+        ResultSet transactions = Transaction.getAll();
+        String[] rows = new String[3]; // Timestamp, Transaction, User
+        int rowsCount = 0;
+
+        try {
+            while (transactions.next()) {
+
+                rows[0] = transactions.getString(Transaction.TRANSACTION_DATE);
+                rows[1] = transactions.getString(Transaction.TRANSACTION_TYPE);
+                rows[2] = transactions.getString(Transaction.USER_CONCAT);
+
+                tableModel.addRow(rows);
+                ++rowsCount;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (changeInformation) {
+            Main.mainWindow.setBottomInformation("Found " + rowsCount + " transactions");
+        }
+    }
+
+    private void clearButtonClicked() {
+
+        startDateFilter.getComponentDateTextField().setText("");
+        endDateFilter.getComponentDateTextField().setText("");
+        userFilter.setText("All");
+        transactionFilter.setSelectedIndex(0);
+
+        getTransactionsData(true);
+    }
+
+    private void filterTransactions() {
+
+        String startDate = startDateFilter.getDate() == null ? null : startDateFilter.getDate().toString();
+        String endDate = endDateFilter.getDate() == null ? null : endDateFilter.getDate().toString();
+
+        ResultSet transactions = Transaction.getQueryData(startDate, endDate, userFilter.getText(),
+                transactionFilter.getSelectedItem().toString());
+        String[] rows = new String[4];
+        int rowsCount = 0;
+
+        tableModel.setRowCount(0);
+
+        try {
+            while (transactions.next()) {
+
+                rows[0] = transactions.getString(Transaction.TRANSACTION_DATE);
+                rows[1] = transactions.getString(Transaction.TRANSACTION_TYPE);
+                rows[2] = transactions.getString(Transaction.USER_CONCAT);
+                ++rowsCount;
+
+                tableModel.addRow(rows);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Main.mainWindow.setBottomInformation("Found " + rowsCount + " transactions");
     }
 }

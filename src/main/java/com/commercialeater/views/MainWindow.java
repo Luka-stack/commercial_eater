@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
     private RestaurantPage restaurantsCard;
     private UserPage usersCard;
     private TransactionsPage transactionsCard;
-    private JPanel settingsCard;
+    private SettingPage settingsCard;
 
     private JPanel logOutButton;
     private JPanel restaurantsButton;
@@ -73,7 +73,7 @@ public class MainWindow extends JFrame {
         restaurantsCard = new RestaurantPage();
         usersCard = new UserPage();
         transactionsCard = new TransactionsPage();
-        settingsCard = new JPanel();
+        settingsCard = new SettingPage();
 
         bottomInfLabel = new JLabel();
 
@@ -229,7 +229,7 @@ public class MainWindow extends JFrame {
         settingsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                loadSettingsView();
             }
 
             @Override
@@ -355,6 +355,7 @@ public class MainWindow extends JFrame {
         mainCardPanel.add(restaurantsCard, "Restaurants");
         mainCardPanel.add(usersCard, "Users");
         mainCardPanel.add(transactionsCard, "Transactions");
+        mainCardPanel.add(settingsCard, "Settings");
 
         bottomInfLabel.setFont(new Font("Segoe UI", 0, 12));
         bottomInfLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -433,6 +434,12 @@ public class MainWindow extends JFrame {
 
         restaurantsCard.getRestaurantsData(changeInformation);
 
+    }
+
+    public void loadSettingsView() {
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "Settings");
     }
 
     public void loadRestaurantCreationPage(Long entityID) {

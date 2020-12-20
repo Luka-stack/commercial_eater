@@ -4,6 +4,8 @@ import com.commercialeater.views.LoginWindow;
 import com.commercialeater.views.MainWindow;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -27,9 +29,9 @@ public class Main {
         }
 
         // TMP
-        openMainApplication("New");
+        //openMainApplication("New");
 
-        //openLoginWindow();
+        openLoginWindow();
     }
 
     public static void openMainApplication(String email) {

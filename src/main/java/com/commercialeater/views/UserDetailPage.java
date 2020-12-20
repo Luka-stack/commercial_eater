@@ -1,9 +1,10 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
-import com.commercialeater.models.Restaurant;
 import com.commercialeater.models.User;
+import com.commercialeater.utilities.FieldValidator;
 import com.commercialeater.utilities.UIUtilities;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -15,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDetailPage extends JPanel {
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     private JPanel background;
 
@@ -32,12 +35,12 @@ public class UserDetailPage extends JPanel {
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
-    private JPanel jPanel4;
-    private JSeparator jSeparator1;
+    private JPanel resetPasswordButton;
+    private JSeparator emailFieldSeparator;
     private JSeparator jSeparator4;
-    private JSeparator jSeparator5;
-    private JSeparator jSeparator6;
-    private JSeparator jSeparator7;
+    private JSeparator firstNameSeparator;
+    private JSeparator cityFieldSeparator;
+    private JSeparator lastNameSeparator;
     private JSeparator jSeparator8;
     private JLabel titleLabel;
 
@@ -79,21 +82,21 @@ public class UserDetailPage extends JPanel {
         jLabel2 = new JLabel();
         emailField = new JTextField();
         jLabel3 = new JLabel();
-        jSeparator1 = new JSeparator();
+        emailFieldSeparator = new JSeparator();
         roleField = new JComboBox<>();
         jSeparator4 = new JSeparator();
         jLabel5 = new JLabel();
         firstNameField = new JTextField();
-        jSeparator5 = new JSeparator();
+        firstNameSeparator = new JSeparator();
         jLabel8 = new JLabel();
         cityField = new JTextField();
-        jSeparator6 = new JSeparator();
+        cityFieldSeparator = new JSeparator();
         jLabel9 = new JLabel();
         lastNameField = new JTextField();
-        jSeparator7 = new JSeparator();
+        lastNameSeparator = new JSeparator();
         jLabel10 = new JLabel();
         jSeparator8 = new JSeparator();
-        jPanel4 = new JPanel();
+        resetPasswordButton = new JPanel();
         jLabel1 = new JLabel();
         jLabel4 = new JLabel();
         balanceLabel = new JLabel();
@@ -141,13 +144,14 @@ public class UserDetailPage extends JPanel {
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Password");
 
-        jSeparator1.setBackground(new Color(153, 194, 93));
-        jSeparator1.setForeground(new Color(153, 194, 93));
+        emailFieldSeparator.setBackground(new Color(153, 194, 93));
+        emailFieldSeparator.setForeground(new Color(153, 194, 93));
 
         roleField.setEditable(true);
         roleField.setFont(new Font("Segoe UI", 0, 14));
         roleField.setMaximumRowCount(3);
         roleField.setModel(new DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
+        roleField.setSelectedIndex(1);
         roleField.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
 
         jSeparator4.setBackground(new Color(153, 194, 93));
@@ -160,8 +164,8 @@ public class UserDetailPage extends JPanel {
         firstNameField.setFont(new Font("Segoe UI", 0, 14));
         firstNameField.setBorder(null);
 
-        jSeparator5.setBackground(new Color(153, 194, 93));
-        jSeparator5.setForeground(new Color(153, 194, 93));
+        firstNameSeparator.setBackground(new Color(153, 194, 93));
+        firstNameSeparator.setForeground(new Color(153, 194, 93));
 
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("City");
@@ -169,8 +173,8 @@ public class UserDetailPage extends JPanel {
         cityField.setFont(new Font("Segoe UI", 0, 14));
         cityField.setBorder(null);
 
-        jSeparator6.setBackground(new Color(153, 194, 93));
-        jSeparator6.setForeground(new Color(153, 194, 93));
+        cityFieldSeparator.setBackground(new Color(153, 194, 93));
+        cityFieldSeparator.setForeground(new Color(153, 194, 93));
 
         jLabel9.setFont(new Font("Segoe UI", 0, 14));
         jLabel9.setText("Last Name");
@@ -178,8 +182,8 @@ public class UserDetailPage extends JPanel {
         lastNameField.setFont(new Font("Segoe UI", 0, 14));
         lastNameField.setBorder(null);
 
-        jSeparator7.setBackground(new Color(153, 194, 93));
-        jSeparator7.setForeground(new Color(153, 194, 93));
+        lastNameSeparator.setBackground(new Color(153, 194, 93));
+        lastNameSeparator.setForeground(new Color(153, 194, 93));
 
         jLabel10.setFont(new Font("Segoe UI", 0, 14));
         jLabel10.setText("Role");
@@ -187,15 +191,31 @@ public class UserDetailPage extends JPanel {
         jSeparator8.setBackground(new Color(153, 194, 93));
         jSeparator8.setForeground(new Color(153, 194, 93));
 
-        jPanel4.setBackground(new Color(153, 194, 93));
+        resetPasswordButton.setBackground(new Color(153, 194, 93));
+        resetPasswordButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setStandardPassword();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                UIUtilities.buttonHoverEntered(resetPasswordButton);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                UIUtilities.buttonHoverExited(resetPasswordButton);
+            }
+        });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 14));
         jLabel1.setForeground(new Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("Reset Password");
 
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
+        GroupLayout jPanel4Layout = new GroupLayout(resetPasswordButton);
+        resetPasswordButton.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
                 jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -258,8 +278,8 @@ public class UserDetailPage extends JPanel {
                                                         .addComponent(jLabel2)
                                                         .addComponent(jLabel3)
                                                         .addComponent(emailField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                                        .addComponent(jSeparator1)
-                                                        .addComponent(jPanel4, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(emailFieldSeparator)
+                                                        .addComponent(resetPasswordButton, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(89, 89, 89)
                                                 .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -267,11 +287,11 @@ public class UserDetailPage extends JPanel {
                                                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                                 .addComponent(jLabel5)
                                                                 .addComponent(firstNameField)
-                                                                .addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(firstNameSeparator, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                                 .addComponent(jLabel8)
                                                                 .addComponent(cityField)
-                                                                .addComponent(jSeparator6, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))))
+                                                                .addComponent(cityFieldSeparator, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))))
                                         .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addComponent(balanceLabel)
@@ -280,7 +300,7 @@ public class UserDetailPage extends JPanel {
                                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(jLabel9)
                                                 .addComponent(lastNameField)
-                                                .addComponent(jSeparator7, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(lastNameSeparator, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel10)
                                         .addComponent(jSeparator8, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(roleField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
@@ -297,11 +317,11 @@ public class UserDetailPage extends JPanel {
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(5, 5, 5)
-                                                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(emailFieldSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel3)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(resetPasswordButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -310,13 +330,13 @@ public class UserDetailPage extends JPanel {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(firstNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(5, 5, 5)
-                                                                .addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(firstNameSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addComponent(jLabel9)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(lastNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(5, 5, 5)
-                                                                .addComponent(jSeparator7, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
+                                                                .addComponent(lastNameSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -324,7 +344,7 @@ public class UserDetailPage extends JPanel {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(cityField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(5, 5, 5)
-                                                                .addComponent(jSeparator6, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(cityFieldSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addComponent(jLabel10)
                                                                 .addGap(7, 7, 7)
@@ -505,26 +525,82 @@ public class UserDetailPage extends JPanel {
 
     private void saveOrUpdateUser() {
 
-        if (entityID < 0) {
-            User.create(emailField.getText(), password , roleField.getSelectedItem().toString(),
-                    firstNameField.getText(), lastNameField.getText(), cityField.getText(),
-                    Double.parseDouble(balanceLabel.getText().split(" ")[0]));
+        if (validateFields()) {
 
-            Main.mainWindow.setBottomInformation("Created new user '"+ emailField.getText() +"'");
+            if (entityID < 0) {
+                User.create(emailField.getText(), password, roleField.getSelectedItem().toString(),
+                        firstNameField.getText(), lastNameField.getText(), cityField.getText(),
+                        Double.parseDouble(balanceLabel.getText().split(" ")[0]));
+
+                Main.mainWindow.setBottomInformation("Created new user '" + emailField.getText() + "'");
+            } else {
+                User.update(entityID, emailField.getText(), password, roleField.getSelectedItem().toString(),
+                        firstNameField.getText(), lastNameField.getText(), cityField.getText(),
+                        Double.parseDouble(balanceLabel.getText().split(" ")[0]));
+
+                String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
+                Main.mainWindow.setBottomInformation("User at row #" + rowID + " updated");
+            }
+
+            Main.mainWindow.loadUsersView(false);
         }
         else {
-            User.update(entityID, emailField.getText(), password , roleField.getSelectedItem().toString(),
-                    firstNameField.getText(), lastNameField.getText(), cityField.getText(),
-                    Double.parseDouble(balanceLabel.getText().split(" ")[0]));
-
-            String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
-            Main.mainWindow.setBottomInformation("User at row #"+ rowID +" updated");
+            Main.mainWindow.setBottomInformation("Wrong Field(s) inputs");
         }
-
-        Main.mainWindow.loadUsersView(false);
     }
 
     private void setStandardPassword() {
-        password = "qwerty";
+        password = encoder.encode("qwerty");
+    }
+
+    private boolean validateFields() {
+
+        boolean valid = true;
+
+        if (!FieldValidator.validateEmail(emailField.getText())) {
+            emailFieldSeparator.setBackground(new Color(153, 0, 0));
+            emailFieldSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            emailFieldSeparator.setBackground(new Color(153, 194, 93));
+            emailFieldSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        if (firstNameField.getText().length() == 0) {
+            firstNameSeparator.setBackground(new Color(153, 0, 0));
+            firstNameSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            firstNameSeparator.setBackground(new Color(153, 194, 93));
+            firstNameSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        if (lastNameField.getText().length() == 0) {
+            lastNameSeparator.setBackground(new Color(153, 0, 0));
+            lastNameSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            lastNameSeparator.setBackground(new Color(153, 194, 93));
+            lastNameSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        if (cityField.getText().length() == 0) {
+            cityFieldSeparator.setBackground(new Color(153, 0, 0));
+            cityFieldSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            cityFieldSeparator.setBackground(new Color(153, 194, 93));
+            cityFieldSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        return valid;
     }
 }

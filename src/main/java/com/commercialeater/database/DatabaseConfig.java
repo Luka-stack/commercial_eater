@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class DatabaseConfig {
@@ -24,12 +25,11 @@ public class DatabaseConfig {
         try (FileReader reader = new FileReader(dbConfigPath)) { // TMP Solution
 
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-
             dbUrl = (String) jsonObject.get("url");
             dbUsername = (String) jsonObject.get("username");
             dbPassword = (String) jsonObject.get("password");
-
-        } catch (ParseException | IOException e) {
+        }
+        catch (ParseException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -44,5 +44,21 @@ public class DatabaseConfig {
 
     public String getDbPassword() {
         return dbPassword;
+    }
+
+    public void saveConfig(String dbUrl, String dbUsername, String dbPassword) {
+
+        try (FileWriter writer = new FileWriter(dbConfigPath)) {
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("url", dbUrl);
+            jsonObject.put("username", dbUsername);
+            jsonObject.put("password", dbPassword);
+
+            writer.write(jsonObject.toJSONString());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

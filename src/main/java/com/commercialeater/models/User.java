@@ -1,6 +1,7 @@
 package com.commercialeater.models;
 
 import com.commercialeater.database.DatabaseConnector;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,19 +19,23 @@ public class User {
     public static final String CITY       = "city";
     public static final String BALANCE    = "balance";
 
-    public static boolean checkExistence(String email, String password) {
+    public static boolean validateLogin(String email, String password) {
 
-        boolean result = false;
+         boolean result = false;
 
-        String query = "SELECT 1 FROM " + TABLE + " WHERE "
-                + EMAIL + " = ? AND "
-                + PASSWORD + " = ?";
+        String query = "SELECT "+ PASSWORD +" FROM " + TABLE + " WHERE "
+                + EMAIL + " = ?";
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
             stm.setString(1, email);
-            stm.setString(2, password);
-            result = stm.executeQuery().next();
+
+            ResultSet record = stm.executeQuery();
+
+            if (record.next()) {
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                result = encoder.matches(password, record.getString(PASSWORD));
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();

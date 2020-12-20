@@ -262,7 +262,7 @@ public class LoginWindow extends JFrame {
 
     private void validateLogin() {
 
-        boolean correctCredential = User.checkExistence(
+        boolean correctCredential = User.validateLogin(
                 emailTextField.getText(), new String(passwdPasswordField.getPassword()));
 
         if (correctCredential) {

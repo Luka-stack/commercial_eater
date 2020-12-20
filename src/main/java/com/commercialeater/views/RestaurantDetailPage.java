@@ -34,8 +34,8 @@ public class RestaurantDetailPage extends JPanel {
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JScrollPane jScrollPane1;
-    private JSeparator jSeparator1;
-    private JSeparator jSeparator2;
+    private JSeparator nameFieldSeparator;
+    private JSeparator addressFieldSeparator;
     private JTextField nameField;
     private JPanel saveButton;
     private JLabel titleLabel;
@@ -72,8 +72,8 @@ public class RestaurantDetailPage extends JPanel {
 
         clearButton = new JPanel();
         jLabel5 = new JLabel();
-        jSeparator1 = new JSeparator();
-        jSeparator2 = new JSeparator();
+        nameFieldSeparator = new JSeparator();
+        addressFieldSeparator = new JSeparator();
         jPanel3 = new JPanel();
         cancelButton = new JPanel();
         jLabel7 = new JLabel();
@@ -198,11 +198,11 @@ public class RestaurantDetailPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(new Color(153, 194, 93));
-        jSeparator1.setForeground(new Color(153, 194, 93));
+        nameFieldSeparator.setBackground(new Color(153, 194, 93));
+        nameFieldSeparator.setForeground(new Color(153, 194, 93));
 
-        jSeparator2.setBackground(new Color(153, 194, 93));
-        jSeparator2.setForeground(new Color(153, 194, 93));
+        addressFieldSeparator.setBackground(new Color(153, 194, 93));
+        addressFieldSeparator.setForeground(new Color(153, 194, 93));
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -216,9 +216,9 @@ public class RestaurantDetailPage extends JPanel {
                                                         .addComponent(jLabel2)
                                                         .addComponent(jLabel3)
                                                         .addComponent(nameField)
-                                                        .addComponent(jSeparator1)
+                                                        .addComponent(nameFieldSeparator)
                                                         .addComponent(addressField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                                        .addComponent(jSeparator2))
+                                                        .addComponent(addressFieldSeparator))
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(jLabel4)
@@ -241,14 +241,14 @@ public class RestaurantDetailPage extends JPanel {
                                                 .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 //.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGap(5, 5, 5)
-                                                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(nameFieldSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(58, 58, 58)
                                                 .addComponent(jLabel3)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(addressField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(5, 5, 5)
                                                 //.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(addressFieldSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -392,19 +392,24 @@ public class RestaurantDetailPage extends JPanel {
 
     private void saveOrUpdateRestaurant() {
 
-        if (entityID < 0) {
-            Restaurant.create(nameField.getText(), addressField.getText(), descriptionArea.getText());
+        if (validateFields()) {
 
-            Main.mainWindow.setBottomInformation("Created new restaurant '"+ nameField.getText() +"'");
+            if (entityID < 0) {
+                Restaurant.create(nameField.getText(), addressField.getText(), descriptionArea.getText());
+
+                Main.mainWindow.setBottomInformation("Created new restaurant '" + nameField.getText() + "'");
+            } else {
+                Restaurant.update(entityID, nameField.getText(), addressField.getText(), descriptionArea.getText());
+
+                String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
+                Main.mainWindow.setBottomInformation("Restaurant at row #" + rowID + " updated");
+            }
+
+            Main.mainWindow.loadRestaurantsView(false);
         }
         else {
-            Restaurant.update(entityID, nameField.getText(), addressField.getText(), descriptionArea.getText());
-
-            String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
-            Main.mainWindow.setBottomInformation("Restaurant at row #"+ rowID +" updated");
+            Main.mainWindow.setBottomInformation("Wrong Field(s) inputs");
         }
-
-        Main.mainWindow.loadRestaurantsView(false);
     }
 
     private void getRestaurantFields() {
@@ -424,4 +429,41 @@ public class RestaurantDetailPage extends JPanel {
         }
     }
 
+    private boolean validateFields() {
+
+        boolean valid = true;
+
+        if (addressField.getText().length() == 0) {
+            addressFieldSeparator.setBackground(new Color(153, 0, 0));
+            addressFieldSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            addressFieldSeparator.setBackground(new Color(153, 194, 93));
+            addressFieldSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        if (nameField.getText().length() == 0) {
+            nameFieldSeparator.setBackground(new Color(153, 0, 0));
+            nameFieldSeparator.setForeground(new Color(153, 0, 0));
+
+            valid = false;
+        }
+        else {
+            nameFieldSeparator.setBackground(new Color(153, 194, 93));
+            nameFieldSeparator.setForeground(new Color(153, 194, 93));
+        }
+
+        if (descriptionArea.getText().length() == 0) {
+            descriptionArea.setBorder(new LineBorder(new Color(153, 0, 0), 1, true));
+
+            valid = false;
+        }
+        else {
+            descriptionArea.setBorder(new LineBorder(new Color(153, 194, 93), 1, true));
+        }
+
+        return valid;
+    }
 }

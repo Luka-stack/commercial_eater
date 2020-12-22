@@ -1,4 +1,4 @@
-package com.commercialeater.views;
+package com.commercialeater.views.users;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Restaurant;

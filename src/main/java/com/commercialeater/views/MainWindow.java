@@ -2,6 +2,10 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.utilities.UIUtilities;
+import com.commercialeater.views.restaurants.RestaurantDetailPage;
+import com.commercialeater.views.restaurants.RestaurantPage;
+import com.commercialeater.views.users.UserDetailPage;
+import com.commercialeater.views.users.UserPage;
 
 import javax.swing.*;
 import java.awt.*;

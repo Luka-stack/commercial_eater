@@ -1,4 +1,4 @@
-package com.commercialeater.views;
+package com.commercialeater.views.users;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.User;
@@ -236,7 +236,9 @@ public class UserDetailPage extends JPanel {
         topUpButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                BalancePopup newBalance = new BalancePopup(Main.mainWindow);
+                balanceLabel.setText(newBalance.getBalance() + " zl");
+                newBalance = null;
             }
 
             @Override

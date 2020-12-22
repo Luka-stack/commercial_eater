@@ -29,9 +29,9 @@ public class Main {
         }
 
         // TMP
-        //openMainApplication("New");
+        openMainApplication("New");
 
-        openLoginWindow();
+        //openLoginWindow();
     }
 
     public static void openMainApplication(String email) {

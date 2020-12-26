@@ -1,7 +1,6 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
-import com.commercialeater.utilities.UIUtilities;
 import com.commercialeater.views.restaurants.RestaurantDetailPage;
 import com.commercialeater.views.restaurants.RestaurantPage;
 import com.commercialeater.views.users.UserDetailPage;
@@ -88,13 +87,13 @@ public class MainWindow extends JFrame {
         setMaximumSize(new Dimension(1150, 620));
         setMinimumSize(new Dimension(1150, 620));
         setPreferredSize(new Dimension(1150, 620));
-        setResizable(true);
+        setResizable(false);
 
-        background.setBackground(new Color(238, 233, 212));
+        background.setBackground(Main.uiUtilities.getMainColor());
 
-        sidebar.setBackground(new Color(153, 194, 93));
+        sidebar.setBackground(Main.uiUtilities.getMainColor());
 
-        restaurantsButton.setBackground(new Color(153, 194, 93));
+        restaurantsButton.setBackground(Main.uiUtilities.getMainColor());
         restaurantsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -103,12 +102,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(restaurantsButton);
+                Main.uiUtilities.buttonHoverEntered(restaurantsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(restaurantsButton);
+                Main.uiUtilities.buttonHoverExited(restaurantsButton);
             }
         });
 
@@ -116,7 +115,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/restauratns.png"))));
 
         jLabel8.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new Color(255, 255, 255));
+        jLabel8.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel8.setText("Restaurants");
 
         GroupLayout restaurantsButtonLayout = new GroupLayout(restaurantsButton);
@@ -139,7 +138,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        usersButton.setBackground(new Color(153, 194, 93));
+        usersButton.setBackground(Main.uiUtilities.getMainColor());
         usersButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -148,12 +147,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(usersButton);
+                Main.uiUtilities.buttonHoverEntered(usersButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(usersButton);
+                Main.uiUtilities.buttonHoverExited(usersButton);
             }
         });
 
@@ -161,7 +160,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/users.png"))));
 
         jLabel9.setFont(new Font("Segoe UI", 1, 18));
-        jLabel9.setForeground(new Color(255, 255, 255));
+        jLabel9.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel9.setText("Users");
 
         GroupLayout usersButtonLayout = new GroupLayout(usersButton);
@@ -184,7 +183,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        transactionsButton.setBackground(new Color(153, 194, 93));
+        transactionsButton.setBackground(Main.uiUtilities.getMainColor());
         transactionsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -193,12 +192,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(transactionsButton);
+                Main.uiUtilities.buttonHoverEntered(transactionsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(transactionsButton);
+                Main.uiUtilities.buttonHoverExited(transactionsButton);
             }
         });
 
@@ -206,7 +205,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/payments.png"))));
 
         jLabel10.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(new Color(255, 255, 255));
+        jLabel10.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel10.setText("Transactions");
 
         GroupLayout transactionsButtonLayout = new GroupLayout(transactionsButton);
@@ -229,7 +228,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        settingsButton.setBackground(new Color(153, 194, 93));
+        settingsButton.setBackground(Main.uiUtilities.getMainColor());
         settingsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -238,20 +237,20 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(settingsButton);
+                Main.uiUtilities.buttonHoverEntered(settingsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(settingsButton);
+                Main.uiUtilities.buttonHoverExited(settingsButton);
             }
         });
 
         jLabel6.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/settings.png"))));
 
-        jLabel11.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new Color(255, 255, 255));
+        jLabel11.setFont(new Font("Segoe UI", 1, 18));
+        jLabel11.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel11.setText("Settings");
 
         GroupLayout settingsButtonLayout = new GroupLayout(settingsButton);
@@ -274,7 +273,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        logOutButton.setBackground(new Color(153, 194, 93));
+        logOutButton.setBackground(Main.uiUtilities.getMainColor());
         logOutButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -283,12 +282,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(logOutButton);
+                Main.uiUtilities.buttonHoverEntered(logOutButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(logOutButton);
+                Main.uiUtilities.buttonHoverExited(logOutButton);
             }
         });
 
@@ -296,7 +295,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/logout.png"))));
 
         jLabel12.setFont(new Font("Segoe UI", 1, 18));
-        jLabel12.setForeground(new Color(255, 255, 255));
+        jLabel12.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel12.setText("Log Out");
 
         GroupLayout logOutButtonLayout = new GroupLayout(logOutButton);
@@ -392,10 +391,12 @@ public class MainWindow extends JFrame {
 
         JMenuItem newRestaurantMenuItem = new JMenuItem("Restaurant");
         newRestaurantMenuItem.addActionListener(e -> loadRestaurantCreationPage(-1L) );
+        newRestaurantMenuItem.setAccelerator(KeyStroke.getKeyStroke("control R"));
         newEntityMenu.add(newRestaurantMenuItem);
 
         JMenuItem newUserMenuItem = new JMenuItem("User");
         newUserMenuItem.addActionListener(e -> loadUsersCreationPage(-1L) );
+        newUserMenuItem.setAccelerator(KeyStroke.getKeyStroke("control U"));
         newEntityMenu.add(newUserMenuItem);
 
         jMenuBar1.add(newEntityMenu);

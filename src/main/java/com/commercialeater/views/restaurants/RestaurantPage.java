@@ -70,10 +70,9 @@ public class RestaurantPage extends JPanel {
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
 
-        background.setBackground(new Color(255, 255, 255));
-        background.setForeground(new Color(255, 255, 255));
+        background.setBackground(Main.uiUtilities.getBackground());
 
-        jPanel3.setBackground(new Color(255, 255, 255));
+        jPanel3.setBackground(Main.uiUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 18));
         jLabel2.setText("Filters");
@@ -82,6 +81,7 @@ public class RestaurantPage extends JPanel {
         jLabel3.setText("Name:");
 
         nameFilter.setFont(new Font("Segoe UI", 0, 14));
+        nameFilter.setBackground(Main.uiUtilities.getBackground());
         nameFilter.setText("All");
         nameFilter.setBorder(null);
 
@@ -89,10 +89,11 @@ public class RestaurantPage extends JPanel {
         jLabel4.setText("Address:");
 
         addressFilter.setFont(new Font("Segoe UI", 0, 14));
+        addressFilter.setBackground(Main.uiUtilities.getBackground());
         addressFilter.setText("All");
         addressFilter.setBorder(null);
 
-        searchButton.setBackground(new Color(153, 194, 93));
+        searchButton.setBackground(Main.uiUtilities.getButtonsColor());
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,18 +103,17 @@ public class RestaurantPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(searchButton);
+                Main.uiUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(searchButton);
+                Main.uiUtilities.buttonHoverExited(searchButton);
             }
         });
 
-        jLabel5.setBackground(new Color(255, 255, 255));
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
-        jLabel5.setForeground(new Color(255, 255, 255));
+        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("Search");
 
@@ -128,7 +128,7 @@ public class RestaurantPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
         );
 
-        clearButton.setBackground(new Color(153, 194, 93));
+        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -136,18 +136,17 @@ public class RestaurantPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(clearButton);
+                Main.uiUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(clearButton);
+                Main.uiUtilities.buttonHoverExited(clearButton);
             }
         });
 
-        jLabel1.setBackground(new Color(255, 255, 255));
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
-        jLabel1.setForeground(new Color(255, 255, 255));
+        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("Clear");
 
@@ -162,11 +161,11 @@ public class RestaurantPage extends JPanel {
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(new Color(153, 194, 93));
-        jSeparator1.setForeground(new Color(153, 194, 93));
+        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
 
-        jSeparator2.setBackground(new Color(153, 194, 93));
-        jSeparator2.setForeground(new Color(153, 194, 93));
+        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
 
         GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -177,7 +176,7 @@ public class RestaurantPage extends JPanel {
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel3)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(nameFilter, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
@@ -185,7 +184,7 @@ public class RestaurantPage extends JPanel {
                                                 .addGap(191, 191, 191)))
                                 .addGap(31, 31, 31)
                                 .addComponent(jLabel4)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel3Layout.createSequentialGroup()
@@ -199,7 +198,7 @@ public class RestaurantPage extends JPanel {
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                //.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(jSeparator2, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -229,15 +228,15 @@ public class RestaurantPage extends JPanel {
         popupMenu.add(popupItemEdit);
         popupMenu.add(popupItemRemove);
 
-        jScrollPane1.setBackground(new Color(255, 255, 255));
-        jScrollPane1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        jScrollPane1.setBackground(Main.uiUtilities.getBackground());
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
 
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable1.getTableHeader().setBackground(new Color(255, 255, 255));
-        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        jTable1.getTableHeader().setBackground(Main.uiUtilities.getBackground());
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
@@ -254,10 +253,11 @@ public class RestaurantPage extends JPanel {
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
         jTable1.setFocusable(false);
-        jTable1.setGridColor(new Color(153, 194, 93));
+        jTable1.setGridColor(Main.uiUtilities.getMainColor());
+        jTable1.setBackground(Main.uiUtilities.getBackground());
         jTable1.setIntercellSpacing(new Dimension(0, 0));
         jTable1.setRowHeight(40);
-        jTable1.setSelectionBackground(new Color(153, 194, 93));
+        jTable1.setSelectionBackground(Main.uiUtilities.getMainColor());
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);

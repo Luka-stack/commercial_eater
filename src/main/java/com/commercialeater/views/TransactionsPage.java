@@ -78,10 +78,10 @@ public class TransactionsPage extends JPanel {
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
 
-        background.setBackground(new Color(255, 255, 255));
-        background.setForeground(new Color(255, 255, 255));
+        background.setBackground(Main.uiUtilities.getBackground());
+        //background.setForeground(new Color(255, 255, 255));
 
-        jPanel3.setBackground(new Color(255, 255, 255));
+        jPanel3.setBackground(Main.uiUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 18));
         jLabel2.setText("Filters");
@@ -92,19 +92,29 @@ public class TransactionsPage extends JPanel {
         DatePickerSettings startDateSettings = new DatePickerSettings();
         startDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
         startDateFilter = new DatePicker(startDateSettings);
-        startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        startDateFilter.setBackground(Main.uiUtilities.getBackground());
+        startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        startDateFilter.getComponentDateTextField().setBackground(Main.uiUtilities.getBackground());
         startDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
+        startDateFilter.getComponentToggleCalendarButton().setBackground(Main.uiUtilities.getMainColor());
+        startDateFilter.getComponentToggleCalendarButton().setBorderPainted(false);
+        startDateFilter.getComponentToggleCalendarButton().setOpaque(true);
+
 
         DatePickerSettings endDateSettings = new DatePickerSettings();
         endDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
         endDateFilter = new DatePicker(endDateSettings);
-        endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        endDateFilter.getComponentDateTextField().setBackground(Main.uiUtilities.getBackground());
         endDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
+        endDateFilter.getComponentToggleCalendarButton().setBackground(Main.uiUtilities.getMainColor());
+        endDateFilter.getComponentToggleCalendarButton().setBorderPainted(false);
+        endDateFilter.getComponentToggleCalendarButton().setOpaque(true);
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("End Date");
 
-        searchButton.setBackground(new Color(153, 194, 93));
+        searchButton.setBackground(Main.uiUtilities.getButtonsColor());
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -114,20 +124,19 @@ public class TransactionsPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(searchButton);
+                Main.uiUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(searchButton);
+                Main.uiUtilities.buttonHoverExited(searchButton);
             }
         });
 
-        jLabel5.setBackground(new Color(255, 255, 255));
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
-        jLabel5.setForeground(new Color(255, 255, 255));
+        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel5.setText("Search");
+        jLabel5.setText("SEARCH");
 
         GroupLayout searchButtonLayout = new GroupLayout(searchButton);
         searchButton.setLayout(searchButtonLayout);
@@ -140,7 +149,7 @@ public class TransactionsPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
         );
 
-        clearButton.setBackground(new Color(153, 194, 93));
+        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -150,20 +159,19 @@ public class TransactionsPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(clearButton);
+                Main.uiUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(clearButton);
+                Main.uiUtilities.buttonHoverExited(clearButton);
             }
         });
 
-        jLabel1.setBackground(new Color(255, 255, 255));
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
-        jLabel1.setForeground(new Color(255, 255, 255));
+        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel1.setText("Clear");
+        jLabel1.setText("CLEAR");
 
         GroupLayout clearButtonLayout = new GroupLayout(clearButton);
         clearButton.setLayout(clearButtonLayout);
@@ -176,33 +184,36 @@ public class TransactionsPage extends JPanel {
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(new Color(153, 194, 93));
-        jSeparator1.setForeground(new Color(153, 194, 93));
+        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
 
-        jSeparator2.setBackground(new Color(153, 194, 93));
-        jSeparator2.setForeground(new Color(153, 194, 93));
+        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
 
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
         jLabel6.setText("User");
 
         userFilter.setFont(new Font("Segoe UI", 0, 14));
+        userFilter.setBackground(Main.uiUtilities.getBackground());
+        userFilter.setOpaque(false);
         userFilter.setText("All");
         userFilter.setBorder(null);
 
-        jSeparator3.setBackground(new Color(153, 194, 93));
-        jSeparator3.setForeground(new Color(153, 194, 93));
+        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
 
         jLabel7.setFont(new Font("Segoe UI", 0, 14));
         jLabel7.setText("Transaction");
 
-        jSeparator4.setBackground(new Color(153, 194, 93));
-        jSeparator4.setForeground(new Color(153, 194, 93));
+        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
 
         transactionFilter.setEditable(false);
         transactionFilter.setFont(new Font("Segoe UI", 0, 14));
+        transactionFilter.setBackground(Main.uiUtilities.getBackground());
         transactionFilter.setMaximumRowCount(3);
         transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Top_Up", "Order" }));
-        transactionFilter.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        transactionFilter.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
         transactionFilter.setMinimumSize(new Dimension(72, 25));
 
         transactionFilter.setUI(new CustomComboBoxUI());
@@ -280,24 +291,24 @@ public class TransactionsPage extends JPanel {
                                                                                         .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                                                                         .addComponent(clearButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                                                                .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+                                                                                .addComponent(transactionFilter, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                                                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                                                 .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))))
                                 .addContainerGap())
         );
 
-        jScrollPane1.setBackground(new Color(255, 255, 255));
-        jScrollPane1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        jScrollPane1.setBackground(Main.uiUtilities.getBackground());
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
 
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable1.getTableHeader().setBackground(new Color(255, 255, 255));
-        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        jTable1.getTableHeader().setBackground(Main.uiUtilities.getBackground());
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
@@ -312,10 +323,11 @@ public class TransactionsPage extends JPanel {
         jTable1.setDefaultEditor(Object.class, null);
 
         jTable1.setFocusable(false);
-        jTable1.setGridColor(new Color(153, 194, 93));
+        jTable1.setBackground(Main.uiUtilities.getBackground());
+        jTable1.setGridColor(Main.uiUtilities.getMainColor());
         jTable1.setIntercellSpacing(new Dimension(0,0));
         jTable1.setRowHeight(40);
-        jTable1.setSelectionBackground(new Color(153, 194, 93));
+        jTable1.setSelectionBackground(Main.uiUtilities.getMainColor());
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);

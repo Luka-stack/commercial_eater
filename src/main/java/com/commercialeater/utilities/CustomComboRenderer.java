@@ -1,5 +1,7 @@
 package com.commercialeater.utilities;
 
+import com.commercialeater.Main;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
@@ -15,15 +17,12 @@ public class CustomComboRenderer extends BasicComboBoxRenderer {
                                                   boolean isSelected, boolean cellHasFocus) {
 
         setText(value.toString());
-        if(isSelected) {
-            setBackground(new Color(153, 194, 93));
+        if (isSelected) {
+            setBackground(Main.uiUtilities.getMainColor());
+            list.setSelectionBackground(Main.uiUtilities.getBackground());
         }
         else {
-            setBackground(Color.white);
-        }
-
-        if (cellHasFocus) {
-            setBackground(Color.white);
+            setBackground(Main.uiUtilities.getBackground());
         }
 
         return this;

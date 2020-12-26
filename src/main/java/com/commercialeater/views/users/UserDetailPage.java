@@ -2,8 +2,8 @@ package com.commercialeater.views.users;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.User;
+import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
-import com.commercialeater.utilities.UIUtilities;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.swing.*;
@@ -108,10 +108,9 @@ public class UserDetailPage extends JPanel {
         saveButton = new JPanel();
         jLabel6 = new JLabel();
 
-        background.setBackground(new Color(255, 255, 255));
-        background.setForeground(new Color(255, 255, 255));
+        background.setBackground(Main.uiUtilities.getBackground());
 
-        jPanel1.setBackground(new Color(255, 255, 255));
+        jPanel1.setBackground(Main.uiUtilities.getBackground());
 
         titleLabel.setFont(new Font("Segoe UI", 1, 24));
         titleLabel.setText("Editing Restaurant");
@@ -133,65 +132,72 @@ public class UserDetailPage extends JPanel {
                                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new Color(255, 255, 255));
+        jPanel2.setBackground(Main.uiUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Email");
 
         emailField.setFont(new Font("Segoe UI", 0, 14));
+        emailField.setBackground(Main.uiUtilities.getBackground());
         emailField.setBorder(null);
 
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Password");
 
-        emailFieldSeparator.setBackground(new Color(153, 194, 93));
-        emailFieldSeparator.setForeground(new Color(153, 194, 93));
+        emailFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
+        emailFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
 
-        roleField.setEditable(true);
+        roleField.setEditable(false);
         roleField.setFont(new Font("Segoe UI", 0, 14));
         roleField.setMaximumRowCount(3);
         roleField.setModel(new DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         roleField.setSelectedIndex(1);
-        roleField.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        roleField.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        roleField.setBackground(Main.uiUtilities.getBackground());
 
-        jSeparator4.setBackground(new Color(153, 194, 93));
-        jSeparator4.setForeground(new Color(153, 194, 93));
+        roleField.setUI(new CustomComboBoxUI());
+
+        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
         jSeparator4.setOrientation(SwingConstants.VERTICAL);
 
         jLabel5.setFont(new Font("Segoe UI", 0, 14));
         jLabel5.setText("First Name");
 
         firstNameField.setFont(new Font("Segoe UI", 0, 14));
+        firstNameField.setBackground(Main.uiUtilities.getBackground());
         firstNameField.setBorder(null);
 
-        firstNameSeparator.setBackground(new Color(153, 194, 93));
-        firstNameSeparator.setForeground(new Color(153, 194, 93));
+        firstNameSeparator.setBackground(Main.uiUtilities.getMainColor());
+        firstNameSeparator.setForeground(Main.uiUtilities.getMainColor());
 
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("City");
 
         cityField.setFont(new Font("Segoe UI", 0, 14));
+        cityField.setBackground(Main.uiUtilities.getBackground());
         cityField.setBorder(null);
 
-        cityFieldSeparator.setBackground(new Color(153, 194, 93));
-        cityFieldSeparator.setForeground(new Color(153, 194, 93));
+        cityFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
+        cityFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
 
         jLabel9.setFont(new Font("Segoe UI", 0, 14));
         jLabel9.setText("Last Name");
 
         lastNameField.setFont(new Font("Segoe UI", 0, 14));
+        lastNameField.setBackground(Main.uiUtilities.getBackground());
         lastNameField.setBorder(null);
 
-        lastNameSeparator.setBackground(new Color(153, 194, 93));
-        lastNameSeparator.setForeground(new Color(153, 194, 93));
+        lastNameSeparator.setBackground(Main.uiUtilities.getMainColor());
+        lastNameSeparator.setForeground(Main.uiUtilities.getMainColor());
 
         jLabel10.setFont(new Font("Segoe UI", 0, 14));
         jLabel10.setText("Role");
 
-        jSeparator8.setBackground(new Color(153, 194, 93));
-        jSeparator8.setForeground(new Color(153, 194, 93));
+        jSeparator8.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator8.setForeground(Main.uiUtilities.getMainColor());
 
-        resetPasswordButton.setBackground(new Color(153, 194, 93));
+        resetPasswordButton.setBackground(Main.uiUtilities.getButtonsColor());
         resetPasswordButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -200,17 +206,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(resetPasswordButton);
+                Main.uiUtilities.buttonHoverEntered(resetPasswordButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(resetPasswordButton);
+                Main.uiUtilities.buttonHoverExited(resetPasswordButton);
             }
         });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 14));
-        jLabel1.setForeground(new Color(255, 255, 255));
+        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("Reset Password");
 
@@ -231,7 +237,7 @@ public class UserDetailPage extends JPanel {
         balanceLabel.setFont(new Font("Segoe UI", 0, 14));
         balanceLabel.setText("0 zl");
 
-        topUpButton.setBackground(new Color(153, 194, 93));
+        topUpButton.setBackground(Main.uiUtilities.getButtonsColor());
         topUpButton.setPreferredSize(new Dimension(172, 25));
         topUpButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -243,17 +249,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(topUpButton);
+                Main.uiUtilities.buttonHoverEntered(topUpButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(topUpButton);
+                Main.uiUtilities.buttonHoverExited(topUpButton);
             }
         });
 
         jLabel12.setFont(new Font("Segoe UI", 1, 14));
-        jLabel12.setForeground(new Color(255, 255, 255));
+        jLabel12.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel12.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel12.setText("Top Up");
 
@@ -362,9 +368,9 @@ public class UserDetailPage extends JPanel {
                                 .addGap(34, 34, 34))
         );
 
-        jPanel3.setBackground(new Color(244, 244, 244));
+        jPanel3.setBackground(Main.uiUtilities.getBackground());
 
-        cancelButton.setBackground(new Color(153, 194, 93));
+        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
         cancelButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -374,19 +380,19 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(cancelButton);
+                Main.uiUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(cancelButton);
+                Main.uiUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14));
-        jLabel7.setForeground(new Color(255, 255, 255));
+        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel7.setText("Cancel");
+        jLabel7.setText("CANCEL");
 
         GroupLayout cancelButtonLayout = new GroupLayout(cancelButton);
         cancelButton.setLayout(cancelButtonLayout);
@@ -399,7 +405,7 @@ public class UserDetailPage extends JPanel {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        saveButton.setBackground(new Color(153, 194, 93));
+        saveButton.setBackground(Main.uiUtilities.getButtonsColor());
         saveButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -409,19 +415,19 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(saveButton);
+                Main.uiUtilities.buttonHoverEntered(saveButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(saveButton);
+                Main.uiUtilities.buttonHoverExited(saveButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
-        jLabel6.setForeground(new Color(255, 255, 255));
+        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel6.setText("Save");
+        jLabel6.setText("SAVE");
 
         GroupLayout saveButtonLayout = new GroupLayout(saveButton);
         saveButton.setLayout(saveButtonLayout);

@@ -1,5 +1,6 @@
 package com.commercialeater;
 
+import com.commercialeater.utilities.UIUtilities;
 import com.commercialeater.views.LoginWindow;
 import com.commercialeater.views.MainWindow;
 import org.apache.log4j.Logger;
@@ -15,18 +16,19 @@ public class Main {
 
     public static Logger logger = Logger.getLogger(Main.class);
     public static MainWindow mainWindow;
+    public static UIUtilities uiUtilities;
 
     public static void main(String[] args) {
 
         DOMConfigurator.configure("D:\\New folder\\jv\\commercial_eater\\config\\log4jconfig.xml");
+        uiUtilities = new UIUtilities();
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             UIManager.put("ComboBox.selectionBackground", new ColorUIResource(Color.WHITE));
             UIManager.put("ComboBox.selectionForeground", new ColorUIResource(Color.BLACK));
         }
-        catch (Exception evt) {
-        }
+        catch (Exception evt) { }
 
         // TMP
         openMainApplication("New");

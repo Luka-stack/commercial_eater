@@ -2,7 +2,6 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.User;
-import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -52,14 +51,14 @@ public class LoginWindow extends JFrame {
         errorMessageLabel = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new Color(243, 243, 244));
+        System.out.println(Main.uiUtilities.getBackground());
         setMaximumSize(new Dimension(700, 450));
         setMinimumSize(new Dimension(700, 450));
         ///setUndecorated(true);
         setPreferredSize(new Dimension(700, 450));
         setResizable(false);
 
-        jPanel1.setBackground(new Color(153, 194, 93));
+        jPanel1.setBackground(Main.uiUtilities.getMainColor());
         jLabel1.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/new_logo.png"))));
 
@@ -80,30 +79,30 @@ public class LoginWindow extends JFrame {
                                 .addGap(50, 50, 50))
         );
 
-        jPanel2.setBackground(new Color(238, 233, 212));
+        jPanel2.setBackground(Main.uiUtilities.getBackground());
         jPanel2.setPreferredSize(new Dimension(400, 262));
 
         jLabel2.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/padlock.png"))));
 
-        jLabel3.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setForeground(new Color(102, 83, 51));
+        jLabel3.setFont(new Font("Segoe UI", 0, 18));
+        jLabel3.setForeground(Main.uiUtilities.getMainTextColor());
         jLabel3.setText("Email:");
 
-        jLabel4.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setForeground(new Color(102, 83, 51));
+        jLabel4.setFont(new Font("Segoe UI", 0, 18));
+        jLabel4.setForeground(Main.uiUtilities.getMainTextColor());
         jLabel4.setText("Password:");
 
-        passwdPasswordField.setBackground(new Color(238, 233, 212));
-        passwdPasswordField.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        passwdPasswordField.setBackground(Main.uiUtilities.getBackground());
+        passwdPasswordField.setFont(new Font("Segoe UI", 0, 14));
         passwdPasswordField.setBorder(null);
 
-        emailTextField.setBackground(new Color(238, 233, 212));
-        emailTextField.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        emailTextField.setBackground(Main.uiUtilities.getBackground());
+        emailTextField.setFont(new Font("Segoe UI", 0, 14));
         emailTextField.setBorder(null);
 
-        cancelButton.setBackground(new Color(153, 194, 93));
-        cancelButton.setBorder(new LineBorder(new java.awt.Color(153, 194, 93), 1, true));
+        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
+        cancelButton.setBorder(new LineBorder(Main.uiUtilities.getButtonsColor(), 1, true));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -112,17 +111,17 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(cancelButton);
+                Main.uiUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(cancelButton);
+                Main.uiUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new Color(249, 246, 241));
+        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel7.setText("Cancel");
 
@@ -137,8 +136,8 @@ public class LoginWindow extends JFrame {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        signInButton.setBackground(new Color(153, 194, 93));
-        signInButton.setBorder(new LineBorder(new Color(153, 194, 93), 1, true));
+        signInButton.setBackground(Main.uiUtilities.getButtonsColor());
+        signInButton.setBorder(new LineBorder(Main.uiUtilities.getButtonsColor(), 1, true));
         signInButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -147,17 +146,17 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                UIUtilities.buttonHoverEntered(signInButton);
+                Main.uiUtilities.buttonHoverEntered(signInButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                UIUtilities.buttonHoverExited(signInButton);
+                Main.uiUtilities.buttonHoverExited(signInButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new Color(249, 246, 241));
+        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("Sign In");
 
@@ -172,11 +171,11 @@ public class LoginWindow extends JFrame {
                         .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(new Color(153, 194, 93));
-        jSeparator1.setForeground(new Color(153, 194, 93));
+        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
 
-        jSeparator2.setBackground(new Color(153, 194, 93));
-        jSeparator2.setForeground(new Color(153, 194, 93));
+        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
+        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
 
         errorMessageLabel.setFont(new Font("Segoe UI", 0, 12));
         errorMessageLabel.setForeground(new Color(153, 0, 0));

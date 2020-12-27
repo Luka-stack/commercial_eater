@@ -45,8 +45,13 @@ public class MainWindow extends JFrame {
     private JMenu newEntityMenu;
     private JMenuBar jMenuBar1;
 
-    public MainWindow() {
+    public MainWindow(boolean redraw) {
+
         initComponents();
+
+        if (redraw) {
+            loadSettingsView();
+        }
     }
 
     private void initComponents() {

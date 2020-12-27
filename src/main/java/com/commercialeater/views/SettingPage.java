@@ -258,7 +258,7 @@ public class SettingPage extends JPanel {
         buttonColorSave.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                validateColorFields();
+                saveColorConfig();
             }
 
             @Override
@@ -486,60 +486,73 @@ public class SettingPage extends JPanel {
         buttonsTextColor.setText(Main.uiUtilities.getButtonsTextColorHEX());
     }
 
+    private void saveColorConfig() {
+
+        if (validateColorFields()) {
+            Main.uiUtilities.saveConfig(mainColor.getText(), mainTextColor.getText(),
+                    buttonsColor.getText(), buttonsTextColor.getText());
+
+            Main.redrawWindowWithNewStyle();
+        }
+        else {
+            Main.mainWindow.setBottomInformation("Wrong Field(s) inputs");
+        }
+    }
+
     private boolean validateColorFields() {
 
         boolean valid = true;
 
-        if (!FieldValidator.validateHEXColor(mainColor.getText()) ||
-            !FieldValidator.validateRGBColor(mainColor.getText()))
+        if (FieldValidator.validateHEXColor(mainColor.getText()) ||
+            FieldValidator.validateRGBColor(mainColor.getText()))
         {
+            mainColorSeparator.setBackground(Main.uiUtilities.getMainColor());
+            mainColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        }
+        else {
             mainColorSeparator.setBackground(new Color(153, 0, 0));
             mainColorSeparator.setForeground(new Color(153, 0, 0));
 
             valid = false;
         }
-        else {
-            mainColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            mainColorSeparator.setForeground(Main.uiUtilities.getMainColor());
-        }
 
-        if (!FieldValidator.validateHEXColor(mainTextColor.getText()) ||
-                !FieldValidator.validateRGBColor(mainTextColor.getText()))
+        if (FieldValidator.validateHEXColor(mainTextColor.getText()) ||
+            FieldValidator.validateRGBColor(mainTextColor.getText()))
         {
+            mainTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
+            mainTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        }
+        else {
             mainTextColorSeparator.setBackground(new Color(153, 0, 0));
             mainTextColorSeparator.setForeground(new Color(153, 0, 0));
 
             valid = false;
         }
-        else {
-            mainTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            mainTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
-        }
 
-        if (!FieldValidator.validateHEXColor(buttonsColor.getText()) ||
-                !FieldValidator.validateRGBColor(buttonsColor.getText()))
+        if (FieldValidator.validateHEXColor(buttonsColor.getText()) ||
+            FieldValidator.validateRGBColor(buttonsColor.getText()))
         {
+            buttonsColorSeparator.setBackground(Main.uiUtilities.getMainColor());
+            buttonsColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        }
+        else {
             buttonsColorSeparator.setBackground(new Color(153, 0, 0));
             buttonsColorSeparator.setForeground(new Color(153, 0, 0));
 
             valid = false;
         }
-        else {
-            buttonsColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            buttonsColorSeparator.setForeground(Main.uiUtilities.getMainColor());
-        }
 
-        if (!FieldValidator.validateHEXColor(buttonsTextColor.getText()) ||
-                !FieldValidator.validateRGBColor(buttonsTextColor.getText()))
+        if (FieldValidator.validateHEXColor(buttonsTextColor.getText()) ||
+            FieldValidator.validateRGBColor(buttonsTextColor.getText()))
         {
+            buttonsTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
+            buttonsTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        }
+        else {
             buttonsTextColorSeparator.setBackground(new Color(153, 0, 0));
             buttonsTextColorSeparator.setForeground(new Color(153, 0, 0));
 
             valid = false;
-        }
-        else {
-            buttonsTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            buttonsTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
         }
 
         return valid;

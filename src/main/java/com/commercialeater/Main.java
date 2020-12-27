@@ -5,8 +5,6 @@ import com.commercialeater.views.LoginWindow;
 import com.commercialeater.views.MainWindow;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -38,10 +36,20 @@ public class Main {
 
     public static void openMainApplication(String email) {
 
-        mainWindow = new MainWindow();
+        mainWindow = new MainWindow(false);
         mainWindow.setVisible(true);
         mainWindow.setBottomInformation("Logged as " + email);
         logger.debug("User with email " + email + " logged to application");
+    }
+
+    public static void redrawWindowWithNewStyle() {
+
+        uiUtilities = new UIUtilities();
+
+        mainWindow.dispose();
+        mainWindow = new MainWindow(true);
+        mainWindow.setVisible(true);
+        mainWindow.setBottomInformation("Colors changed");
     }
 
     public static void openLoginWindow() {

@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class UIUtilities {
@@ -90,6 +91,34 @@ public class UIUtilities {
 
     public String getButtonsTextColorHEX() {
         return rgb2Hex(buttonsTextColor.getRed(), buttonsTextColor.getGreen(), buttonsTextColor.getBlue());
+    }
+
+    public String getButtonsHoverColorHex() {
+        return rgb2Hex(buttonsHoverColor.getRed(), buttonsHoverColor.getGreen(), buttonsHoverColor.getBlue());
+    }
+
+    public String getBackgroundColorHex() {
+        return rgb2Hex(background.getRed(), background.getGreen(), background.getBlue());
+    }
+
+    public void saveConfig(String mainColor, String mainTextColor, String buttonsColor, String buttonsTextColor) {
+
+        try (FileWriter writer = new FileWriter(stylePath)) {
+
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("background", getBackgroundColorHex());
+            jsonObject.put("buttons_hover_color", getButtonsHoverColorHex());
+
+            jsonObject.put("main_color", mainColor);
+            jsonObject.put("main_text_color", mainTextColor);
+            jsonObject.put("buttons_color", buttonsColor);
+            jsonObject.put("buttons_text_color", buttonsTextColor);
+            writer.write(jsonObject.toJSONString());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String rgb2Hex(int red, int green, int blue) {

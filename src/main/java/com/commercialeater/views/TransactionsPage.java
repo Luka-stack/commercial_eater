@@ -1,10 +1,8 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
-import com.commercialeater.models.Restaurant;
 import com.commercialeater.models.Transaction;
 import com.commercialeater.utilities.CustomComboBoxUI;
-import com.commercialeater.utilities.UIUtilities;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
@@ -79,7 +77,6 @@ public class TransactionsPage extends JPanel {
         tableModel = new DefaultTableModel();
 
         background.setBackground(Main.uiUtilities.getBackground());
-        //background.setForeground(new Color(255, 255, 255));
 
         jPanel3.setBackground(Main.uiUtilities.getBackground());
 
@@ -91,6 +88,10 @@ public class TransactionsPage extends JPanel {
 
         DatePickerSettings startDateSettings = new DatePickerSettings();
         startDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        startDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.uiUtilities.getMainColor());
+        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.uiUtilities.getBackground());
+        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.uiUtilities.getBackground());
+
         startDateFilter = new DatePicker(startDateSettings);
         startDateFilter.setBackground(Main.uiUtilities.getBackground());
         startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
@@ -100,9 +101,12 @@ public class TransactionsPage extends JPanel {
         startDateFilter.getComponentToggleCalendarButton().setBorderPainted(false);
         startDateFilter.getComponentToggleCalendarButton().setOpaque(true);
 
-
         DatePickerSettings endDateSettings = new DatePickerSettings();
         endDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        endDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.uiUtilities.getMainColor());
+        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.uiUtilities.getBackground());
+        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.uiUtilities.getBackground());
+
         endDateFilter = new DatePicker(endDateSettings);
         endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
         endDateFilter.getComponentDateTextField().setBackground(Main.uiUtilities.getBackground());

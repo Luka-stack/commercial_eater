@@ -324,7 +324,8 @@ public class MainWindow extends JFrame {
         );
 
         sidebarLogo.setIcon(new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("imgs/name2.png"))));
+                getClass().getClassLoader().getResource("imgs/transparent_name.png"))));
+                //getClass().getClassLoader().getResource("imgs/name2.png"))));
 
         GroupLayout sidebarLayout = new GroupLayout(sidebar);
         sidebar.setLayout(sidebarLayout);

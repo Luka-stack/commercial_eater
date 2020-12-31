@@ -60,7 +60,8 @@ public class LoginWindow extends JFrame {
 
         jPanel1.setBackground(Main.uiUtilities.getMainColor());
         jLabel1.setIcon(new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("imgs/new_logo.png"))));
+                getClass().getClassLoader().getResource("imgs/transparent_logo.png"))));
+                //getClass().getClassLoader().getResource("imgs/new_logo.png"))));
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,7 +84,8 @@ public class LoginWindow extends JFrame {
         jPanel2.setPreferredSize(new Dimension(400, 262));
 
         jLabel2.setIcon(new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("imgs/padlock.png"))));
+                getClass().getClassLoader().getResource("imgs/new_padlock.png"))));
+//                getClass().getClassLoader().getResource("imgs/padlock.png"))));
 
         jLabel3.setFont(new Font("Segoe UI", 0, 18));
         jLabel3.setForeground(Main.uiUtilities.getMainTextColor());

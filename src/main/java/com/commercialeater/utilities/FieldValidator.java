@@ -11,9 +11,13 @@ public class FieldValidator {
     public static final Pattern VALID_DB_URL_REGEX =
             Pattern.compile("[A-Z]+:[A-Z]+:\\/\\/[A-Z0-9.]+:[0-9]{1,5}\\/[A-Z0-9._]+", Pattern.CASE_INSENSITIVE);
 
-    public static final Pattern VALID_HEX_COLOR = Pattern.compile("#[A-Z0-9]{6}", Pattern.CASE_INSENSITIVE);
+    public static final Pattern VALID_MONEY_REGEX = Pattern.compile("^[1-9]+[0-9]*[,.]?[0-9]*");
 
-    public static final Pattern VALID_RGB_COLOR =
+    public static final Pattern VALID_MONEY_FILTER_REGEX = Pattern.compile("[<=>]?\\d+(.\\d{1,2})?");
+
+    public static final Pattern VALID_HEX_COLOR_REGEX = Pattern.compile("#[A-Z0-9]{6}", Pattern.CASE_INSENSITIVE);
+
+    public static final Pattern VALID_RGB_COLOR_REGEX =
             Pattern.compile("\\s*\\(?\\s*[0-9]{1,3}\\s*,\\s*[0-9]{1,3}\\s*,\\s*[0-9]{1,3}\\s*\\)?\\s*");
 
     public static boolean validateEmail(String emailStr) {
@@ -27,12 +31,22 @@ public class FieldValidator {
     }
 
     public static boolean validateRGBColor(String rgbColor) {
-        Matcher matcher = VALID_RGB_COLOR.matcher(rgbColor);
+        Matcher matcher = VALID_RGB_COLOR_REGEX.matcher(rgbColor);
         return matcher.find();
     }
 
     public static boolean validateHEXColor(String hexColor) {
-        Matcher matcher = VALID_HEX_COLOR.matcher(hexColor);
+        Matcher matcher = VALID_HEX_COLOR_REGEX.matcher(hexColor);
+        return matcher.find();
+    }
+
+    public static boolean validateMoneyFilter(String money) {
+        Matcher matcher = VALID_MONEY_FILTER_REGEX.matcher(money);
+        return matcher.find();
+    }
+
+    public static boolean validateMoney(String money) {
+        Matcher matcher = VALID_MONEY_REGEX.matcher(money);
         return matcher.find();
     }
 }

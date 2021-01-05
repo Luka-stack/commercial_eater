@@ -1,3 +1,16 @@
+DROP TABLE IF EXISTS `cities`;
+
+CREATE TABLE IF NOT EXISTS `cities` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(20) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `cities` (`name` ASC);
+
+------------------------------------------------------------------
+
 DROP TABLE IF EXISTS `users` ;
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -7,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  `city` VARCHAR(45) NOT NULL,
-  `balance` DECIMAL NOT NULL,
+  `city` INT NOT NULL,
+  `balance` DECIMAL(10, 2) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -21,12 +34,32 @@ DROP TABLE IF EXISTS `restaurants`;
 CREATE TABLE IF NOT EXISTS `restaurants` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
-    `description` VARCHAR(50),
+    `description` VARCHAR(255),
     `address` VARCHAR(45),
     PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `name_UNIQUE` ON `restaurants` (`name` ASC);
+
+------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `dishes`;
+
+CREATE TABLE IF NOT EXISTS `dishes` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `description` VARCHAR(255),
+    `dishType` ENUM('APPETIZERS', 'DRINKS', 'MAIN_COURSES', 'SIDES', 'OTHERS') NOT NULL,
+    `diet` ENUM('NONE', 'VEGAN', 'VEGETARIAN') NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `restaurantId` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_dish_restaurant`
+        FOREIGN KEY (`restaurantId`)
+        REFERENCES `restaurants` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 ------------------------------------------------------------------
 
@@ -47,4 +80,3 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_transactions_users_idx` ON `transactions` (`userId` ASC);
-

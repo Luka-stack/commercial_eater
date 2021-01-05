@@ -379,6 +379,8 @@ public class RestaurantDetailPage extends JPanel {
         );
     }
 
+
+
     private void cancelButtonAction() {
 
         if (entityID < 0) {

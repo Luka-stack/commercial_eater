@@ -1,6 +1,8 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
+import com.commercialeater.views.dishes.DishDetailPage;
+import com.commercialeater.views.dishes.DishPage;
 import com.commercialeater.views.restaurants.RestaurantDetailPage;
 import com.commercialeater.views.restaurants.RestaurantPage;
 import com.commercialeater.views.users.UserDetailPage;
@@ -8,8 +10,9 @@ import com.commercialeater.views.users.UserPage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 public class MainWindow extends JFrame {
@@ -329,6 +332,7 @@ public class MainWindow extends JFrame {
 
         GroupLayout sidebarLayout = new GroupLayout(sidebar);
         sidebar.setLayout(sidebarLayout);
+
         sidebarLayout.setHorizontalGroup(
                 sidebarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(restaurantsButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -360,6 +364,12 @@ public class MainWindow extends JFrame {
         );
 
         mainCardPanel.setLayout(new CardLayout());
+        mainCardPanel.addContainerListener(new ContainerAdapter() {
+            @Override
+            public void componentRemoved(ContainerEvent e) {
+                setEnableNewDishMenu(false);
+            }
+        });
 
         mainCardPanel.add(restaurantsCard, "Restaurants");
         mainCardPanel.add(usersCard, "Users");
@@ -405,6 +415,12 @@ public class MainWindow extends JFrame {
         newUserMenuItem.setAccelerator(KeyStroke.getKeyStroke("control U"));
         newEntityMenu.add(newUserMenuItem);
 
+        JMenuItem newDishItem = new JMenuItem("Dish");
+        newDishItem.addActionListener(e -> loadDishCreationPage(-1L));
+        newDishItem.setAccelerator(KeyStroke.getKeyStroke("control D"));
+        newDishItem.setEnabled(false);
+        newEntityMenu.add(newDishItem);
+
         jMenuBar1.add(newEntityMenu);
         setJMenuBar(jMenuBar1);
 
@@ -427,6 +443,8 @@ public class MainWindow extends JFrame {
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Transactions");
 
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
         transactionsCard.getTransactionsData(changeInformation);
     }
 
@@ -434,6 +452,8 @@ public class MainWindow extends JFrame {
 
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Users");
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
 
         usersCard.getUsersData(changeInformation);
     }
@@ -443,6 +463,8 @@ public class MainWindow extends JFrame {
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Restaurants");
 
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
         restaurantsCard.getRestaurantsData(changeInformation);
 
     }
@@ -451,16 +473,30 @@ public class MainWindow extends JFrame {
 
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Settings");
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
     }
 
-    public void loadRestaurantCreationPage(Long entityID) {
+    public void loadRestaurantDishesView(String restaurantName, Long restaurantId) {
 
-        if (entityID < 0) {
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
+        mainCardPanel.add(new DishPage(restaurantName, restaurantId), "RestaurantDishes");
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "RestaurantDishes");
+        setEnableNewDishMenu(true);
+    }
+
+    public void loadRestaurantCreationPage(Long entityId) {
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
+        if (entityId < 0) {
             mainCardPanel.add(new RestaurantDetailPage(), "RestaurantDetail");
             Main.mainWindow.setBottomInformation("");
         }
         else {
-            mainCardPanel.add(new RestaurantDetailPage(entityID), "RestaurantDetail");
+            mainCardPanel.add(new RestaurantDetailPage(entityId), "RestaurantDetail");
         }
 
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
@@ -468,6 +504,8 @@ public class MainWindow extends JFrame {
     }
 
     public void loadUsersCreationPage(Long entityId) {
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
 
         if (entityId < 0) {
             mainCardPanel.add(new UserDetailPage(), "UserDetails");
@@ -481,11 +519,35 @@ public class MainWindow extends JFrame {
         cardLayout.show(mainCardPanel, "UserDetails");
     }
 
+    public void loadDishCreationPage(Long entityId) {
+
+        DishPage page = (DishPage) mainCardPanel.getComponent(4);
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
+        if (entityId < 0) {
+            mainCardPanel.add(new DishDetailPage(page.getRestaurantName(), page.getRestaurantId(), -1L),
+                    "DishDetails");
+            Main.mainWindow.setBottomInformation("");
+        }
+        else {
+            mainCardPanel.add(new DishDetailPage(page.getRestaurantName(), page.getRestaurantId(), entityId),
+                "DishDetails");
+        }
+
+        CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
+        cardLayout.show(mainCardPanel, "DishDetails");
+    }
+
     public void setBottomInformation(String information) {
         bottomInfLabel.setText(information);
     }
 
     public String getBottomInformation() { return bottomInfLabel.getText(); }
+
+    public void setEnableNewDishMenu(boolean enable) {
+        newEntityMenu.getItem(2).setEnabled(enable);
+    }
 
     private void logOutButtonClicked() {
 

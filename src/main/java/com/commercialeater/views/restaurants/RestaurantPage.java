@@ -2,7 +2,6 @@ package com.commercialeater.views.restaurants;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Restaurant;
-import com.commercialeater.utilities.UIUtilities;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -33,7 +32,6 @@ public class RestaurantPage extends JPanel {
     private JPanel clearButton;
     private JPanel searchButton;
 
-
     private JScrollPane jScrollPane1;
     private JTable jTable1;
     private DefaultTableModel tableModel;
@@ -41,6 +39,7 @@ public class RestaurantPage extends JPanel {
     private JPopupMenu popupMenu;
     private JMenuItem popupItemEdit;
     private JMenuItem popupItemRemove;
+    private JMenuItem restaurantDishes;
 
     private JTextField nameFilter;
     private JTextField addressFilter;
@@ -224,9 +223,13 @@ public class RestaurantPage extends JPanel {
         popupItemRemove = new JMenuItem("Remove Current Row");
         popupItemRemove.addActionListener(event -> removeSelectedRow());
 
+        restaurantDishes = new JMenuItem("Show Dishes");
+        restaurantDishes.addActionListener(event -> openRestaurantDishes());
+
         popupMenu = new JPopupMenu();
         popupMenu.add(popupItemEdit);
         popupMenu.add(popupItemRemove);
+        popupMenu.add(restaurantDishes);
 
         jScrollPane1.setBackground(Main.uiUtilities.getBackground());
         jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
@@ -334,7 +337,6 @@ public class RestaurantPage extends JPanel {
         }
     }
 
-    //TODO change the argument after testing
     public void getRestaurantsData(boolean changeInformation) {
 
         tableModel.setRowCount(0);
@@ -399,5 +401,14 @@ public class RestaurantPage extends JPanel {
 
         Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants for name: " +
                 nameFilter.getText() + ", address: " + addressFilter.getText());
+    }
+
+    private void openRestaurantDishes() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long restaurantId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+        String restaurantName = tableModel.getValueAt(selectedRow, 1).toString();
+
+        Main.mainWindow.loadRestaurantDishesView(restaurantName, restaurantId);
     }
 }

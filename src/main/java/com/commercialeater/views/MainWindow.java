@@ -11,8 +11,6 @@ import com.commercialeater.views.users.UserPage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 public class MainWindow extends JFrame {
@@ -97,11 +95,11 @@ public class MainWindow extends JFrame {
         setPreferredSize(new Dimension(1150, 620));
         setResizable(false);
 
-        background.setBackground(Main.uiUtilities.getMainColor());
+        background.setBackground(Main.colorUtilities.getMainColor());
 
-        sidebar.setBackground(Main.uiUtilities.getMainColor());
+        sidebar.setBackground(Main.colorUtilities.getMainColor());
 
-        restaurantsButton.setBackground(Main.uiUtilities.getMainColor());
+        restaurantsButton.setBackground(Main.colorUtilities.getMainColor());
         restaurantsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -110,12 +108,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(restaurantsButton);
+                Main.colorUtilities.buttonHoverEntered(restaurantsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(restaurantsButton);
+                Main.colorUtilities.buttonHoverExited(restaurantsButton);
             }
         });
 
@@ -123,7 +121,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/restauratns.png"))));
 
         jLabel8.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel8.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel8.setText("Restaurants");
 
         GroupLayout restaurantsButtonLayout = new GroupLayout(restaurantsButton);
@@ -146,7 +144,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        usersButton.setBackground(Main.uiUtilities.getMainColor());
+        usersButton.setBackground(Main.colorUtilities.getMainColor());
         usersButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -155,12 +153,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(usersButton);
+                Main.colorUtilities.buttonHoverEntered(usersButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(usersButton);
+                Main.colorUtilities.buttonHoverExited(usersButton);
             }
         });
 
@@ -168,7 +166,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/users.png"))));
 
         jLabel9.setFont(new Font("Segoe UI", 1, 18));
-        jLabel9.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel9.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel9.setText("Users");
 
         GroupLayout usersButtonLayout = new GroupLayout(usersButton);
@@ -191,7 +189,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        transactionsButton.setBackground(Main.uiUtilities.getMainColor());
+        transactionsButton.setBackground(Main.colorUtilities.getMainColor());
         transactionsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -200,12 +198,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(transactionsButton);
+                Main.colorUtilities.buttonHoverEntered(transactionsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(transactionsButton);
+                Main.colorUtilities.buttonHoverExited(transactionsButton);
             }
         });
 
@@ -213,7 +211,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/payments.png"))));
 
         jLabel10.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel10.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel10.setText("Transactions");
 
         GroupLayout transactionsButtonLayout = new GroupLayout(transactionsButton);
@@ -236,7 +234,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        settingsButton.setBackground(Main.uiUtilities.getMainColor());
+        settingsButton.setBackground(Main.colorUtilities.getMainColor());
         settingsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -245,12 +243,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(settingsButton);
+                Main.colorUtilities.buttonHoverEntered(settingsButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(settingsButton);
+                Main.colorUtilities.buttonHoverExited(settingsButton);
             }
         });
 
@@ -258,7 +256,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/settings.png"))));
 
         jLabel11.setFont(new Font("Segoe UI", 1, 18));
-        jLabel11.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel11.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel11.setText("Settings");
 
         GroupLayout settingsButtonLayout = new GroupLayout(settingsButton);
@@ -281,7 +279,7 @@ public class MainWindow extends JFrame {
                                 .addContainerGap())
         );
 
-        logOutButton.setBackground(Main.uiUtilities.getMainColor());
+        logOutButton.setBackground(Main.colorUtilities.getMainColor());
         logOutButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -290,12 +288,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(logOutButton);
+                Main.colorUtilities.buttonHoverEntered(logOutButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(logOutButton);
+                Main.colorUtilities.buttonHoverExited(logOutButton);
             }
         });
 
@@ -303,7 +301,7 @@ public class MainWindow extends JFrame {
                 getClass().getClassLoader().getResource("imgs/logout.png"))));
 
         jLabel12.setFont(new Font("Segoe UI", 1, 18));
-        jLabel12.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel12.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel12.setText("Log Out");
 
         GroupLayout logOutButtonLayout = new GroupLayout(logOutButton);
@@ -477,11 +475,11 @@ public class MainWindow extends JFrame {
         try { mainCardPanel.remove(4); } catch (Exception err) {}
     }
 
-    public void loadRestaurantDishesView(String restaurantName, Long restaurantId) {
+    public void loadRestaurantDishesView(Long restaurantId) {
 
         try { mainCardPanel.remove(4); } catch (Exception err) {}
 
-        mainCardPanel.add(new DishPage(restaurantName, restaurantId), "RestaurantDishes");
+        mainCardPanel.add(new DishPage(restaurantId), "RestaurantDishes");
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "RestaurantDishes");
         setEnableNewDishMenu(true);
@@ -526,8 +524,7 @@ public class MainWindow extends JFrame {
         try { mainCardPanel.remove(4); } catch (Exception err) {}
 
         if (entityId < 0) {
-            mainCardPanel.add(new DishDetailPage(page.getRestaurantName(), page.getRestaurantId(), -1L),
-                    "DishDetails");
+            mainCardPanel.add(new DishDetailPage(page.getRestaurantName(), page.getRestaurantId()), "DishDetails");
             Main.mainWindow.setBottomInformation("");
         }
         else {

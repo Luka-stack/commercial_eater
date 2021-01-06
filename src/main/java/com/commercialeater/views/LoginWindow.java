@@ -51,14 +51,14 @@ public class LoginWindow extends JFrame {
         errorMessageLabel = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        System.out.println(Main.uiUtilities.getBackground());
+        System.out.println(Main.colorUtilities.getBackground());
         setMaximumSize(new Dimension(700, 450));
         setMinimumSize(new Dimension(700, 450));
         ///setUndecorated(true);
         setPreferredSize(new Dimension(700, 450));
         setResizable(false);
 
-        jPanel1.setBackground(Main.uiUtilities.getMainColor());
+        jPanel1.setBackground(Main.colorUtilities.getMainColor());
         jLabel1.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/transparent_logo.png"))));
                 //getClass().getClassLoader().getResource("imgs/new_logo.png"))));
@@ -80,7 +80,7 @@ public class LoginWindow extends JFrame {
                                 .addGap(50, 50, 50))
         );
 
-        jPanel2.setBackground(Main.uiUtilities.getBackground());
+        jPanel2.setBackground(Main.colorUtilities.getBackground());
         jPanel2.setPreferredSize(new Dimension(400, 262));
 
         jLabel2.setIcon(new ImageIcon(Objects.requireNonNull(
@@ -88,23 +88,23 @@ public class LoginWindow extends JFrame {
 //                getClass().getClassLoader().getResource("imgs/padlock.png"))));
 
         jLabel3.setFont(new Font("Segoe UI", 0, 18));
-        jLabel3.setForeground(Main.uiUtilities.getMainTextColor());
+        jLabel3.setForeground(Main.colorUtilities.getMainTextColor());
         jLabel3.setText("Email:");
 
         jLabel4.setFont(new Font("Segoe UI", 0, 18));
-        jLabel4.setForeground(Main.uiUtilities.getMainTextColor());
+        jLabel4.setForeground(Main.colorUtilities.getMainTextColor());
         jLabel4.setText("Password:");
 
-        passwdPasswordField.setBackground(Main.uiUtilities.getBackground());
+        passwdPasswordField.setBackground(Main.colorUtilities.getBackground());
         passwdPasswordField.setFont(new Font("Segoe UI", 0, 14));
         passwdPasswordField.setBorder(null);
 
-        emailTextField.setBackground(Main.uiUtilities.getBackground());
+        emailTextField.setBackground(Main.colorUtilities.getBackground());
         emailTextField.setFont(new Font("Segoe UI", 0, 14));
         emailTextField.setBorder(null);
 
-        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
-        cancelButton.setBorder(new LineBorder(Main.uiUtilities.getButtonsColor(), 1, true));
+        cancelButton.setBackground(Main.colorUtilities.getButtonsColor());
+        cancelButton.setBorder(new LineBorder(Main.colorUtilities.getButtonsColor(), 1, true));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -113,17 +113,17 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(cancelButton);
+                Main.colorUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(cancelButton);
+                Main.colorUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel7.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel7.setText("Cancel");
 
@@ -138,8 +138,8 @@ public class LoginWindow extends JFrame {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        signInButton.setBackground(Main.uiUtilities.getButtonsColor());
-        signInButton.setBorder(new LineBorder(Main.uiUtilities.getButtonsColor(), 1, true));
+        signInButton.setBackground(Main.colorUtilities.getButtonsColor());
+        signInButton.setBorder(new LineBorder(Main.colorUtilities.getButtonsColor(), 1, true));
         signInButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -148,17 +148,17 @@ public class LoginWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(signInButton);
+                Main.colorUtilities.buttonHoverEntered(signInButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(signInButton);
+                Main.colorUtilities.buttonHoverExited(signInButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel6.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("Sign In");
 
@@ -173,11 +173,11 @@ public class LoginWindow extends JFrame {
                         .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator1.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator1.setForeground(Main.colorUtilities.getMainColor());
 
-        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator2.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator2.setForeground(Main.colorUtilities.getMainColor());
 
         errorMessageLabel.setFont(new Font("Segoe UI", 0, 12));
         errorMessageLabel.setForeground(new Color(153, 0, 0));

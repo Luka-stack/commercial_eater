@@ -1,6 +1,6 @@
 package com.commercialeater;
 
-import com.commercialeater.utilities.UIUtilities;
+import com.commercialeater.utilities.ColorUtilities;
 import com.commercialeater.views.LoginWindow;
 import com.commercialeater.views.MainWindow;
 import org.apache.log4j.Logger;
@@ -14,12 +14,12 @@ public class Main {
 
     public static Logger logger = Logger.getLogger(Main.class);
     public static MainWindow mainWindow;
-    public static UIUtilities uiUtilities;
+    public static ColorUtilities colorUtilities;
 
     public static void main(String[] args) {
 
         DOMConfigurator.configure("D:\\New folder\\jv\\commercial_eater\\config\\log4jconfig.xml");
-        uiUtilities = new UIUtilities();
+        colorUtilities = new ColorUtilities();
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -44,7 +44,7 @@ public class Main {
 
     public static void redrawWindowWithNewStyle() {
 
-        uiUtilities = new UIUtilities();
+        colorUtilities = new ColorUtilities();
 
         mainWindow.dispose();
         mainWindow = new MainWindow(true);

@@ -104,4 +104,69 @@ public class Dish {
 
         return result;
     }
+
+    public static int delete(Long id) {
+
+        int result = 0;
+        String query = "DELETE FROM "+ TABLE +" WHERE "+ ID +"=?";
+
+        try {
+            PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
+            stm.setLong(1, id);
+            result = stm.executeUpdate();
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static int create(String name, double price, String type, String diet,
+                             String description, Long restaurantId) {
+
+        int result = 0;
+        String query = "INSERT INTO "+ TABLE +
+                "("+ NAME +","+ TYPE +","+ DIET +","+ PRICE +","+ DESCRIPTION +","+ RESTAURANT_FK +") "+
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
+            stm.setString(1, name);
+            stm.setString(2, type);
+            stm.setString(3, diet);
+            stm.setDouble(4, price);
+            stm.setString(5, description);
+            stm.setLong(6, restaurantId);
+            result = stm.executeUpdate();
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static int update(Long dishId, String name, double price, String type, String diet, String description) {
+
+        int result = 0;
+        String query = "UPDATE "+ TABLE +" SET "+
+                NAME +"=?,"+ TYPE +"=?,"+ DIET +"=?,"+ PRICE +"=?,"+ DESCRIPTION +"=? WHERE "+ ID +"=?";
+
+        try {
+            PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
+            stm.setString(1, name);
+            stm.setString(2, type);
+            stm.setString(3, diet);
+            stm.setDouble(4, price);
+            stm.setString(5, description);
+            stm.setLong(6, dishId);
+            result = stm.executeUpdate();
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return result;
+    }
 }

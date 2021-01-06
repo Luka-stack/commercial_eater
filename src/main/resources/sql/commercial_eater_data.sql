@@ -21,10 +21,10 @@ INSERT INTO restaurants (name, description, address) VALUES
 ---------------------------------------------------------------------------------------
 
 INSERT INTO dishes (name, dishType, diet, price, restaurantId) VALUES
-('Whole Chicken', 'MAIN_COURSES', 'NONE', 11.5, 1),
-('Chicken Wings', 'MAIN_COURSES', 'NONE', 12.5, 2),
-('Pepsi', 'DRINKS', 'NONE', 3.99, 3),
-('Lemonade', 'DRINKS', 'NONE', 6.23, 1);
+('Whole Chicken', 'Main Courses', 'None', 11.5, 1),
+('Chicken Wings', 'Main Courses', 'None', 12.5, 2),
+('Pepsi', 'Drinks', 'None', 3.99, 3),
+('Lemonade', 'Drinks', 'None', 6.23, 1);
 
 ---------------------------------------------------------------------------------------
 

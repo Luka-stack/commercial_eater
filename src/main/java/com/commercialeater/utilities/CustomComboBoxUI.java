@@ -3,7 +3,6 @@ package com.commercialeater.utilities;
 import com.commercialeater.Main;
 
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import java.awt.*;
 
 public class CustomComboBoxUI extends BasicComboBoxUI {
 
@@ -25,6 +24,6 @@ public class CustomComboBoxUI extends BasicComboBoxUI {
     @Override
     public void configureArrowButton() {
         super.configureArrowButton();
-        arrowButton.setBackground(Main.uiUtilities.getMainColor());
+        arrowButton.setBackground(Main.colorUtilities.getMainColor());
     }
 }

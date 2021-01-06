@@ -76,9 +76,9 @@ public class TransactionsPage extends JPanel {
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 18));
         jLabel2.setText("Filters");
@@ -88,37 +88,37 @@ public class TransactionsPage extends JPanel {
 
         DatePickerSettings startDateSettings = new DatePickerSettings();
         startDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-        startDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.uiUtilities.getMainColor());
-        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.uiUtilities.getBackground());
-        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.uiUtilities.getBackground());
+        startDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.colorUtilities.getMainColor());
+        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.colorUtilities.getBackground());
+        startDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.colorUtilities.getBackground());
 
         startDateFilter = new DatePicker(startDateSettings);
-        startDateFilter.setBackground(Main.uiUtilities.getBackground());
-        startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
-        startDateFilter.getComponentDateTextField().setBackground(Main.uiUtilities.getBackground());
+        startDateFilter.setBackground(Main.colorUtilities.getBackground());
+        startDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
+        startDateFilter.getComponentDateTextField().setBackground(Main.colorUtilities.getBackground());
         startDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
-        startDateFilter.getComponentToggleCalendarButton().setBackground(Main.uiUtilities.getMainColor());
+        startDateFilter.getComponentToggleCalendarButton().setBackground(Main.colorUtilities.getMainColor());
         startDateFilter.getComponentToggleCalendarButton().setBorderPainted(false);
         startDateFilter.getComponentToggleCalendarButton().setOpaque(true);
 
         DatePickerSettings endDateSettings = new DatePickerSettings();
         endDateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-        endDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.uiUtilities.getMainColor());
-        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.uiUtilities.getBackground());
-        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.uiUtilities.getBackground());
+        endDateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Main.colorUtilities.getMainColor());
+        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundInvalidDate, Main.colorUtilities.getBackground());
+        endDateSettings.setColor(DatePickerSettings.DateArea.TextFieldBackgroundValidDate, Main.colorUtilities.getBackground());
 
         endDateFilter = new DatePicker(endDateSettings);
-        endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
-        endDateFilter.getComponentDateTextField().setBackground(Main.uiUtilities.getBackground());
+        endDateFilter.getComponentDateTextField().setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
+        endDateFilter.getComponentDateTextField().setBackground(Main.colorUtilities.getBackground());
         endDateFilter.getComponentDateTextField().setFont(new Font("Segoe UI", 0, 14));
-        endDateFilter.getComponentToggleCalendarButton().setBackground(Main.uiUtilities.getMainColor());
+        endDateFilter.getComponentToggleCalendarButton().setBackground(Main.colorUtilities.getMainColor());
         endDateFilter.getComponentToggleCalendarButton().setBorderPainted(false);
         endDateFilter.getComponentToggleCalendarButton().setOpaque(true);
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("End Date");
 
-        searchButton.setBackground(Main.uiUtilities.getButtonsColor());
+        searchButton.setBackground(Main.colorUtilities.getButtonsColor());
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -128,17 +128,17 @@ public class TransactionsPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(searchButton);
+                Main.colorUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(searchButton);
+                Main.colorUtilities.buttonHoverExited(searchButton);
             }
         });
 
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
-        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel5.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("SEARCH");
 
@@ -153,7 +153,7 @@ public class TransactionsPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
         );
 
-        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
+        clearButton.setBackground(Main.colorUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -163,17 +163,17 @@ public class TransactionsPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(clearButton);
+                Main.colorUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(clearButton);
+                Main.colorUtilities.buttonHoverExited(clearButton);
             }
         });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
-        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel1.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("CLEAR");
 
@@ -188,36 +188,36 @@ public class TransactionsPage extends JPanel {
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator1.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator1.setForeground(Main.colorUtilities.getMainColor());
 
-        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator2.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator2.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
         jLabel6.setText("User");
 
         userFilter.setFont(new Font("Segoe UI", 0, 14));
-        userFilter.setBackground(Main.uiUtilities.getBackground());
+        userFilter.setBackground(Main.colorUtilities.getBackground());
         userFilter.setOpaque(false);
         userFilter.setText("All");
         userFilter.setBorder(null);
 
-        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator3.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator3.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel7.setFont(new Font("Segoe UI", 0, 14));
         jLabel7.setText("Transaction");
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
 
         transactionFilter.setEditable(false);
         transactionFilter.setFont(new Font("Segoe UI", 0, 14));
-        transactionFilter.setBackground(Main.uiUtilities.getBackground());
+        transactionFilter.setBackground(Main.colorUtilities.getBackground());
         transactionFilter.setMaximumRowCount(3);
         transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Top_Up", "Order" }));
-        transactionFilter.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        transactionFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         transactionFilter.setMinimumSize(new Dimension(72, 25));
 
         transactionFilter.setUI(new CustomComboBoxUI());
@@ -304,15 +304,15 @@ public class TransactionsPage extends JPanel {
                                 .addContainerGap())
         );
 
-        jScrollPane1.setBackground(Main.uiUtilities.getBackground());
-        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jScrollPane1.setBackground(Main.colorUtilities.getBackground());
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
 
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable1.getTableHeader().setBackground(Main.uiUtilities.getBackground());
-        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jTable1.getTableHeader().setBackground(Main.colorUtilities.getBackground());
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
@@ -327,11 +327,11 @@ public class TransactionsPage extends JPanel {
         jTable1.setDefaultEditor(Object.class, null);
 
         jTable1.setFocusable(false);
-        jTable1.setBackground(Main.uiUtilities.getBackground());
-        jTable1.setGridColor(Main.uiUtilities.getMainColor());
+        jTable1.setBackground(Main.colorUtilities.getBackground());
+        jTable1.setGridColor(Main.colorUtilities.getMainColor());
         jTable1.setIntercellSpacing(new Dimension(0,0));
         jTable1.setRowHeight(40);
-        jTable1.setSelectionBackground(Main.uiUtilities.getMainColor());
+        jTable1.setSelectionBackground(Main.colorUtilities.getMainColor());
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);

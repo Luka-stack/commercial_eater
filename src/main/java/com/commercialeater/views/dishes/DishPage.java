@@ -1,7 +1,9 @@
 package com.commercialeater.views.dishes;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.Diet;
 import com.commercialeater.models.Dish;
+import com.commercialeater.models.DishType;
 import com.commercialeater.models.Restaurant;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
@@ -44,9 +46,9 @@ public class DishPage extends JPanel {
     private JPanel searchButton;
 
     private final Long restaurantId;
-    private final String restaurantName;
+    private String restaurantName;
 
-    public DishPage(String restaurantName, Long restaurantId) {
+    public DishPage(final Long restaurantId) {
         initComponents();
         this.restaurantName = restaurantName;
         this.restaurantId = restaurantId;
@@ -79,9 +81,9 @@ public class DishPage extends JPanel {
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 18));
         jLabel2.setText("Filters");
@@ -90,7 +92,7 @@ public class DishPage extends JPanel {
         jLabel3.setText("Name");
 
         nameFilter.setFont(new Font("Segoe UI", 0, 14));
-        nameFilter.setBackground(Main.uiUtilities.getBackground());
+        nameFilter.setBackground(Main.colorUtilities.getBackground());
         nameFilter.setText("All");
         nameFilter.setBorder(null);
 
@@ -98,11 +100,11 @@ public class DishPage extends JPanel {
         jLabel4.setText("Price");
 
         priceFilter.setFont(new Font("Segoe UI", 0, 14));
-        priceFilter.setBackground(Main.uiUtilities.getBackground());
+        priceFilter.setBackground(Main.colorUtilities.getBackground());
         priceFilter.setText("All");
         priceFilter.setBorder(null);
 
-        searchButton.setBackground(Main.uiUtilities.getButtonsColor());
+        searchButton.setBackground(Main.colorUtilities.getButtonsColor());
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -112,17 +114,17 @@ public class DishPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(searchButton);
+                Main.colorUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(searchButton);
+                Main.colorUtilities.buttonHoverExited(searchButton);
             }
         });
 
         jLabel5.setFont(new Font("Segoe UI", 1, 14));
-        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel5.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("SEARCH");
 
@@ -137,7 +139,7 @@ public class DishPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
         );
 
-        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
+        clearButton.setBackground(Main.colorUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -147,17 +149,17 @@ public class DishPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(clearButton);
+                Main.colorUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(clearButton);
+                Main.colorUtilities.buttonHoverExited(clearButton);
             }
         });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 14));
-        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel1.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("CLEAR");
 
@@ -172,41 +174,44 @@ public class DishPage extends JPanel {
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator1.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator1.setForeground(Main.colorUtilities.getMainColor());
 
-        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator2.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator2.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
         jLabel6.setText("Type");
 
-        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator3.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator3.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel7.setFont(new Font("Segoe UI", 0, 14));
         jLabel7.setText("Diet");
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
 
         dietFilter.setEditable(false);
         dietFilter.setFont(new Font("Segoe UI", 0, 14));
-        dietFilter.setBackground(Main.uiUtilities.getBackground());
+        dietFilter.setBackground(Main.colorUtilities.getBackground());
         dietFilter.setMaximumRowCount(3);
-        dietFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "None", "Vegan", "Vegetarian" }));
-        dietFilter.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        dietFilter.setModel(new DefaultComboBoxModel<>(new String[] {
+                "All", Diet.NONE.getType(), Diet.VEGETARIAN.getType(), Diet.VEGAN.getType()
+        }));
+        dietFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         dietFilter.setMinimumSize(new Dimension(72, 25));
         dietFilter.setUI(new CustomComboBoxUI());
 
         typeFilter.setEditable(false);
         typeFilter.setFont(new Font("Segoe UI", 0, 14));
-        typeFilter.setBackground(Main.uiUtilities.getBackground());
+        typeFilter.setBackground(Main.colorUtilities.getBackground());
         typeFilter.setMaximumRowCount(3);
         typeFilter.setModel(new DefaultComboBoxModel<>(new String[] {
-                "All", "Appetizers", "Drinks", "Main Courses", "Sides", "Others"
+                "All", DishType.MAIN_COURSES.getType(), DishType.SIDES.getType(),
+                DishType.APPETIZERS.getType(), DishType.DRINKS.getType(), DishType.OTHERS.getType()
         }));
-        typeFilter.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        typeFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         typeFilter.setMinimumSize(new Dimension(72, 25));
         typeFilter.setUI(new CustomComboBoxUI());
 
@@ -292,8 +297,8 @@ public class DishPage extends JPanel {
                                 .addContainerGap())
         );
 
-        jScrollPane1.setBackground(Main.uiUtilities.getBackground());
-        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jScrollPane1.setBackground(Main.colorUtilities.getBackground());
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
 
         JMenuItem popupItemEdit = new JMenuItem("Edit Current Row");
         popupItemEdit.addActionListener(event -> editSelectedRow());
@@ -309,8 +314,8 @@ public class DishPage extends JPanel {
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable1.getTableHeader().setBackground(Main.uiUtilities.getBackground());
-        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jTable1.getTableHeader().setBackground(Main.colorUtilities.getBackground());
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
@@ -327,11 +332,11 @@ public class DishPage extends JPanel {
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
         jTable1.setFocusable(false);
-        jTable1.setGridColor(Main.uiUtilities.getMainColor());
-        jTable1.setBackground(Main.uiUtilities.getBackground());
+        jTable1.setGridColor(Main.colorUtilities.getMainColor());
+        jTable1.setBackground(Main.colorUtilities.getBackground());
         jTable1.setIntercellSpacing(new Dimension(0, 0));
         jTable1.setRowHeight(40);
-        jTable1.setSelectionBackground(Main.uiUtilities.getMainColor());
+        jTable1.setSelectionBackground(Main.colorUtilities.getMainColor());
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
@@ -386,9 +391,29 @@ public class DishPage extends JPanel {
     }
 
     private void removeSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        String dish = tableModel.getValueAt(selectedRow, 1).toString();
+        int deleteResult = Dish.delete(rowId);
+
+        if (deleteResult > 0) {
+            tableModel.removeRow(selectedRow);
+            Main.mainWindow.setBottomInformation("Dish '"+ dish +"' was deleted");
+        }
+        else {
+            Main.mainWindow.setBottomInformation("Couldn't delete Dish on row #"+ (selectedRow+1));
+        }
     }
 
     private void editSelectedRow() {
+
+        int selectedRow = jTable1.getSelectedRow();
+        Long rowId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+
+        Main.mainWindow.setBottomInformation("Editing Row #" + (selectedRow+1));
+        Main.mainWindow.loadDishCreationPage(rowId);
     }
 
     private void clearButtonClicked() {
@@ -410,6 +435,8 @@ public class DishPage extends JPanel {
 
         try {
             while (dishes.next()) {
+
+                restaurantName = dishes.getString(Restaurant.TABLE);
 
                 rows[0] = dishes.getString(Dish.ID);
                 rows[1] = dishes.getString(Restaurant.TABLE);

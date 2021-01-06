@@ -18,11 +18,11 @@ public class CustomComboRenderer extends BasicComboBoxRenderer {
 
         setText(value.toString());
         if (isSelected) {
-            setBackground(Main.uiUtilities.getMainColor());
-            list.setSelectionBackground(Main.uiUtilities.getBackground());
+            setBackground(Main.colorUtilities.getMainColor());
+            list.setSelectionBackground(Main.colorUtilities.getBackground());
         }
         else {
-            setBackground(Main.uiUtilities.getBackground());
+            setBackground(Main.colorUtilities.getBackground());
         }
 
         return this;

@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class UIUtilities {
+public class ColorUtilities {
 
     private Color background;
     private Color mainColor;
@@ -22,7 +22,7 @@ public class UIUtilities {
     // TMP Solution
     private final String stylePath = "D:\\New folder\\jv\\commercial_eater\\config\\app_style.json";
 
-    public UIUtilities() {
+    public ColorUtilities() {
 
         JSONParser jsonParser = new JSONParser();
 

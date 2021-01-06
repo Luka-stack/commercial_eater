@@ -108,9 +108,9 @@ public class UserDetailPage extends JPanel {
         saveButton = new JPanel();
         jLabel6 = new JLabel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel1.setBackground(Main.uiUtilities.getBackground());
+        jPanel1.setBackground(Main.colorUtilities.getBackground());
 
         titleLabel.setFont(new Font("Segoe UI", 1, 24));
         titleLabel.setText("Editing Restaurant");
@@ -132,72 +132,72 @@ public class UserDetailPage extends JPanel {
                                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(Main.uiUtilities.getBackground());
+        jPanel2.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Email");
 
         emailField.setFont(new Font("Segoe UI", 0, 14));
-        emailField.setBackground(Main.uiUtilities.getBackground());
+        emailField.setBackground(Main.colorUtilities.getBackground());
         emailField.setBorder(null);
 
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
         jLabel3.setText("Password");
 
-        emailFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-        emailFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+        emailFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        emailFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         roleField.setEditable(false);
         roleField.setFont(new Font("Segoe UI", 0, 14));
         roleField.setMaximumRowCount(3);
         roleField.setModel(new DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         roleField.setSelectedIndex(1);
-        roleField.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
-        roleField.setBackground(Main.uiUtilities.getBackground());
+        roleField.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
+        roleField.setBackground(Main.colorUtilities.getBackground());
 
         roleField.setUI(new CustomComboBoxUI());
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
         jSeparator4.setOrientation(SwingConstants.VERTICAL);
 
         jLabel5.setFont(new Font("Segoe UI", 0, 14));
         jLabel5.setText("First Name");
 
         firstNameField.setFont(new Font("Segoe UI", 0, 14));
-        firstNameField.setBackground(Main.uiUtilities.getBackground());
+        firstNameField.setBackground(Main.colorUtilities.getBackground());
         firstNameField.setBorder(null);
 
-        firstNameSeparator.setBackground(Main.uiUtilities.getMainColor());
-        firstNameSeparator.setForeground(Main.uiUtilities.getMainColor());
+        firstNameSeparator.setBackground(Main.colorUtilities.getMainColor());
+        firstNameSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("City");
 
         cityField.setFont(new Font("Segoe UI", 0, 14));
-        cityField.setBackground(Main.uiUtilities.getBackground());
+        cityField.setBackground(Main.colorUtilities.getBackground());
         cityField.setBorder(null);
 
-        cityFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-        cityFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+        cityFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        cityFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel9.setFont(new Font("Segoe UI", 0, 14));
         jLabel9.setText("Last Name");
 
         lastNameField.setFont(new Font("Segoe UI", 0, 14));
-        lastNameField.setBackground(Main.uiUtilities.getBackground());
+        lastNameField.setBackground(Main.colorUtilities.getBackground());
         lastNameField.setBorder(null);
 
-        lastNameSeparator.setBackground(Main.uiUtilities.getMainColor());
-        lastNameSeparator.setForeground(Main.uiUtilities.getMainColor());
+        lastNameSeparator.setBackground(Main.colorUtilities.getMainColor());
+        lastNameSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel10.setFont(new Font("Segoe UI", 0, 14));
         jLabel10.setText("Role");
 
-        jSeparator8.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator8.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator8.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator8.setForeground(Main.colorUtilities.getMainColor());
 
-        resetPasswordButton.setBackground(Main.uiUtilities.getButtonsColor());
+        resetPasswordButton.setBackground(Main.colorUtilities.getButtonsColor());
         resetPasswordButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -206,17 +206,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(resetPasswordButton);
+                Main.colorUtilities.buttonHoverEntered(resetPasswordButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(resetPasswordButton);
+                Main.colorUtilities.buttonHoverExited(resetPasswordButton);
             }
         });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 14));
-        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel1.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("Reset Password");
 
@@ -237,7 +237,7 @@ public class UserDetailPage extends JPanel {
         balanceLabel.setFont(new Font("Segoe UI", 0, 14));
         balanceLabel.setText("0 zl");
 
-        topUpButton.setBackground(Main.uiUtilities.getButtonsColor());
+        topUpButton.setBackground(Main.colorUtilities.getButtonsColor());
         topUpButton.setPreferredSize(new Dimension(172, 25));
         topUpButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -249,17 +249,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(topUpButton);
+                Main.colorUtilities.buttonHoverEntered(topUpButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(topUpButton);
+                Main.colorUtilities.buttonHoverExited(topUpButton);
             }
         });
 
         jLabel12.setFont(new Font("Segoe UI", 1, 14));
-        jLabel12.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel12.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel12.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel12.setText("Top Up");
 
@@ -368,9 +368,9 @@ public class UserDetailPage extends JPanel {
                                 .addGap(34, 34, 34))
         );
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
-        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
+        cancelButton.setBackground(Main.colorUtilities.getButtonsColor());
         cancelButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -380,17 +380,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(cancelButton);
+                Main.colorUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(cancelButton);
+                Main.colorUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14));
-        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel7.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel7.setText("CANCEL");
 
@@ -405,7 +405,7 @@ public class UserDetailPage extends JPanel {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        saveButton.setBackground(Main.uiUtilities.getButtonsColor());
+        saveButton.setBackground(Main.colorUtilities.getButtonsColor());
         saveButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -415,17 +415,17 @@ public class UserDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(saveButton);
+                Main.colorUtilities.buttonHoverEntered(saveButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(saveButton);
+                Main.colorUtilities.buttonHoverExited(saveButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
-        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel6.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("SAVE");
 

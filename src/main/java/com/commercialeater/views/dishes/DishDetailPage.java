@@ -1,7 +1,9 @@
 package com.commercialeater.views.dishes;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.Diet;
 import com.commercialeater.models.Dish;
+import com.commercialeater.models.DishType;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
 
@@ -15,7 +17,6 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -100,12 +101,12 @@ public class DishDetailPage extends JPanel {
         saveButton = new JPanel();
         jLabel6 = new JLabel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel1.setBackground(Main.uiUtilities.getBackground());
+        jPanel1.setBackground(Main.colorUtilities.getBackground());
 
         titleLabel.setFont(new Font("Segoe UI", 1, 24));
-        titleLabel.setText("Adding Dish For: "+ restaurantName);
+        titleLabel.setText("Adding Dish For "+ restaurantName);
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,13 +125,13 @@ public class DishDetailPage extends JPanel {
                                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(Main.uiUtilities.getBackground());
+        jPanel2.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Name");
 
         nameField.setFont(new Font("Segoe UI", 0, 14));
-        nameField.setBackground(Main.uiUtilities.getBackground());
+        nameField.setBackground(Main.colorUtilities.getBackground());
         nameField.setBorder(null);
 
         jLabel3.setFont(new Font("Segoe UI", 0, 14));
@@ -139,7 +140,7 @@ public class DishDetailPage extends JPanel {
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("Description");
 
-        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
+        clearButton.setBackground(Main.colorUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -149,17 +150,17 @@ public class DishDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(clearButton);
+                Main.colorUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(clearButton);
+                Main.colorUtilities.buttonHoverExited(clearButton);
             }
         });
 
         jLabel5.setFont(new Font("Segoe UI", 1, 14));
-        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel5.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("CLEAR");
 
@@ -174,8 +175,8 @@ public class DishDetailPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        nameFieldSepartor.setBackground(Main.uiUtilities.getMainColor());
-        nameFieldSepartor.setForeground(Main.uiUtilities.getMainColor());
+        nameFieldSepartor.setBackground(Main.colorUtilities.getMainColor());
+        nameFieldSepartor.setForeground(Main.colorUtilities.getMainColor());
 
         descriptionField.setDocument(new PlainDocument() {
             @Override
@@ -188,47 +189,50 @@ public class DishDetailPage extends JPanel {
                 }
             }
         });
-        descriptionField.setBorder(new LineBorder(Main.uiUtilities.getMainColor(), 1, true));
-        descriptionField.setBackground(Main.uiUtilities.getBackground());
+        descriptionField.setBorder(new LineBorder(Main.colorUtilities.getMainColor(), 1, true));
+        descriptionField.setBackground(Main.colorUtilities.getBackground());
         descriptionField.setFont(new Font("Segoe UI", 0, 14));
         jScrollPane1.setViewportView(descriptionField);
 
         priceField.setFont(new Font("Segoe UI", 0, 14));
-        priceField.setBackground(Main.uiUtilities.getBackground());
+        priceField.setBackground(Main.colorUtilities.getBackground());
         priceField.setBorder(null);
 
-        priceFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-        priceFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+        priceFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        priceFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("Type");
 
-        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator3.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator3.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel9.setFont(new Font("Segoe UI", 0, 14));
         jLabel9.setText("Diet");
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
 
         typeField.setEditable(false);
         typeField.setFont(new Font("Segoe UI", 0, 14));
-        typeField.setBackground(Main.uiUtilities.getBackground());
+        typeField.setBackground(Main.colorUtilities.getBackground());
         typeField.setMaximumRowCount(3);
-        typeField.setModel(new DefaultComboBoxModel<>(new String[] { "None", "Vegan", "Vegetarian" }));
-        typeField.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        typeField.setModel(new DefaultComboBoxModel<>(new String[] {
+                DishType.MAIN_COURSES.getType(), DishType.SIDES.getType(),
+                DishType.APPETIZERS.getType(), DishType.DRINKS.getType(), DishType.OTHERS.getType()
+        }));
+        typeField.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         typeField.setMinimumSize(new Dimension(72, 25));
         typeField.setUI(new CustomComboBoxUI());
 
         dietField.setEditable(false);
         dietField.setFont(new Font("Segoe UI", 0, 14));
-        dietField.setBackground(Main.uiUtilities.getBackground());
+        dietField.setBackground(Main.colorUtilities.getBackground());
         dietField.setMaximumRowCount(3);
         dietField.setModel(new DefaultComboBoxModel<>(new String[] {
-                "Appetizers", "Drinks", "Main Courses", "Sides", "Others"
+                Diet.NONE.getType(), Diet.VEGETARIAN.getType(), Diet.VEGAN.getType()
         }));
-        dietField.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        dietField.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         dietField.setMinimumSize(new Dimension(72, 25));
         dietField.setUI(new CustomComboBoxUI());
 
@@ -312,29 +316,29 @@ public class DishDetailPage extends JPanel {
                                 .addGap(28, 28, 28))
         );
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
-        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
+        cancelButton.setBackground(Main.colorUtilities.getButtonsColor());
         cancelButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                cancelButtonAction();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(cancelButton);
+                Main.colorUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(cancelButton);
+                Main.colorUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14));
-        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel7.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel7.setText("CANCEL");
 
@@ -349,7 +353,7 @@ public class DishDetailPage extends JPanel {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        saveButton.setBackground(Main.uiUtilities.getButtonsColor());
+        saveButton.setBackground(Main.colorUtilities.getButtonsColor());
         saveButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -359,17 +363,17 @@ public class DishDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(saveButton);
+                Main.colorUtilities.buttonHoverEntered(saveButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(saveButton);
+                Main.colorUtilities.buttonHoverExited(saveButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
-        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel6.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("SAVE");
 
@@ -435,12 +439,42 @@ public class DishDetailPage extends JPanel {
         );
     }
 
-    private void cancelButtonAction() {}
+    private void cancelButtonAction() {
+
+        if (dishId < 0) {
+            nameField.setText("");
+            priceField.setText("");
+            descriptionField.setText("");
+        }
+        else {
+            getDishFields();
+        }
+    }
 
     private void saveOrUpdateDish() {
 
         if (validateFields()) {
 
+            if (dishId < 0) {
+                Dish.create(nameField.getText(), Double.parseDouble(priceField.getText()),
+                        (String) typeField.getSelectedItem(), (String) dietField.getSelectedItem(),
+                        descriptionField.getText(), restaurantId);
+
+                Main.mainWindow.setBottomInformation("Created new Dish '" + nameField.getText() +"'");
+            }
+            else {
+                Dish.update(dishId, nameField.getText(), Double.parseDouble(priceField.getText()),
+                        (String) typeField.getSelectedItem(), (String) dietField.getSelectedItem(),
+                        descriptionField.getText());
+
+                String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
+                Main.mainWindow.setBottomInformation("Dish at row #"+ rowID +" updated");
+            }
+
+            Main.mainWindow.loadRestaurantDishesView(restaurantId);
+        }
+        else {
+            Main.mainWindow.setBottomInformation("Wrong Fields(s) inputs");
         }
 
     }
@@ -455,40 +489,15 @@ public class DishDetailPage extends JPanel {
                 nameField.setText(dish.getString(Dish.NAME));
                 priceField.setText(dish.getString(Dish.PRICE));
 
-                String dishType = dish.getString(Dish.TYPE);
-                if (dishType.equals("NONE")) {
-                    typeField.setSelectedIndex(0);
-                }
-                else if (dishType.equals("Vegan")) {
-                    typeField.setSelectedIndex(1);
-                }
-                else {
-                    typeField.setSelectedIndex(2);
-                }
-
-                String dishDiet = dish.getString(Dish.DIET);
-                if (dishDiet.equals("APPETIZERS")) {
-                    dietField.setSelectedIndex(0);
-                }
-                else if (dishDiet.equals("DRINKS")) {
-                    dietField.setSelectedIndex(1);
-                }
-                else if (dishDiet.equals("SIDES")) {
-                    dietField.setSelectedIndex(3);
-                }
-                else if (dishDiet.equals("OTHERS")) {
-                    dietField.setSelectedIndex(4);
-                }
-                else {
-                    dietField.setSelectedIndex(2);
-                }
+                typeField.setSelectedItem(dish.getString(Dish.TYPE));
+                dietField.setSelectedItem(dish.getString(Dish.DIET));
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        titleLabel.setText("Editing Dish For: "+ restaurantName);
+        titleLabel.setText("Editing Dish For "+ restaurantName);
     }
 
     private boolean validateFields() {
@@ -502,8 +511,8 @@ public class DishDetailPage extends JPanel {
             valid = false;
         }
         else {
-            nameFieldSepartor.setBackground(Main.uiUtilities.getMainColor());
-            nameFieldSepartor.setForeground(Main.uiUtilities.getMainColor());
+            nameFieldSepartor.setBackground(Main.colorUtilities.getMainColor());
+            nameFieldSepartor.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (!FieldValidator.validateMoney(priceField.getText())) {
@@ -513,8 +522,8 @@ public class DishDetailPage extends JPanel {
             valid = false;
         }
         else {
-            priceFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-            priceFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+            priceFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+            priceFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         return valid;

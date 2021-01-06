@@ -102,33 +102,33 @@ public class SettingPage extends JPanel {
         buttonColorClear = new JPanel();
         jLabel16 = new JLabel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel2.setBackground(Main.uiUtilities.getBackground());
+        jPanel2.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Url");
 
         dbUrl.setFont(new Font("Segoe UI", 0, 14));
-        dbUrl.setBackground(Main.uiUtilities.getBackground());
+        dbUrl.setBackground(Main.colorUtilities.getBackground());
         dbUrl.setBorder(null);
 
-        dbUrlSeparator.setBackground(Main.uiUtilities.getMainColor());
-        dbUrlSeparator.setForeground(Main.uiUtilities.getMainColor());
+        dbUrlSeparator.setBackground(Main.colorUtilities.getMainColor());
+        dbUrlSeparator.setForeground(Main.colorUtilities.getMainColor());
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
         jSeparator4.setOrientation(SwingConstants.VERTICAL);
 
         jLabel9.setFont(new Font("Segoe UI", 0, 14));
         jLabel9.setText("Main Color");
 
         mainColor.setFont(new Font("Segoe UI", 0, 14));
-        mainColor.setBackground(Main.uiUtilities.getBackground());
+        mainColor.setBackground(Main.colorUtilities.getBackground());
         mainColor.setBorder(null);
 
-        mainColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-        mainColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        mainColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+        mainColorSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel1.setFont(new Font("Segoe UI", 1, 18));
         jLabel1.setText("Database Config");
@@ -140,53 +140,53 @@ public class SettingPage extends JPanel {
         jLabel4.setText("User Name");
 
         dbUsername.setFont(new Font("Segoe UI", 0, 14));
-        dbUsername.setBackground(Main.uiUtilities.getBackground());
+        dbUsername.setBackground(Main.colorUtilities.getBackground());
         dbUsername.setBorder(null);
 
-        dbUsernameSeparator.setBackground(Main.uiUtilities.getMainColor());
-        dbUsernameSeparator.setForeground(Main.uiUtilities.getMainColor());
+        dbUsernameSeparator.setBackground(Main.colorUtilities.getMainColor());
+        dbUsernameSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel5.setFont(new Font("Segoe UI", 0, 14));
         jLabel5.setText("Password");
 
-        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator3.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator3.setForeground(Main.colorUtilities.getMainColor());
 
         dbPassword.setFont(new Font("Segoe UI", 0, 14));
-        dbPassword.setBackground(Main.uiUtilities.getBackground());
+        dbPassword.setBackground(Main.colorUtilities.getBackground());
         dbPassword.setBorder(null);
 
         jLabel10.setFont(new Font("Segoe UI", 0, 14));
         jLabel10.setText("Main Text Color");
 
         mainTextColor.setFont(new Font("Segoe UI", 0, 14));
-        mainTextColor.setBackground(Main.uiUtilities.getBackground());
+        mainTextColor.setBackground(Main.colorUtilities.getBackground());
         mainTextColor.setBorder(null);
 
-        mainTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-        mainTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        mainTextColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+        mainTextColorSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel11.setFont(new Font("Segoe UI", 0, 14));
         jLabel11.setText("Buttons Color");
 
         buttonsColor.setFont(new Font("Segoe UI", 0, 14));
-        buttonsColor.setBackground(Main.uiUtilities.getBackground());
+        buttonsColor.setBackground(Main.colorUtilities.getBackground());
         buttonsColor.setBorder(null);
 
-        buttonsColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-        buttonsColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        buttonsColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+        buttonsColorSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel12.setFont(new Font("Segoe UI", 0, 14));
         jLabel12.setText("Buttons Text Color");
 
         buttonsTextColor.setFont(new Font("Segoe UI", 0, 14));
-        buttonsTextColor.setBackground(Main.uiUtilities.getBackground());
+        buttonsTextColor.setBackground(Main.colorUtilities.getBackground());
         buttonsTextColor.setBorder(null);
 
-        buttonsTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-        buttonsTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+        buttonsTextColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+        buttonsTextColorSeparator.setForeground(Main.colorUtilities.getMainColor());
 
-        buttonDBClear.setBackground(Main.uiUtilities.getButtonsColor());
+        buttonDBClear.setBackground(Main.colorUtilities.getButtonsColor());
         buttonDBClear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -195,17 +195,17 @@ public class SettingPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(buttonDBClear);
+                Main.colorUtilities.buttonHoverEntered(buttonDBClear);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(buttonDBClear);
+                Main.colorUtilities.buttonHoverExited(buttonDBClear);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
-        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel6.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("CANCEL");
 
@@ -220,7 +220,7 @@ public class SettingPage extends JPanel {
                         .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        buttonDBSave.setBackground(Main.uiUtilities.getButtonsColor());
+        buttonDBSave.setBackground(Main.colorUtilities.getButtonsColor());
         buttonDBSave.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -229,17 +229,17 @@ public class SettingPage extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(buttonDBSave);
+                Main.colorUtilities.buttonHoverExited(buttonDBSave);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(buttonDBSave);
+                Main.colorUtilities.buttonHoverEntered(buttonDBSave);
             }
         });
 
         jLabel15.setFont(new Font("Segoe UI", 1, 14));
-        jLabel15.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel15.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel15.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel15.setText("SAVE");
 
@@ -254,7 +254,7 @@ public class SettingPage extends JPanel {
                         .addComponent(jLabel15, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        buttonColorSave.setBackground(Main.uiUtilities.getButtonsColor());
+        buttonColorSave.setBackground(Main.colorUtilities.getButtonsColor());
         buttonColorSave.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -263,17 +263,17 @@ public class SettingPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(buttonColorSave);
+                Main.colorUtilities.buttonHoverEntered(buttonColorSave);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(buttonColorSave);
+                Main.colorUtilities.buttonHoverExited(buttonColorSave);
             }
         });
 
         jLabel17.setFont(new Font("Segoe UI", 1, 14));
-        jLabel17.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel17.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel17.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel17.setText("SAVE");
 
@@ -288,7 +288,7 @@ public class SettingPage extends JPanel {
                         .addComponent(jLabel17, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        buttonColorClear.setBackground(Main.uiUtilities.getButtonsColor());
+        buttonColorClear.setBackground(Main.colorUtilities.getButtonsColor());
         buttonColorClear.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -297,17 +297,17 @@ public class SettingPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(buttonColorClear);
+                Main.colorUtilities.buttonHoverEntered(buttonColorClear);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(buttonColorClear);
+                Main.colorUtilities.buttonHoverExited(buttonColorClear);
             }
         });
 
         jLabel16.setFont(new Font("Segoe UI", 1, 14));
-        jLabel16.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel16.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel16.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel16.setText("CLEAR");
 
@@ -480,16 +480,16 @@ public class SettingPage extends JPanel {
 
     private void fillColorFields() {
 
-        mainColor.setText(Main.uiUtilities.getMainColorHEX());
-        mainTextColor.setText(Main.uiUtilities.getMainTextColorHEX());
-        buttonsColor.setText(Main.uiUtilities.getButtonsColorHEX());
-        buttonsTextColor.setText(Main.uiUtilities.getButtonsTextColorHEX());
+        mainColor.setText(Main.colorUtilities.getMainColorHEX());
+        mainTextColor.setText(Main.colorUtilities.getMainTextColorHEX());
+        buttonsColor.setText(Main.colorUtilities.getButtonsColorHEX());
+        buttonsTextColor.setText(Main.colorUtilities.getButtonsTextColorHEX());
     }
 
     private void saveColorConfig() {
 
         if (validateColorFields()) {
-            Main.uiUtilities.saveConfig(mainColor.getText(), mainTextColor.getText(),
+            Main.colorUtilities.saveConfig(mainColor.getText(), mainTextColor.getText(),
                     buttonsColor.getText(), buttonsTextColor.getText());
 
             Main.redrawWindowWithNewStyle();
@@ -506,8 +506,8 @@ public class SettingPage extends JPanel {
         if (FieldValidator.validateHEXColor(mainColor.getText()) ||
             FieldValidator.validateRGBColor(mainColor.getText()))
         {
-            mainColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            mainColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+            mainColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+            mainColorSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
         else {
             mainColorSeparator.setBackground(new Color(153, 0, 0));
@@ -519,8 +519,8 @@ public class SettingPage extends JPanel {
         if (FieldValidator.validateHEXColor(mainTextColor.getText()) ||
             FieldValidator.validateRGBColor(mainTextColor.getText()))
         {
-            mainTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            mainTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+            mainTextColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+            mainTextColorSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
         else {
             mainTextColorSeparator.setBackground(new Color(153, 0, 0));
@@ -532,8 +532,8 @@ public class SettingPage extends JPanel {
         if (FieldValidator.validateHEXColor(buttonsColor.getText()) ||
             FieldValidator.validateRGBColor(buttonsColor.getText()))
         {
-            buttonsColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            buttonsColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+            buttonsColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+            buttonsColorSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
         else {
             buttonsColorSeparator.setBackground(new Color(153, 0, 0));
@@ -545,8 +545,8 @@ public class SettingPage extends JPanel {
         if (FieldValidator.validateHEXColor(buttonsTextColor.getText()) ||
             FieldValidator.validateRGBColor(buttonsTextColor.getText()))
         {
-            buttonsTextColorSeparator.setBackground(Main.uiUtilities.getMainColor());
-            buttonsTextColorSeparator.setForeground(Main.uiUtilities.getMainColor());
+            buttonsTextColorSeparator.setBackground(Main.colorUtilities.getMainColor());
+            buttonsTextColorSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
         else {
             buttonsTextColorSeparator.setBackground(new Color(153, 0, 0));
@@ -589,8 +589,8 @@ public class SettingPage extends JPanel {
             valid = false;
         }
         else {
-            dbUrlSeparator.setBackground(Main.uiUtilities.getMainColor());
-            dbUrlSeparator.setForeground(Main.uiUtilities.getMainColor());
+            dbUrlSeparator.setBackground(Main.colorUtilities.getMainColor());
+            dbUrlSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (dbUsername.getText().length() == 0) {
@@ -600,8 +600,8 @@ public class SettingPage extends JPanel {
             valid = false;
         }
         else {
-            dbUrlSeparator.setBackground(Main.uiUtilities.getMainColor());
-            dbUrlSeparator.setForeground(Main.uiUtilities.getMainColor());
+            dbUrlSeparator.setBackground(Main.colorUtilities.getMainColor());
+            dbUrlSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         return valid;

@@ -84,9 +84,9 @@ public class UserPage extends JPanel {
         jTable1 = new JTable();
         tableModel = new DefaultTableModel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 18));
         jLabel2.setText("Filters");
@@ -95,62 +95,62 @@ public class UserPage extends JPanel {
         jLabel3.setText("First Name");
 
         firstNameFilter.setFont(new Font("Segoe UI", 0, 14));
-        firstNameFilter.setBackground(Main.uiUtilities.getBackground());
+        firstNameFilter.setBackground(Main.colorUtilities.getBackground());
         firstNameFilter.setText("All");
         firstNameFilter.setBorder(null);
 
-        jSeparator1.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator1.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator1.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator1.setForeground(Main.colorUtilities.getMainColor());
 
         emailFilter.setFont(new Font("Segoe UI", 0, 14));
-        emailFilter.setBackground(Main.uiUtilities.getBackground());
+        emailFilter.setBackground(Main.colorUtilities.getBackground());
         emailFilter.setText("All");
         emailFilter.setBorder(null);
 
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
         jLabel6.setText("Email");
 
-        jSeparator3.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator3.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator3.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator3.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel7.setFont(new Font("Segoe UI", 0, 14));
         jLabel7.setText("City");
 
         cityFilter.setFont(new Font("Segoe UI", 0, 14));
-        cityFilter.setBackground(Main.uiUtilities.getBackground());
+        cityFilter.setBackground(Main.colorUtilities.getBackground());
         cityFilter.setText("All");
         cityFilter.setBorder(null);
 
-        jSeparator4.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator4.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator4.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator4.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
         jLabel4.setText("Role:");
 
         roleFilter.setEditable(false);
         roleFilter.setFont(new Font("Segoe UI", 0, 14));
-        roleFilter.setBackground(Main.uiUtilities.getBackground());
+        roleFilter.setBackground(Main.colorUtilities.getBackground());
         roleFilter.setMaximumRowCount(3);
         roleFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Admin", "User" }));
-        roleFilter.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        roleFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
 
         roleFilter.setUI(new CustomComboBoxUI());
 
-        jSeparator2.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator2.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator2.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator2.setForeground(Main.colorUtilities.getMainColor());
 
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("Last Name");
 
         lastNameFilter.setFont(new Font("Segoe UI", 0, 14));
-        lastNameFilter.setBackground(Main.uiUtilities.getBackground());
+        lastNameFilter.setBackground(Main.colorUtilities.getBackground());
         lastNameFilter.setText("All");
         lastNameFilter.setBorder(null);
 
-        jSeparator5.setBackground(Main.uiUtilities.getMainColor());
-        jSeparator5.setForeground(Main.uiUtilities.getMainColor());
+        jSeparator5.setBackground(Main.colorUtilities.getMainColor());
+        jSeparator5.setForeground(Main.colorUtilities.getMainColor());
 
-        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
+        clearButton.setBackground(Main.colorUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -160,17 +160,17 @@ public class UserPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(clearButton);
+                Main.colorUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(clearButton);
+                Main.colorUtilities.buttonHoverExited(clearButton);
             }
         });
 
         jLabel1.setFont(new Font("Segoe UI", 1, 12));
-        jLabel1.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel1.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel1.setText("CLEAR");
 
@@ -185,7 +185,7 @@ public class UserPage extends JPanel {
                         .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
-        searchButton.setBackground(Main.uiUtilities.getButtonsColor());
+        searchButton.setBackground(Main.colorUtilities.getButtonsColor());
         searchButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         searchButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -195,17 +195,17 @@ public class UserPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(searchButton);
+                Main.colorUtilities.buttonHoverEntered(searchButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(searchButton);
+                Main.colorUtilities.buttonHoverExited(searchButton);
             }
         });
 
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
-        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel5.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("SEARCH");
 
@@ -324,16 +324,16 @@ public class UserPage extends JPanel {
         popupMenu.add(popupItemEdit);
         popupMenu.add(popupItemRemove);
 
-        jScrollPane1.setBackground(Main.uiUtilities.getBackground());
-        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jScrollPane1.setBackground(Main.colorUtilities.getBackground());
+        jScrollPane1.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
 
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jTable1.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         jTable1.setFont(new Font("Segoe UI", 0, 14));
 
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        jTable1.getTableHeader().setBackground(Main.uiUtilities.getBackground());
-        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.uiUtilities.getBackground()));
+        jTable1.getTableHeader().setBackground(Main.colorUtilities.getBackground());
+        jTable1.getTableHeader().setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setOpaque(false);
@@ -350,11 +350,11 @@ public class UserPage extends JPanel {
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
         jTable1.setFocusable(false);
-        jTable1.setGridColor(Main.uiUtilities.getMainColor());
-        jTable1.setBackground(Main.uiUtilities.getBackground());
+        jTable1.setGridColor(Main.colorUtilities.getMainColor());
+        jTable1.setBackground(Main.colorUtilities.getBackground());
         jTable1.setIntercellSpacing(new Dimension(0, 0));
         jTable1.setRowHeight(40);
-        jTable1.setSelectionBackground(Main.uiUtilities.getMainColor());
+        jTable1.setSelectionBackground(Main.colorUtilities.getMainColor());
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);

@@ -79,9 +79,9 @@ public class RestaurantDetailPage extends JPanel {
         saveButton = new JPanel();
         jLabel6 = new JLabel();
 
-        background.setBackground(Main.uiUtilities.getBackground());
+        background.setBackground(Main.colorUtilities.getBackground());
 
-        jPanel1.setBackground(Main.uiUtilities.getBackground());
+        jPanel1.setBackground(Main.colorUtilities.getBackground());
 
         titleLabel.setFont(new Font("Segoe UI", 1, 24));
 
@@ -102,13 +102,13 @@ public class RestaurantDetailPage extends JPanel {
                                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(Main.uiUtilities.getBackground());
+        jPanel2.setBackground(Main.colorUtilities.getBackground());
 
         jLabel2.setFont(new Font("Segoe UI", 0, 14));
         jLabel2.setText("Name");
 
         nameField.setFont(new Font("Segoe UI", 0, 14));
-        nameField.setBackground(Main.uiUtilities.getBackground());
+        nameField.setBackground(Main.colorUtilities.getBackground());
         nameField.setBorder(null);
         nameField.setDocument(new PlainDocument() {
             @Override
@@ -126,7 +126,7 @@ public class RestaurantDetailPage extends JPanel {
         jLabel3.setText("Address");
 
         addressField.setFont(new Font("Segoe UI", 0, 14));
-        addressField.setBackground(Main.uiUtilities.getBackground());
+        addressField.setBackground(Main.colorUtilities.getBackground());
         addressField.setBorder(null);
         addressField.setDocument(new PlainDocument() {
             @Override
@@ -156,13 +156,13 @@ public class RestaurantDetailPage extends JPanel {
         });
         descriptionArea.setColumns(20);
         descriptionArea.setFont(new Font("Segoe UI", 0, 14));
-        descriptionArea.setBackground(Main.uiUtilities.getBackground());
+        descriptionArea.setBackground(Main.colorUtilities.getBackground());
         descriptionArea.setLineWrap(true);
         descriptionArea.setRows(5);
-        descriptionArea.setBorder(new LineBorder(Main.uiUtilities.getMainColor()));
+        descriptionArea.setBorder(new LineBorder(Main.colorUtilities.getMainColor()));
         jScrollPane1.setViewportView(descriptionArea);
 
-        clearButton.setBackground(Main.uiUtilities.getButtonsColor());
+        clearButton.setBackground(Main.colorUtilities.getButtonsColor());
         clearButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         clearButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -172,17 +172,17 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(clearButton);
+                Main.colorUtilities.buttonHoverEntered(clearButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(clearButton);
+                Main.colorUtilities.buttonHoverExited(clearButton);
             }
         });
 
         jLabel5.setFont(new Font("Segoe UI", 1, 14));
-        jLabel5.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel5.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel5.setText("CLEAR");
 
@@ -199,11 +199,11 @@ public class RestaurantDetailPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        nameFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-        nameFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+        nameFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        nameFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
-        addressFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-        addressFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+        addressFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        addressFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -256,9 +256,9 @@ public class RestaurantDetailPage extends JPanel {
                                 .addGap(30, 30, 30))
         );
 
-        jPanel3.setBackground(Main.uiUtilities.getBackground());
+        jPanel3.setBackground(Main.colorUtilities.getBackground());
 
-        cancelButton.setBackground(Main.uiUtilities.getButtonsColor());
+        cancelButton.setBackground(Main.colorUtilities.getButtonsColor());
         cancelButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         cancelButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -268,17 +268,17 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(cancelButton);
+                Main.colorUtilities.buttonHoverEntered(cancelButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(cancelButton);
+                Main.colorUtilities.buttonHoverExited(cancelButton);
             }
         });
 
         jLabel7.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel7.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel7.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel7.setText("CANCEL");
 
@@ -293,7 +293,7 @@ public class RestaurantDetailPage extends JPanel {
                         .addComponent(jLabel7, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        saveButton.setBackground(Main.uiUtilities.getButtonsColor());
+        saveButton.setBackground(Main.colorUtilities.getButtonsColor());
         saveButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, Color.white, Color.white, Color.lightGray, Color.white));
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -303,17 +303,17 @@ public class RestaurantDetailPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Main.uiUtilities.buttonHoverEntered(saveButton);
+                Main.colorUtilities.buttonHoverEntered(saveButton);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Main.uiUtilities.buttonHoverExited(saveButton);
+                Main.colorUtilities.buttonHoverExited(saveButton);
             }
         });
 
         jLabel6.setFont(new Font("Segoe UI", 1, 14));
-        jLabel6.setForeground(Main.uiUtilities.getButtonsTextColor());
+        jLabel6.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel6.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel6.setText("SAVE");
 
@@ -379,8 +379,6 @@ public class RestaurantDetailPage extends JPanel {
         );
     }
 
-
-
     private void cancelButtonAction() {
 
         if (entityID < 0) {
@@ -443,8 +441,8 @@ public class RestaurantDetailPage extends JPanel {
             valid = false;
         }
         else {
-            addressFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-            addressFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+            addressFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+            addressFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (nameField.getText().length() == 0) {
@@ -454,8 +452,8 @@ public class RestaurantDetailPage extends JPanel {
             valid = false;
         }
         else {
-            nameFieldSeparator.setBackground(Main.uiUtilities.getMainColor());
-            nameFieldSeparator.setForeground(Main.uiUtilities.getMainColor());
+            nameFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+            nameFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (descriptionArea.getText().length() == 0) {
@@ -464,7 +462,7 @@ public class RestaurantDetailPage extends JPanel {
             valid = false;
         }
         else {
-            descriptionArea.setBorder(new LineBorder(Main.uiUtilities.getMainColor()));
+            descriptionArea.setBorder(new LineBorder(Main.colorUtilities.getMainColor()));
         }
 
         return valid;

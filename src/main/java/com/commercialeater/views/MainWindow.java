@@ -413,6 +413,11 @@ public class MainWindow extends JFrame {
         newUserMenuItem.setAccelerator(KeyStroke.getKeyStroke("control U"));
         newEntityMenu.add(newUserMenuItem);
 
+        JMenuItem newCityMenuItem = new JMenuItem("City");
+        newCityMenuItem.addActionListener(e -> loadCitiesView());
+        newCityMenuItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
+        newEntityMenu.add(newCityMenuItem);
+
         JMenuItem newDishItem = new JMenuItem("Dish");
         newDishItem.addActionListener(e -> loadDishCreationPage(-1L));
         newDishItem.setAccelerator(KeyStroke.getKeyStroke("control D"));
@@ -483,6 +488,14 @@ public class MainWindow extends JFrame {
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "RestaurantDishes");
         setEnableNewDishMenu(true);
+    }
+
+    public void loadCitiesView() {
+
+        try { mainCardPanel.remove(4); } catch (Exception err) {}
+
+        mainCardPanel.add(new CitiesPage(), "Cities");
+        ((CardLayout) mainCardPanel.getLayout()).show(mainCardPanel, "Cities");
     }
 
     public void loadRestaurantCreationPage(Long entityId) {

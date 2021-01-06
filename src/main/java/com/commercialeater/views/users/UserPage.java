@@ -1,6 +1,7 @@
 package com.commercialeater.views.users;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.City;
 import com.commercialeater.models.User;
 import com.commercialeater.utilities.CustomComboBoxUI;
 
@@ -35,7 +36,7 @@ public class UserPage extends JPanel {
 
     private JPanel background;
 
-    private JTextField cityFilter;
+    private JComboBox<String> cityFilter;
     private JTextField emailFilter;
     private JTextField firstNameFilter;
     private JTextField lastNameFilter;
@@ -68,7 +69,7 @@ public class UserPage extends JPanel {
         jLabel6 = new JLabel();
         jSeparator3 = new JSeparator();
         jLabel7 = new JLabel();
-        cityFilter = new JTextField();
+        cityFilter = new JComboBox<>();
         jSeparator4 = new JSeparator();
         jLabel4 = new JLabel();
         roleFilter = new JComboBox<>();
@@ -116,10 +117,15 @@ public class UserPage extends JPanel {
         jLabel7.setFont(new Font("Segoe UI", 0, 14));
         jLabel7.setText("City");
 
+        cityFilter.setEditable(false);
         cityFilter.setFont(new Font("Segoe UI", 0, 14));
         cityFilter.setBackground(Main.colorUtilities.getBackground());
-        cityFilter.setText("All");
-        cityFilter.setBorder(null);
+        cityFilter.setMaximumRowCount(3);
+        cityFilter.setModel(new DefaultComboBoxModel<>(City.getCitiesArray().toArray(new String[0])));
+        cityFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
+        cityFilter.setMinimumSize(new Dimension(72, 25));
+
+        cityFilter.setUI(new CustomComboBoxUI());
 
         jSeparator4.setBackground(Main.colorUtilities.getMainColor());
         jSeparator4.setForeground(Main.colorUtilities.getMainColor());
@@ -307,10 +313,11 @@ public class UserPage extends JPanel {
                                                                 .addGap(18, 18, 18)
                                                                 .addComponent(jLabel7))
                                                         .addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                                //.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGap(16, 16, 16)
                                                                 .addComponent(cityFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -462,14 +469,14 @@ public class UserPage extends JPanel {
             Main.mainWindow.setBottomInformation("User '"+ user +"'  was deleted");
         }
         else {
-            Main.mainWindow.setBottomInformation("Couldn't delete User on row #"+ rowID);
+            Main.mainWindow.setBottomInformation("Couldn't delete User on row #"+ (selectedRow+1));
         }
     }
 
     private void filterUsers() {
 
         ResultSet users = User.getQueryData(emailFilter.getText(), firstNameFilter.getText(), lastNameFilter.getText(),
-                cityFilter.getText(), roleFilter.getSelectedItem().toString());
+                (String) cityFilter.getSelectedItem(), roleFilter.getSelectedItem().toString());
         String[] rows = new String[6];
         int rowsCount = 0;
 
@@ -493,16 +500,13 @@ public class UserPage extends JPanel {
             e.printStackTrace();
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " users for email: '" +
-                emailFilter.getText() + "', role: '" + roleFilter.getSelectedItem().toString() +
-                "', first name: '" + firstNameFilter.getText() +"', last name: '" + lastNameFilter.getText() +
-                "', city: '"+ cityFilter.getText() +"'");
+        Main.mainWindow.setBottomInformation("Found " + rowsCount + " users");
     }
 
     private void clearAndSearch() {
 
         emailFilter.setText("All");
-        cityFilter.setText("All");
+        cityFilter.setSelectedIndex(0);
         firstNameFilter.setText("All");
         lastNameFilter.setText("All");
         roleFilter.setSelectedIndex(0);

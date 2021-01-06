@@ -1,6 +1,7 @@
 package com.commercialeater.views.users;
 
 import com.commercialeater.Main;
+import com.commercialeater.models.City;
 import com.commercialeater.models.User;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
@@ -48,7 +49,7 @@ public class UserDetailPage extends JPanel {
     private JPanel saveButton;
     private JPanel topUpButton;
 
-    private JTextField cityField;
+    private JComboBox<String> cityField;
     private JTextField emailField;
     private JTextField firstNameField;
     private JTextField lastNameField;
@@ -89,7 +90,7 @@ public class UserDetailPage extends JPanel {
         firstNameField = new JTextField();
         firstNameSeparator = new JSeparator();
         jLabel8 = new JLabel();
-        cityField = new JTextField();
+        cityField = new JComboBox<>();
         cityFieldSeparator = new JSeparator();
         jLabel9 = new JLabel();
         lastNameField = new JTextField();
@@ -174,9 +175,19 @@ public class UserDetailPage extends JPanel {
         jLabel8.setFont(new Font("Segoe UI", 0, 14));
         jLabel8.setText("City");
 
+        cityField.setEditable(false);
         cityField.setFont(new Font("Segoe UI", 0, 14));
         cityField.setBackground(Main.colorUtilities.getBackground());
-        cityField.setBorder(null);
+        cityField.setMaximumRowCount(3);
+        cityField.setModel(new DefaultComboBoxModel<>(City.getCitiesArray().toArray(new String[0])));
+        cityField.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
+        cityField.setMinimumSize(new Dimension(72, 25));
+
+        cityField.setUI(new CustomComboBoxUI());
+
+//        cityField.setFont(new Font("Segoe UI", 0, 14));
+//        cityField.setBackground(Main.colorUtilities.getBackground());
+//        cityField.setBorder(null);
 
         cityFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
         cityFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
@@ -358,6 +369,7 @@ public class UserDetailPage extends JPanel {
                                                                 .addGap(7, 7, 7)
                                                                 .addComponent(roleField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                                                 //.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGap(5, 5, 5)
                                                                 .addComponent(jSeparator8, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
                                                 .addGap(43, 43, 43)
                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -497,7 +509,7 @@ public class UserDetailPage extends JPanel {
             emailField.setText("");
             firstNameField.setText("");
             lastNameField.setText("");
-            cityField.setText("");
+            cityField.setSelectedIndex(0);
             balanceLabel.setText("0 zl");
             roleField.setSelectedIndex(1);
             setStandardPassword();
@@ -518,7 +530,7 @@ public class UserDetailPage extends JPanel {
                 password = user.getString(User.PASSWORD);
                 firstNameField.setText(user.getString(User.FIRST_NAME));
                 lastNameField.setText(user.getString(User.LAST_NAME));
-                cityField.setText(user.getString(User.CITY));
+                cityField.setSelectedItem(user.getString(User.CITY));
                 balanceLabel.setText(user.getString(User.BALANCE) + " zl");
 
                 String role = user.getString(User.ROLE);
@@ -537,13 +549,13 @@ public class UserDetailPage extends JPanel {
 
             if (entityID < 0) {
                 User.create(emailField.getText(), password, roleField.getSelectedItem().toString(),
-                        firstNameField.getText(), lastNameField.getText(), cityField.getText(),
+                        firstNameField.getText(), lastNameField.getText(), (String) cityField.getSelectedItem(),
                         Double.parseDouble(balanceLabel.getText().split(" ")[0]));
 
                 Main.mainWindow.setBottomInformation("Created new user '" + emailField.getText() + "'");
             } else {
                 User.update(entityID, emailField.getText(), password, roleField.getSelectedItem().toString(),
-                        firstNameField.getText(), lastNameField.getText(), cityField.getText(),
+                        firstNameField.getText(), lastNameField.getText(), (String) cityField.getSelectedItem(),
                         Double.parseDouble(balanceLabel.getText().split(" ")[0]));
 
                 String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
@@ -572,8 +584,8 @@ public class UserDetailPage extends JPanel {
             valid = false;
         }
         else {
-            emailFieldSeparator.setBackground(new Color(153, 194, 93));
-            emailFieldSeparator.setForeground(new Color(153, 194, 93));
+            emailFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+            emailFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (firstNameField.getText().length() == 0) {
@@ -583,8 +595,8 @@ public class UserDetailPage extends JPanel {
             valid = false;
         }
         else {
-            firstNameSeparator.setBackground(new Color(153, 194, 93));
-            firstNameSeparator.setForeground(new Color(153, 194, 93));
+            firstNameSeparator.setBackground(Main.colorUtilities.getMainColor());
+            firstNameSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (lastNameField.getText().length() == 0) {
@@ -594,19 +606,8 @@ public class UserDetailPage extends JPanel {
             valid = false;
         }
         else {
-            lastNameSeparator.setBackground(new Color(153, 194, 93));
-            lastNameSeparator.setForeground(new Color(153, 194, 93));
-        }
-
-        if (cityField.getText().length() == 0) {
-            cityFieldSeparator.setBackground(new Color(153, 0, 0));
-            cityFieldSeparator.setForeground(new Color(153, 0, 0));
-
-            valid = false;
-        }
-        else {
-            cityFieldSeparator.setBackground(new Color(153, 194, 93));
-            cityFieldSeparator.setForeground(new Color(153, 194, 93));
+            lastNameSeparator.setBackground(Main.colorUtilities.getMainColor());
+            lastNameSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         return valid;

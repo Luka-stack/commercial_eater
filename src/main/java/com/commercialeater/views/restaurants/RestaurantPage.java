@@ -399,8 +399,7 @@ public class RestaurantPage extends JPanel {
             e.printStackTrace();
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants for name: " +
-                nameFilter.getText() + ", address: " + addressFilter.getText());
+        Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants");
     }
 
     private void openRestaurantDishes() {

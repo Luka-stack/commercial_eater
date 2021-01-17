@@ -1,7 +1,8 @@
 package com.commercialeater.views.restaurants;
 
 import com.commercialeater.Main;
-import com.commercialeater.models.Restaurant;
+import com.commercialeater.persistance.entity.RestaurantEntity;
+import com.commercialeater.persistance.service.RestaurantService;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -11,10 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 public class RestaurantPage extends JPanel {
+
+    private RestaurantService restaurantService;
 
     private JPanel background;
 
@@ -45,6 +47,7 @@ public class RestaurantPage extends JPanel {
     private JTextField addressFilter;
 
     public RestaurantPage() {
+        restaurantService = new RestaurantService();
         initComponents();
         getRestaurantsData(false);
     }
@@ -81,7 +84,6 @@ public class RestaurantPage extends JPanel {
 
         nameFilter.setFont(new Font("Segoe UI", 0, 14));
         nameFilter.setBackground(Main.colorUtilities.getBackground());
-        nameFilter.setText("All");
         nameFilter.setBorder(null);
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
@@ -89,7 +91,6 @@ public class RestaurantPage extends JPanel {
 
         addressFilter.setFont(new Font("Segoe UI", 0, 14));
         addressFilter.setBackground(Main.colorUtilities.getBackground());
-        addressFilter.setText("All");
         addressFilter.setBorder(null);
 
         searchButton.setBackground(Main.colorUtilities.getButtonsColor());
@@ -279,6 +280,7 @@ public class RestaurantPage extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 int selectedRow = jTable1.getSelectedRow();
+                System.out.println(tableModel.getValueAt(selectedRow, 0).toString());
                 Main.mainWindow.setBottomInformation("Selected Row #"+ (selectedRow+1));
             }
         });
@@ -316,53 +318,40 @@ public class RestaurantPage extends JPanel {
 
     private void clearButtonClicked() {
         getRestaurantsData(true);
-        nameFilter.setText("All");
-        addressFilter.setText("All");
+        nameFilter.setText("");
+        addressFilter.setText("");
     }
 
     private void removeSelectedRow() {
 
         int selectedRow = jTable1.getSelectedRow();
-        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+        Long entityId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
 
+        restaurantService.deleteRestaurant(entityId);
+
+        tableModel.removeRow(selectedRow);
         String restaurant = tableModel.getValueAt(selectedRow, 1).toString();
-        int deleteResult = Restaurant.delete(rowID);
-
-        if (deleteResult > 0) {
-            tableModel.removeRow(selectedRow);
-            Main.mainWindow.setBottomInformation("Restaurant '"+ restaurant +"'  was deleted");
-        }
-        else {
-            Main.mainWindow.setBottomInformation("Couldn't delete Restaurant on row #"+ (selectedRow+1));
-        }
+        Main.mainWindow.setBottomInformation("Restaurant '"+ restaurant +"'  was deleted");
     }
 
     public void getRestaurantsData(boolean changeInformation) {
 
         tableModel.setRowCount(0);
-
-        ResultSet restaurants = Restaurant.getAll();
+        List<RestaurantEntity> restaurantList = restaurantService.getRestaurants();
         String[] rows = new String[4]; // Name, Address, Description
-        int rowsCount = 0;
 
-        try {
-            while (restaurants.next()) {
+        for (var restaurant : restaurantList) {
 
-                rows[0] = restaurants.getString(Restaurant.ID);
-                rows[1] = restaurants.getString(Restaurant.NAME);
-                rows[2] = restaurants.getString(Restaurant.ADDRESS);
-                rows[3] = restaurants.getString(Restaurant.DESCRIPTION);
+            rows[0] = String.valueOf(restaurant.getId());
+            rows[1] = restaurant.getName();
+            rows[2] = restaurant.getAddress();
+            rows[3] = restaurant.getDescription();
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
         if (changeInformation) {
-            Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants");
+            Main.mainWindow.setBottomInformation("Found " + restaurantList.size() + " restaurants");
         }
     }
 
@@ -377,36 +366,32 @@ public class RestaurantPage extends JPanel {
 
     private void filterRestaurants() {
 
-        ResultSet restaurants = Restaurant.getQueryData(nameFilter.getText(), addressFilter.getText());
+        List<RestaurantEntity> restaurants = restaurantService.getRestaurants(nameFilter.getText(), addressFilter.getText());
         String[] rows = new String[4];
-        int rowsCount = 0;
-
         tableModel.setRowCount(0);
 
-        try {
-            while (restaurants.next()) {
+        if (restaurants != null) {
 
-                rows[0] = restaurants.getString(Restaurant.ID);
-                rows[1] = restaurants.getString(Restaurant.NAME);
-                rows[2] = restaurants.getString(Restaurant.ADDRESS);
-                rows[3] = restaurants.getString(Restaurant.DESCRIPTION);
-                ++rowsCount;
+            for (var restaurant : restaurants) {
+
+                rows[0] = String.valueOf(restaurant.getId());
+                rows[1] = restaurant.getName();
+                rows[2] = restaurant.getAddress();
+                rows[3] = restaurant.getDescription();
 
                 tableModel.addRow(rows);
             }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " restaurants");
+            Main.mainWindow.setBottomInformation("Found " + restaurants.size() + " restaurants");
+        }
     }
 
     private void openRestaurantDishes() {
 
         int selectedRow = jTable1.getSelectedRow();
         Long restaurantId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+        String restaurantName = tableModel.getValueAt(selectedRow, 1).toString();
 
-        Main.mainWindow.loadRestaurantDishesView(restaurantId);
+        Main.mainWindow.loadRestaurantDishesView(restaurantId, restaurantName);
     }
 }

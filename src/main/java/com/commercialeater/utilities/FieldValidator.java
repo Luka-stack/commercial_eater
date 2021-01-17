@@ -5,19 +5,19 @@ import java.util.regex.Pattern;
 
 public class FieldValidator {
 
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-    public static final Pattern VALID_DB_URL_REGEX =
+    private static final Pattern VALID_DB_URL_REGEX =
             Pattern.compile("[A-Z]+:[A-Z]+:\\/\\/[A-Z0-9.]+:[0-9]{1,5}\\/[A-Z0-9._]+", Pattern.CASE_INSENSITIVE);
 
-    public static final Pattern VALID_MONEY_REGEX = Pattern.compile("^[1-9]+[0-9]*[,.]?[0-9]*");
+    private static final Pattern VALID_MONEY_REGEX = Pattern.compile("^[1-9]+[0-9]*[,.]?[0-9]*");
 
-    public static final Pattern VALID_MONEY_FILTER_REGEX = Pattern.compile("[<=>]?\\d+(.\\d{1,2})?");
+    private static final Pattern VALID_MONEY_FILTER_REGEX = Pattern.compile("[<=>]?\\d+(.\\d{1,2})?");
 
-    public static final Pattern VALID_HEX_COLOR_REGEX = Pattern.compile("#[A-Z0-9]{6}", Pattern.CASE_INSENSITIVE);
+    private static final Pattern VALID_HEX_COLOR_REGEX = Pattern.compile("#[A-Z0-9]{6}", Pattern.CASE_INSENSITIVE);
 
-    public static final Pattern VALID_RGB_COLOR_REGEX =
+    private static final Pattern VALID_RGB_COLOR_REGEX =
             Pattern.compile("\\s*\\(?\\s*[0-9]{1,3}\\s*,\\s*[0-9]{1,3}\\s*,\\s*[0-9]{1,3}\\s*\\)?\\s*");
 
     public static boolean validateEmail(String emailStr) {

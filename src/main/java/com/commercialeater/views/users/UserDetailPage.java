@@ -3,6 +3,11 @@ package com.commercialeater.views.users;
 import com.commercialeater.Main;
 import com.commercialeater.models.City;
 import com.commercialeater.models.User;
+import com.commercialeater.persistance.entity.CityEntity;
+import com.commercialeater.persistance.entity.Role;
+import com.commercialeater.persistance.entity.UserEntity;
+import com.commercialeater.persistance.service.CityService;
+import com.commercialeater.persistance.service.UserService;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,12 +18,16 @@ import javax.swing.border.SoftBevelBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 public class UserDetailPage extends JPanel {
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final UserService userService = new UserService();
+    private final CityService cityService = new CityService();
 
     private JPanel background;
 
@@ -71,7 +80,7 @@ public class UserDetailPage extends JPanel {
         initComponents();
 
         this.entityID = entityID;
-        getUserFields();
+        //getUserFields();
     }
 
     private void initComponents() {
@@ -179,15 +188,13 @@ public class UserDetailPage extends JPanel {
         cityField.setFont(new Font("Segoe UI", 0, 14));
         cityField.setBackground(Main.colorUtilities.getBackground());
         cityField.setMaximumRowCount(3);
-        cityField.setModel(new DefaultComboBoxModel<>(City.getCitiesArray().toArray(new String[0])));
+
+        cityField.setModel(new DefaultComboBoxModel<>(cityService.getCities().stream()
+                .map(CityEntity::getName).toArray(String[]::new)));
         cityField.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         cityField.setMinimumSize(new Dimension(72, 25));
 
         cityField.setUI(new CustomComboBoxUI());
-
-//        cityField.setFont(new Font("Segoe UI", 0, 14));
-//        cityField.setBackground(Main.colorUtilities.getBackground());
-//        cityField.setBorder(null);
 
         cityFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
         cityFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
@@ -530,7 +537,7 @@ public class UserDetailPage extends JPanel {
                 password = user.getString(User.PASSWORD);
                 firstNameField.setText(user.getString(User.FIRST_NAME));
                 lastNameField.setText(user.getString(User.LAST_NAME));
-                cityField.setSelectedItem(user.getString(User.CITY));
+                cityField.setSelectedItem(user.getString(User.REF_CITY));
                 balanceLabel.setText(user.getString(User.BALANCE) + " zl");
 
                 String role = user.getString(User.ROLE);
@@ -547,16 +554,22 @@ public class UserDetailPage extends JPanel {
 
         if (validateFields()) {
 
+            CityEntity cityEntity = cityService.getCityByName((String) cityField.getSelectedItem());
+            BigDecimal balance = BigDecimal.valueOf(Long.parseLong(balanceLabel.getText().split(" ")[0]));
+
+            UserEntity userEntity = new UserEntity(firstNameField.getText(), lastNameField.getText(),
+                    emailField.getText(), Role.fromString((String) roleField.getSelectedItem()),
+                    password, balance, cityEntity);
+
+            System.out.println(userEntity.getRole());
+
             if (entityID < 0) {
-                User.create(emailField.getText(), password, roleField.getSelectedItem().toString(),
-                        firstNameField.getText(), lastNameField.getText(), (String) cityField.getSelectedItem(),
-                        Double.parseDouble(balanceLabel.getText().split(" ")[0]));
+                userService.createUser(userEntity);
 
                 Main.mainWindow.setBottomInformation("Created new user '" + emailField.getText() + "'");
             } else {
-                User.update(entityID, emailField.getText(), password, roleField.getSelectedItem().toString(),
-                        firstNameField.getText(), lastNameField.getText(), (String) cityField.getSelectedItem(),
-                        Double.parseDouble(balanceLabel.getText().split(" ")[0]));
+                userEntity.setId(entityID);
+                userService.updateUser(userEntity);
 
                 String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
                 Main.mainWindow.setBottomInformation("User at row #" + rowID + " updated");

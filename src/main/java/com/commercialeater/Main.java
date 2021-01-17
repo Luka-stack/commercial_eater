@@ -1,6 +1,7 @@
 package com.commercialeater;
 
 import com.commercialeater.utilities.ColorUtilities;
+import com.commercialeater.utilities.PDFGenerator;
 import com.commercialeater.views.LoginWindow;
 import com.commercialeater.views.MainWindow;
 import org.apache.log4j.Logger;
@@ -18,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DOMConfigurator.configure("D:\\New folder\\jv\\commercial_eater\\config\\log4jconfig.xml");
+        DOMConfigurator.configure("config\\log4jconfig.xml");
         colorUtilities = new ColorUtilities();
 
         try {

@@ -3,6 +3,11 @@ package com.commercialeater.views.users;
 import com.commercialeater.Main;
 import com.commercialeater.models.City;
 import com.commercialeater.models.User;
+import com.commercialeater.persistance.entity.CityEntity;
+import com.commercialeater.persistance.entity.Role;
+import com.commercialeater.persistance.entity.UserEntity;
+import com.commercialeater.persistance.service.CityService;
+import com.commercialeater.persistance.service.UserService;
 import com.commercialeater.utilities.CustomComboBoxUI;
 
 import javax.swing.*;
@@ -15,8 +20,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserPage extends JPanel {
+
+    private final UserService userService = new UserService();
+    private final CityService cityService = new CityService();
 
     private JLabel jLabel1;
     private JLabel jLabel2;
@@ -97,7 +106,6 @@ public class UserPage extends JPanel {
 
         firstNameFilter.setFont(new Font("Segoe UI", 0, 14));
         firstNameFilter.setBackground(Main.colorUtilities.getBackground());
-        firstNameFilter.setText("All");
         firstNameFilter.setBorder(null);
 
         jSeparator1.setBackground(Main.colorUtilities.getMainColor());
@@ -105,7 +113,6 @@ public class UserPage extends JPanel {
 
         emailFilter.setFont(new Font("Segoe UI", 0, 14));
         emailFilter.setBackground(Main.colorUtilities.getBackground());
-        emailFilter.setText("All");
         emailFilter.setBorder(null);
 
         jLabel6.setFont(new Font("Segoe UI", 0, 14));
@@ -121,7 +128,8 @@ public class UserPage extends JPanel {
         cityFilter.setFont(new Font("Segoe UI", 0, 14));
         cityFilter.setBackground(Main.colorUtilities.getBackground());
         cityFilter.setMaximumRowCount(3);
-        cityFilter.setModel(new DefaultComboBoxModel<>(City.getCitiesArray().toArray(new String[0])));
+        cityFilter.setModel(new DefaultComboBoxModel<>(cityService.getCities().stream()
+                .map(CityEntity::getName).toArray(String[]::new)));
         cityFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         cityFilter.setMinimumSize(new Dimension(72, 25));
 
@@ -150,7 +158,6 @@ public class UserPage extends JPanel {
 
         lastNameFilter.setFont(new Font("Segoe UI", 0, 14));
         lastNameFilter.setBackground(Main.colorUtilities.getBackground());
-        lastNameFilter.setText("All");
         lastNameFilter.setBorder(null);
 
         jSeparator5.setBackground(Main.colorUtilities.getMainColor());
@@ -348,7 +355,7 @@ public class UserPage extends JPanel {
         ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEtchedBorder());
 
         tableModel.setColumnIdentifiers(new String [] {
-                "Id", "First Name", "Last Name", "City", "Email", "Role"
+                "Id", "First Name", "Last Name","Email", "City", "Role"
         });
 
         jTable1.setModel(tableModel);
@@ -420,31 +427,29 @@ public class UserPage extends JPanel {
 
         tableModel.setRowCount(0);
 
-        ResultSet users = User.getAll();
+        List<UserEntity> users = userService.getUsers();
         String[] rows = new String[6]; // Id, First Name, Last Name, City, Email, Role
-        int rowsCount = 0;
 
-        try {
-            while (users.next()) {
+        for (var user : users) {
 
-                rows[0] = users.getString(User.ID);
-                rows[1] = users.getString(User.FIRST_NAME);
-                rows[2] = users.getString(User.LAST_NAME);
-                rows[3] = users.getString(User.CITY);
-                rows[4] = users.getString(User.EMAIL);
-                rows[5] = users.getString(User.ROLE);
+            rows[0] = String.valueOf(user.getId());
+            rows[1] = user.getFirstName();
+            rows[2] = user.getLastName();
+            rows[3] = user.getEmail();
+            rows[4] = user.getCity().getName();
+            rows[5] = user.getRole().getType();
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
         if (changeInformation) {
-            Main.mainWindow.setBottomInformation("Found " + rowsCount + " users");
+            Main.mainWindow.setBottomInformation("Found "+ users.size() +" users");
         }
+    }
+
+    public void refillCities() {
+        cityFilter.setModel(new DefaultComboBoxModel<>(cityService.getCities().stream()
+                .map(CityEntity::getName).toArray(String[]::new)));
     }
 
     private void editSelectedRow() {
@@ -459,56 +464,49 @@ public class UserPage extends JPanel {
     private void removeSelectedRow() {
 
         int selectedRow = jTable1.getSelectedRow();
-        Long rowID = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
-
+        Long entityId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
         String user = tableModel.getValueAt(selectedRow, 1).toString();
-        int deleteResult = User.delete(rowID);
 
-        if (deleteResult > 0) {
-            tableModel.removeRow(selectedRow);
-            Main.mainWindow.setBottomInformation("User '"+ user +"'  was deleted");
-        }
-        else {
-            Main.mainWindow.setBottomInformation("Couldn't delete User on row #"+ (selectedRow+1));
-        }
+        userService.deleteUser(entityId);
+        tableModel.removeRow(selectedRow);
+
+        Main.mainWindow.setBottomInformation("User '"+ user +"'  was deleted");
     }
 
     private void filterUsers() {
 
-        ResultSet users = User.getQueryData(emailFilter.getText(), firstNameFilter.getText(), lastNameFilter.getText(),
-                (String) cityFilter.getSelectedItem(), roleFilter.getSelectedItem().toString());
-        String[] rows = new String[6];
-        int rowsCount = 0;
+        Long cityId = 0L;
+        if (!cityFilter.getSelectedItem().toString().equalsIgnoreCase("all")) {
+            CityEntity city = cityService.getCityByName((String) cityFilter.getSelectedItem());
+            cityId = city.getId();
+        }
 
+        List<UserEntity> users = userService.getUsers(emailFilter.getText(), firstNameFilter.getText(),
+                lastNameFilter.getText(), cityId, roleFilter.getSelectedItem().toString());
+        String[] rows = new String[6];
         tableModel.setRowCount(0);
 
-        try {
-            while (users.next()) {
+        for (var user : users) {
 
-                rows[0] = users.getString(User.ID);
-                rows[1] = users.getString(User.FIRST_NAME);
-                rows[2] = users.getString(User.LAST_NAME);
-                rows[3] = users.getString(User.CITY);
-                rows[4] = users.getString(User.EMAIL);
-                rows[5] = users.getString(User.ROLE);
+            rows[0] = String.valueOf(user.getId());
+            rows[1] = user.getFirstName();
+            rows[2] = user.getLastName();
+            rows[3] = user.getEmail();
+            rows[4] = user.getCity().getName();
+            rows[5] = user.getRole().getType();
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " users");
+        Main.mainWindow.setBottomInformation("Found " + users.size() + " users");
     }
 
     private void clearAndSearch() {
 
-        emailFilter.setText("All");
+        emailFilter.setText("");
         cityFilter.setSelectedIndex(0);
-        firstNameFilter.setText("All");
-        lastNameFilter.setText("All");
+        firstNameFilter.setText("");
+        lastNameFilter.setText("");
         roleFilter.setSelectedIndex(0);
 
         getUsersData(true);

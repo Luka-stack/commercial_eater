@@ -14,4 +14,13 @@ public enum Diet {
     public String getType() {
         return type;
     }
+
+    public static Diet fromString(String text) {
+        for (var diet : Diet.values()) {
+            if (diet.type.equalsIgnoreCase(text)) {
+                return diet;
+            }
+        }
+        return Diet.values()[0];
+    }
 }

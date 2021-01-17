@@ -2,6 +2,8 @@ package com.commercialeater.views;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Transaction;
+import com.commercialeater.persistance.entity.TransactionEntity;
+import com.commercialeater.persistance.service.TransactionService;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
@@ -14,11 +16,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.DayOfWeek;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class TransactionsPage extends JPanel {
+
+    private final TransactionService transactionService = new TransactionService();
+    private final DateTimeFormatter showFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     private JPanel background;
 
@@ -200,7 +205,6 @@ public class TransactionsPage extends JPanel {
         userFilter.setFont(new Font("Segoe UI", 0, 14));
         userFilter.setBackground(Main.colorUtilities.getBackground());
         userFilter.setOpaque(false);
-        userFilter.setText("All");
         userFilter.setBorder(null);
 
         jSeparator3.setBackground(Main.colorUtilities.getMainColor());
@@ -216,7 +220,7 @@ public class TransactionsPage extends JPanel {
         transactionFilter.setFont(new Font("Segoe UI", 0, 14));
         transactionFilter.setBackground(Main.colorUtilities.getBackground());
         transactionFilter.setMaximumRowCount(3);
-        transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Top_Up", "Order" }));
+        transactionFilter.setModel(new DefaultComboBoxModel<>(new String[] { "All", "Top up", "Order" }));
         transactionFilter.setBorder(BorderFactory.createLineBorder(Main.colorUtilities.getBackground()));
         transactionFilter.setMinimumSize(new Dimension(72, 25));
 
@@ -388,27 +392,20 @@ public class TransactionsPage extends JPanel {
 
         tableModel.setRowCount(0);
 
-        ResultSet transactions = Transaction.getAll();
+        List<TransactionEntity> transactions = transactionService.getTransactions();
         String[] rows = new String[3]; // Timestamp, Transaction, User
-        int rowsCount = 0;
 
-        try {
-            while (transactions.next()) {
+        for (var trans : transactions) {
 
-                rows[0] = transactions.getString(Transaction.TRANSACTION_DATE);
-                rows[1] = transactions.getString(Transaction.TRANSACTION_TYPE);
-                rows[2] = transactions.getString(Transaction.USER_CONCAT);
+            rows[0] = trans.getDateTime().format(showFormat);
+            rows[1] = trans.getTransactionType().getType();
+            rows[2] = trans.getUser().getLastName() + " " + trans.getUser().getFirstName();
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
         if (changeInformation) {
-            Main.mainWindow.setBottomInformation("Found " + rowsCount + " transactions");
+            Main.mainWindow.setBottomInformation("Found " + transactions.size() + " transactions");
         }
     }
 
@@ -427,28 +424,21 @@ public class TransactionsPage extends JPanel {
         String startDate = startDateFilter.getDate() == null ? null : startDateFilter.getDate().toString();
         String endDate = endDateFilter.getDate() == null ? null : endDateFilter.getDate().toString();
 
-        ResultSet transactions = Transaction.getQueryData(startDate, endDate, userFilter.getText(),
-                transactionFilter.getSelectedItem().toString());
-        String[] rows = new String[4];
-        int rowsCount = 0;
+        List<TransactionEntity> transactions = transactionService.getTransactions(startDate, endDate,
+                userFilter.getText(), transactionFilter.getSelectedItem().toString());
 
+        String[] rows = new String[4];
         tableModel.setRowCount(0);
 
-        try {
-            while (transactions.next()) {
+        for (var trans : transactions) {
 
-                rows[0] = transactions.getString(Transaction.TRANSACTION_DATE);
-                rows[1] = transactions.getString(Transaction.TRANSACTION_TYPE);
-                rows[2] = transactions.getString(Transaction.USER_CONCAT);
-                ++rowsCount;
+            rows[0] = trans.getDateTime().format(showFormat);
+            rows[1] = trans.getTransactionType().getType();
+            rows[2] = trans.getUser().getLastName() + " " + trans.getUser().getFirstName();
 
-                tableModel.addRow(rows);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " transactions");
+        Main.mainWindow.setBottomInformation("Found " + transactions.size() + " transactions");
     }
 }

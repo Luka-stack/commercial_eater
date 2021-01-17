@@ -15,7 +15,7 @@ public class DatabaseConfig {
     private String dbPassword;
 
     // TMP Solution
-    private final String dbConfigPath = "D:\\New folder\\jv\\commercial_eater\\config\\dbconfig.json";
+    private final String dbConfigPath = "config\\dbconfig.json";
 
     public DatabaseConfig() {
 

@@ -20,7 +20,7 @@ public class ColorUtilities {
     private Color buttonsTextColor;
 
     // TMP Solution
-    private final String stylePath = "D:\\New folder\\jv\\commercial_eater\\config\\app_style.json";
+    private final String stylePath = "config\\app_style.json";
 
     public ColorUtilities() {
 

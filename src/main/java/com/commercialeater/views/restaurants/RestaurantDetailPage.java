@@ -1,7 +1,8 @@
 package com.commercialeater.views.restaurants;
 
 import com.commercialeater.Main;
-import com.commercialeater.models.Restaurant;
+import com.commercialeater.persistance.entity.RestaurantEntity;
+import com.commercialeater.persistance.service.RestaurantService;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -13,10 +14,10 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class RestaurantDetailPage extends JPanel {
+
+    private final RestaurantService restaurantService = new RestaurantService();
 
     private JTextField addressField;
     private JPanel background;
@@ -395,12 +396,16 @@ public class RestaurantDetailPage extends JPanel {
 
         if (validateFields()) {
 
+            RestaurantEntity restaurant = new RestaurantEntity(nameField.getText(), addressField.getText(), descriptionArea.getText());
+
             if (entityID < 0) {
-                Restaurant.create(nameField.getText(), addressField.getText(), descriptionArea.getText());
+                restaurantService.createRestaurant(restaurant);
 
                 Main.mainWindow.setBottomInformation("Created new restaurant '" + nameField.getText() + "'");
-            } else {
-                Restaurant.update(entityID, nameField.getText(), addressField.getText(), descriptionArea.getText());
+            }
+            else {
+                restaurant.setId(entityID);
+                restaurantService.updateRestaurant(restaurant);
 
                 String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
                 Main.mainWindow.setBottomInformation("Restaurant at row #" + rowID + " updated");
@@ -414,19 +419,19 @@ public class RestaurantDetailPage extends JPanel {
     }
 
     private void getRestaurantFields() {
-        ResultSet restaurant = Restaurant.getById(entityID);
 
-        try {
-            while (restaurant.next()) {
+        RestaurantEntity restaurantEntity = restaurantService.getRestaurantById(entityID);
 
-                nameField.setText(restaurant.getString(Restaurant.NAME));
-                addressField.setText(restaurant.getString(Restaurant.ADDRESS));
-                descriptionArea.setText(restaurant.getString(Restaurant.DESCRIPTION));
+        System.out.println(entityID);
+        System.out.println(restaurantEntity);
 
-                titleLabel.setText("Editing " + restaurant.getString(Restaurant.NAME));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (restaurantEntity != null) {
+
+            nameField.setText(restaurantEntity.getName());
+            addressField.setText(restaurantEntity.getAddress());
+            descriptionArea.setText(restaurantEntity.getDescription());
+
+            titleLabel.setText("Editing " + restaurantEntity.getName());
         }
     }
 

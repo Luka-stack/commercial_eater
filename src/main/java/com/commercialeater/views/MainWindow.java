@@ -1,6 +1,7 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
+import com.commercialeater.utilities.PDFGenerator;
 import com.commercialeater.views.dishes.DishDetailPage;
 import com.commercialeater.views.dishes.DishPage;
 import com.commercialeater.views.restaurants.RestaurantDetailPage;
@@ -14,6 +15,8 @@ import java.awt.event.*;
 import java.util.Objects;
 
 public class MainWindow extends JFrame {
+
+    private final PDFGenerator pdfGenerator = new PDFGenerator();
 
     private JLabel bottomInfLabel;
 
@@ -44,6 +47,7 @@ public class MainWindow extends JFrame {
     private JPanel usersButton;
 
     private JMenu newEntityMenu;
+    private JMenu generateMenu;
     private JMenuBar jMenuBar1;
 
     public MainWindow(boolean redraw) {
@@ -88,6 +92,7 @@ public class MainWindow extends JFrame {
 
         jMenuBar1 = new JMenuBar();
         newEntityMenu = new JMenu();
+        generateMenu = new JMenu();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new Dimension(1150, 620));
@@ -210,7 +215,7 @@ public class MainWindow extends JFrame {
         jLabel5.setIcon(new ImageIcon(Objects.requireNonNull(
                 getClass().getClassLoader().getResource("imgs/payments.png"))));
 
-        jLabel10.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setFont(new Font("Segoe UI", 1, 18));
         jLabel10.setForeground(Main.colorUtilities.getButtonsTextColor());
         jLabel10.setText("Transactions");
 
@@ -425,6 +430,21 @@ public class MainWindow extends JFrame {
         newEntityMenu.add(newDishItem);
 
         jMenuBar1.add(newEntityMenu);
+
+        generateMenu.setText("PDF");
+
+        JMenuItem restaurantsPDFMenuItem = new JMenuItem("Restaurants");
+        restaurantsPDFMenuItem.addActionListener(e -> createPDF("Restaurants") );
+        restaurantsPDFMenuItem.setAccelerator(KeyStroke.getKeyStroke("alt R"));
+        generateMenu.add(restaurantsPDFMenuItem);
+
+        JMenuItem userrestaurantsPDFMenuItem = new JMenuItem("Users");
+        userrestaurantsPDFMenuItem.addActionListener(e -> createPDF("Users") );
+        userrestaurantsPDFMenuItem.setAccelerator(KeyStroke.getKeyStroke("alt U"));
+        generateMenu.add(userrestaurantsPDFMenuItem);
+
+        jMenuBar1.add(generateMenu);
+
         setJMenuBar(jMenuBar1);
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -459,6 +479,7 @@ public class MainWindow extends JFrame {
         try { mainCardPanel.remove(4); } catch (Exception err) {}
 
         usersCard.getUsersData(changeInformation);
+        usersCard.refillCities();
     }
 
     public void loadRestaurantsView(boolean changeInformation) {
@@ -466,7 +487,7 @@ public class MainWindow extends JFrame {
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "Restaurants");
 
-        try { mainCardPanel.remove(4); } catch (Exception err) {}
+        try { mainCardPanel.remove(3); } catch (Exception err) {}
 
         restaurantsCard.getRestaurantsData(changeInformation);
 
@@ -480,11 +501,11 @@ public class MainWindow extends JFrame {
         try { mainCardPanel.remove(4); } catch (Exception err) {}
     }
 
-    public void loadRestaurantDishesView(Long restaurantId) {
+    public void loadRestaurantDishesView(Long restaurantId, String restaurantName) {
 
         try { mainCardPanel.remove(4); } catch (Exception err) {}
 
-        mainCardPanel.add(new DishPage(restaurantId), "RestaurantDishes");
+        mainCardPanel.add(new DishPage(restaurantId, restaurantName), "RestaurantDishes");
         CardLayout cardLayout = (CardLayout) mainCardPanel.getLayout();
         cardLayout.show(mainCardPanel, "RestaurantDishes");
         setEnableNewDishMenu(true);
@@ -556,12 +577,20 @@ public class MainWindow extends JFrame {
     public String getBottomInformation() { return bottomInfLabel.getText(); }
 
     public void setEnableNewDishMenu(boolean enable) {
-        newEntityMenu.getItem(2).setEnabled(enable);
+        newEntityMenu.getItem(3).setEnabled(enable);
     }
 
     private void logOutButtonClicked() {
 
         this.dispose();
         Main.openLoginWindow();
+    }
+
+    private void createPDF(String forEntity) {
+        try {
+            pdfGenerator.generateTable(forEntity);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }

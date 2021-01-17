@@ -5,9 +5,13 @@ import com.commercialeater.models.Diet;
 import com.commercialeater.models.Dish;
 import com.commercialeater.models.DishType;
 import com.commercialeater.models.Restaurant;
+import com.commercialeater.persistance.entity.DishEntity;
+import com.commercialeater.persistance.service.DishService;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
 
+import java.math.BigDecimal;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -20,6 +24,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DishPage extends JPanel {
+
+    private final DishService dishService = new DishService();
 
     private JTextField priceFilter;
     private JPanel background;
@@ -48,7 +54,7 @@ public class DishPage extends JPanel {
     private final Long restaurantId;
     private String restaurantName;
 
-    public DishPage(final Long restaurantId) {
+    public DishPage(final Long restaurantId, final String restaurantName) {
         initComponents();
         this.restaurantName = restaurantName;
         this.restaurantId = restaurantId;
@@ -93,7 +99,6 @@ public class DishPage extends JPanel {
 
         nameFilter.setFont(new Font("Segoe UI", 0, 14));
         nameFilter.setBackground(Main.colorUtilities.getBackground());
-        nameFilter.setText("All");
         nameFilter.setBorder(null);
 
         jLabel4.setFont(new Font("Segoe UI", 0, 14));
@@ -101,7 +106,6 @@ public class DishPage extends JPanel {
 
         priceFilter.setFont(new Font("Segoe UI", 0, 14));
         priceFilter.setBackground(Main.colorUtilities.getBackground());
-        priceFilter.setText("All");
         priceFilter.setBorder(null);
 
         searchButton.setBackground(Main.colorUtilities.getButtonsColor());
@@ -393,18 +397,12 @@ public class DishPage extends JPanel {
     private void removeSelectedRow() {
 
         int selectedRow = jTable1.getSelectedRow();
-        Long rowId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+        Long entityId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
+        dishService.deleteDish(entityId);
 
         String dish = tableModel.getValueAt(selectedRow, 1).toString();
-        int deleteResult = Dish.delete(rowId);
-
-        if (deleteResult > 0) {
-            tableModel.removeRow(selectedRow);
-            Main.mainWindow.setBottomInformation("Dish '"+ dish +"' was deleted");
-        }
-        else {
-            Main.mainWindow.setBottomInformation("Couldn't delete Dish on row #"+ (selectedRow+1));
-        }
+        tableModel.removeRow(selectedRow);
+        Main.mainWindow.setBottomInformation("Dish '"+ dish +"' was deleted");
     }
 
     private void editSelectedRow() {
@@ -417,8 +415,8 @@ public class DishPage extends JPanel {
     }
 
     private void clearButtonClicked() {
-        nameFilter.setText("All");
-        priceFilter.setText("All");
+        nameFilter.setText("");
+        priceFilter.setText("");
         typeFilter.setSelectedIndex(0);
         dietFilter.setSelectedIndex(0);
 
@@ -429,71 +427,65 @@ public class DishPage extends JPanel {
 
         tableModel.setRowCount(0);
 
-        ResultSet dishes = Dish.getAllByRestaurant(restaurantId);
+        List<DishEntity> dishes = dishService.getDishes(restaurantId);
         String[] rows = new String[6]; // "Id", "Restaurant", "Dish", "Type", "Diet", "Price"
-        int rowsCount = 0;
 
-        try {
-            while (dishes.next()) {
+        for (var dish : dishes) {
 
-                restaurantName = dishes.getString(Restaurant.TABLE);
+            rows[0] = String.valueOf(dish.getId());
+            rows[1] = restaurantName;
+            rows[2] = dish.getName();
+            rows[3] = dish.getType().getType();
+            rows[4] = dish.getDiet().getType();
+            rows[5] = dish.getPrice().toString();
 
-                rows[0] = dishes.getString(Dish.ID);
-                rows[1] = dishes.getString(Restaurant.TABLE);
-                rows[2] = dishes.getString(Dish.NAME);
-                rows[3] = dishes.getString(Dish.TYPE);
-                rows[4] = dishes.getString(Dish.DIET);
-                rows[5] = dishes.getString(Dish.PRICE);
-
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " dishes");
+        Main.mainWindow.setBottomInformation("Found " + dishes.size() + " dishes");
     }
 
     private void filterDishes() {
 
         String pricePattern = "";
-        double priceValue = 0;
+        BigDecimal priceValue = BigDecimal.ZERO;
 
         if (FieldValidator.validateMoneyFilter(priceFilter.getText())) {
 
             String[] tokens = priceFilter.getText().split(" ");
             pricePattern = tokens[0];
-            priceValue = Double.parseDouble(tokens[1]);
+            priceValue = BigDecimal.valueOf(Long.parseLong(tokens[1]));
         }
 
-        ResultSet dishes = Dish.getQueryData(restaurantId, nameFilter.getText(), typeFilter.getSelectedItem().toString(),
-                dietFilter.getSelectedItem().toString(), pricePattern, priceValue);
+        String diet = dietFilter.getSelectedItem().toString();
+        if (!diet.equals("All")) {
+            diet = Diet.fromString(diet).name();
+        }
+
+        String type = dietFilter.getSelectedItem().toString();
+        if (!type.equals("All")) {
+            type = DishType.fromString(diet).name();
+        }
+
+        List<DishEntity> dishes = dishService.getDishes(restaurantId, nameFilter.getText(), priceValue,
+                type, diet, pricePattern);
 
         tableModel.setRowCount(0);
         String[] rows = new String[6]; // "Id", "Restaurant", "Dish", "Type", "Diet", "Price"
-        int rowsCount = 0;
 
-        try {
-            while (dishes.next()) {
+        for (var dish : dishes) {
 
-                rows[0] = dishes.getString(Dish.ID);
-                rows[1] = dishes.getString(Restaurant.TABLE);
-                rows[2] = dishes.getString(Dish.NAME);
-                rows[3] = dishes.getString(Dish.TYPE);
-                rows[4] = dishes.getString(Dish.DIET);
-                rows[5] = dishes.getString(Dish.PRICE);
+            rows[0] = String.valueOf(dish.getId());
+            rows[1] = restaurantName;
+            rows[2] = dish.getName();
+            rows[3] = dish.getType().getType();
+            rows[4] = dish.getDiet().getType();
+            rows[5] = String.valueOf(dish.getPrice());
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            tableModel.addRow(rows);
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " dishes");
+        Main.mainWindow.setBottomInformation("Found " + dishes.size() + " dishes");
     }
 
     public Long getRestaurantId() {

@@ -17,6 +17,7 @@ public class User {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME  = "lastName";
     public static final String CITY       = "city";
+    public static final String REF_CITY   = "cname";
     public static final String BALANCE    = "balance";
 
     public static boolean validateLogin(String email, String password) {
@@ -47,7 +48,7 @@ public class User {
     public static ResultSet getAll() {
 
         ResultSet result = null;
-        String query = "SELECT * FROM " + TABLE;
+        String query = "SELECT *, "+ City.NAME +" "+ REF_CITY +" FROM " + TABLE +","+ City.TABLE +" WHERE "+ TABLE +"."+ ID +"="+ City.TABLE +"."+ City.ID;
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
@@ -63,7 +64,7 @@ public class User {
     public static ResultSet getById(Long id) {
 
         ResultSet result = null;
-        String query = "SELECT * FROM " + TABLE + " WHERE id = ?";
+        String query = "SELECT *,"+ City.NAME +" "+ REF_CITY +" FROM " + TABLE +","+ City.TABLE +" WHERE "+ TABLE +"."+ ID +"=? AND " + TABLE +"."+ ID +"="+ City.TABLE +"."+ City.ID;;
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
@@ -82,9 +83,9 @@ public class User {
 
         ResultSet result = null;
 
-        String query = "SELECT * FROM " + TABLE + " WHERE "+
+        String query = "SELECT *,"+ City.NAME +" "+ REF_CITY +" FROM " + TABLE +","+ City.TABLE + " WHERE "+
                 EMAIL +" LIKE ? AND "+ ROLE +" LIKE ? AND " +
-                FIRST_NAME +" LIKE ? AND "+ LAST_NAME +" LIKE ? AND "+ CITY +" LIKE ?";
+                FIRST_NAME +" LIKE ? AND "+ LAST_NAME +" LIKE ? AND "+ City.TABLE +"."+ City.NAME +" LIKE ? AND "+ TABLE +"."+ ID +"="+ City.TABLE +"."+ City.ID;
 
         if (emailFilter.equals("") || emailFilter.toLowerCase().equals("all")) {
             emailFilter = "%";
@@ -127,18 +128,21 @@ public class User {
     {
         int result = 0;
         String query = "INSERT INTO " + TABLE + "("+
-                EMAIL +", "+ PASSWORD +", "+ ROLE +", "+ FIRST_NAME +", "+ LAST_NAME +", "+ CITY +", "+ BALANCE +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+                EMAIL +", "+ PASSWORD +", "+ ROLE +", "+ FIRST_NAME +", "+ LAST_NAME +", "+ BALANCE +", "+ CITY +
+                ") VALUES (?, ?, ?, ?, ?, ?, (SELECT id FROM cities WHERE name = ?))";
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
             stm.setString(1, email.toLowerCase());
             stm.setString(2, password);
             stm.setString(3, role.toLowerCase());
-            stm.setString(4, firstName.toLowerCase());
-            stm.setString(5, lastName.toLowerCase());
-            stm.setString(6, city.toLowerCase());
-            stm.setDouble(7, balance);
+            stm.setString(4, firstName);
+            stm.setString(5, lastName);
+            stm.setDouble(6, balance);
+            stm.setString(7, city);
+//            stm.setInt(6, city);
+//            stm.setDouble(7, balance);
+
             result = stm.executeUpdate();
         }
         catch (SQLException exception) {
@@ -154,16 +158,16 @@ public class User {
         int result = 0;
         String query = "UPDATE " + TABLE + " SET "+
                 EMAIL +"=?, "+ PASSWORD +"=?, "+ ROLE +"=?, "+ FIRST_NAME +"=?, "+
-                LAST_NAME +"=?, "+ CITY +"=?, "+ BALANCE + "=? WHERE "+ ID +"=?";
+                LAST_NAME +"=?, "+ CITY +"=(SELECT id FROM cities WHERE name = ?), "+ BALANCE + "=? WHERE "+ ID +"=?";
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
             stm.setString(1, email.toLowerCase());
             stm.setString(2, password);
             stm.setString(3, role.toLowerCase());
-            stm.setString(4, firstName.toLowerCase());
-            stm.setString(5, lastName.toLowerCase());
-            stm.setString(6, city.toLowerCase());
+            stm.setString(4, firstName);
+            stm.setString(5, lastName);
+            stm.setString(6, city);
             stm.setDouble(7, balance);
             stm.setLong(8, id);
             result = stm.executeUpdate();

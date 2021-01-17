@@ -1,5 +1,6 @@
 package com.commercialeater.models;
 
+import com.commercialeater.Main;
 import com.commercialeater.database.DatabaseConnector;
 
 import java.sql.PreparedStatement;
@@ -35,7 +36,7 @@ public class City {
     public static ResultSet getAll() {
 
         ResultSet result = null;
-        String query = "SELECT * FROM "+ TABLE;
+        String query = "SELECT * FROM "+ TABLE +" ORDER BY "+ ID;
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
@@ -43,6 +44,7 @@ public class City {
         }
         catch (SQLException exception) {
             exception.printStackTrace();
+            Main.logger.debug("Error while getting cities from DB.");
         }
 
         return result;
@@ -51,7 +53,7 @@ public class City {
     public static int create(String name) {
 
         int result = 0;
-        String query = "INSERT INTO "+ TABLE +" WHERE "+ NAME +"=?";
+        String query = "INSERT INTO "+ TABLE +"("+ NAME +") VALUES (?)";
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
@@ -60,6 +62,7 @@ public class City {
         }
         catch (SQLException exception) {
             exception.printStackTrace();
+            Main.logger.debug("Error while creating new city from DB.");
         }
 
         return result;
@@ -76,6 +79,7 @@ public class City {
         }
         catch (SQLException exception) {
             exception.printStackTrace();
+            Main.logger.debug("Error while deleting city from DB.");
         }
 
         return result;

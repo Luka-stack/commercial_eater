@@ -2,8 +2,9 @@ package com.commercialeater.views.dishes;
 
 import com.commercialeater.Main;
 import com.commercialeater.models.Diet;
-import com.commercialeater.models.Dish;
 import com.commercialeater.models.DishType;
+import com.commercialeater.persistance.entity.DishEntity;
+import com.commercialeater.persistance.service.DishService;
 import com.commercialeater.utilities.CustomComboBoxUI;
 import com.commercialeater.utilities.FieldValidator;
 
@@ -17,10 +18,11 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
 
 public class DishDetailPage extends JPanel {
+
+    DishService dishService = new DishService();
 
     private JPanel background;
     private JPanel cancelButton;
@@ -39,7 +41,7 @@ public class DishDetailPage extends JPanel {
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JScrollPane jScrollPane1;
-    private JSeparator nameFieldSepartor;
+    private JSeparator nameFieldSeparator;
     private JSeparator priceFieldSeparator;
     private JSeparator jSeparator3;
     private JSeparator jSeparator4;
@@ -84,7 +86,7 @@ public class DishDetailPage extends JPanel {
         jLabel4 = new JLabel();
         clearButton = new JPanel();
         jLabel5 = new JLabel();
-        nameFieldSepartor = new JSeparator();
+        nameFieldSeparator = new JSeparator();
         jScrollPane1 = new JScrollPane();
         descriptionField = new JTextArea();
         priceField = new JTextField();
@@ -175,8 +177,8 @@ public class DishDetailPage extends JPanel {
                         .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        nameFieldSepartor.setBackground(Main.colorUtilities.getMainColor());
-        nameFieldSepartor.setForeground(Main.colorUtilities.getMainColor());
+        nameFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+        nameFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
 
         descriptionField.setDocument(new PlainDocument() {
             @Override
@@ -258,7 +260,7 @@ public class DishDetailPage extends JPanel {
                                                                 .addComponent(jLabel2)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(nameFieldSepartor, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(nameFieldSeparator, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                                                         .addComponent(nameField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)))
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addComponent(jLabel8)
@@ -287,7 +289,7 @@ public class DishDetailPage extends JPanel {
                                         .addComponent(jLabel2)
                                         .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameFieldSepartor, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nameFieldSeparator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGap(2, 2, 2)
@@ -455,23 +457,25 @@ public class DishDetailPage extends JPanel {
 
         if (validateFields()) {
 
+            DishEntity dish = new DishEntity(nameField.getText(), descriptionField.getText(),
+                    BigDecimal.valueOf(Long.parseLong(priceField.getText())),
+                    DishType.fromString((String) typeField.getSelectedItem()),
+                    Diet.fromString((String) dietField.getSelectedItem()));
+
             if (dishId < 0) {
-                Dish.create(nameField.getText(), Double.parseDouble(priceField.getText()),
-                        (String) typeField.getSelectedItem(), (String) dietField.getSelectedItem(),
-                        descriptionField.getText(), restaurantId);
+                dishService.createDish(restaurantId, dish);
 
                 Main.mainWindow.setBottomInformation("Created new Dish '" + nameField.getText() +"'");
             }
             else {
-                Dish.update(dishId, nameField.getText(), Double.parseDouble(priceField.getText()),
-                        (String) typeField.getSelectedItem(), (String) dietField.getSelectedItem(),
-                        descriptionField.getText());
+                dish.setId(dishId);
+                dishService.updateDish(dish);
 
                 String rowID = Main.mainWindow.getBottomInformation().split("#")[1];
                 Main.mainWindow.setBottomInformation("Dish at row #"+ rowID +" updated");
             }
 
-            Main.mainWindow.loadRestaurantDishesView(restaurantId);
+            Main.mainWindow.loadRestaurantDishesView(restaurantId, restaurantName);
         }
         else {
             Main.mainWindow.setBottomInformation("Wrong Fields(s) inputs");
@@ -481,38 +485,33 @@ public class DishDetailPage extends JPanel {
 
     private void getDishFields() {
 
-        ResultSet dish = Dish.getById(dishId);
+        DishEntity dishEntity = dishService.getDishById(dishId);
 
-        try {
-            while (dish.next()) {
+        if (dishEntity != null) {
 
-                nameField.setText(dish.getString(Dish.NAME));
-                priceField.setText(dish.getString(Dish.PRICE));
-
-                typeField.setSelectedItem(dish.getString(Dish.TYPE));
-                dietField.setSelectedItem(dish.getString(Dish.DIET));
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+                nameField.setText(dishEntity.getName());
+                priceField.setText(dishEntity.getPrice().toString());
+                descriptionField.setText(dishEntity.getDescription());
+                typeField.setSelectedItem(dishEntity.getType().getType());
+                dietField.setSelectedItem(dishEntity.getDiet().getType());
         }
 
         titleLabel.setText("Editing Dish For "+ restaurantName);
-    }
+   }
 
     private boolean validateFields() {
 
         boolean valid = true;
 
         if (nameField.getText().length() == 0) {
-            nameFieldSepartor.setBackground(new Color(153, 0, 0));
-            nameFieldSepartor.setForeground(new Color(153, 0, 0));
+            nameFieldSeparator.setBackground(new Color(153, 0, 0));
+            nameFieldSeparator.setForeground(new Color(153, 0, 0));
 
             valid = false;
         }
         else {
-            nameFieldSepartor.setBackground(Main.colorUtilities.getMainColor());
-            nameFieldSepartor.setForeground(Main.colorUtilities.getMainColor());
+            nameFieldSeparator.setBackground(Main.colorUtilities.getMainColor());
+            nameFieldSeparator.setForeground(Main.colorUtilities.getMainColor());
         }
 
         if (!FieldValidator.validateMoney(priceField.getText())) {

@@ -20,9 +20,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` VARCHAR(45) NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
-  `city` INT NOT NULL,
+  `city` INT,
   `balance` DECIMAL(10, 2) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_users_city`
+    FOREIGN KEY (`city`)
+    REFERENCES `users` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `users` (`email` ASC);
@@ -75,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
     CONSTRAINT `fk_transactions_users`
         FOREIGN KEY (`userId`)
         REFERENCES `users` (`id`)
-        ON DELETE NO ACTION
+        ON DELETE NO CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

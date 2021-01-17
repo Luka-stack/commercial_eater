@@ -16,4 +16,13 @@ public enum DishType {
     public String getType() {
         return type;
     }
+
+    public static DishType fromString(String text) {
+        for (var dish : DishType.values()) {
+            if (dish.type.equalsIgnoreCase(text)) {
+                return dish;
+            }
+        }
+        return DishType.values()[0];
+    }
 }

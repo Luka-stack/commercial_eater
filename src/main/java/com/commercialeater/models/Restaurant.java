@@ -82,9 +82,9 @@ public class Restaurant {
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
-            stm.setString(1, name.toLowerCase());
-            stm.setString(2, address.toLowerCase());
-            stm.setString(3, description.toLowerCase());
+            stm.setString(1, name);
+            stm.setString(2, address);
+            stm.setString(3, description);
             result = stm.executeUpdate();
         }
         catch (SQLException exception) {
@@ -101,9 +101,9 @@ public class Restaurant {
 
         try {
             PreparedStatement stm = DatabaseConnector.getDatabaseConn().prepareStatement(query);
-            stm.setString(1, name.toLowerCase());
-            stm.setString(2, address.toLowerCase());
-            stm.setString(3, description.toLowerCase());
+            stm.setString(1, name);
+            stm.setString(2, address);
+            stm.setString(3, description);
             stm.setLong(4, id);
             result = stm.executeUpdate();
         }

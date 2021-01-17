@@ -1,7 +1,8 @@
 package com.commercialeater.views;
 
 import com.commercialeater.Main;
-import com.commercialeater.models.City;
+import com.commercialeater.persistance.entity.CityEntity;
+import com.commercialeater.persistance.service.CityService;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -11,10 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 public class CitiesPage extends JPanel {
+
+    private final CityService cityService = new CityService();
 
     private JPanel background;
     private JLabel jLabel1;
@@ -173,10 +175,12 @@ public class CitiesPage extends JPanel {
         ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.LEFT);
         ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setBorder(BorderFactory.createEtchedBorder());
 
-        tableModel.setColumnIdentifiers(new String [] { "Name" });
+        tableModel.setColumnIdentifiers(new String [] { "Id", "Name" });
 
         jTable1.setModel(tableModel);
         jTable1.setDefaultEditor(Object.class, null);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
 
         jTable1.setFocusable(false);
         jTable1.setGridColor(Main.colorUtilities.getMainColor());
@@ -235,37 +239,27 @@ public class CitiesPage extends JPanel {
 
     private void getCitiesData() {
 
-        ResultSet cities = City.getAll();
-        String[] rows = new String[1];
-        int rowsCount = 0;
+        List<CityEntity> cities = cityService.getCities();
+        String[] rows = new String[2];
 
-        try {
-            while (cities.next()) {
-                rows[0] = cities.getString(City.NAME);
+        for (var city : cities) {
+            rows[0] = String.valueOf(city.getId());
+            rows[1] = city.getName();
 
-                tableModel.addRow(rows);
-                ++rowsCount;
-            }
-        }
-        catch (SQLException exception) {
-            exception.printStackTrace();
+            System.out.println(rows);
+
+            tableModel.addRow(rows);
         }
 
-        Main.mainWindow.setBottomInformation("Found " + rowsCount + " cities");
+        Main.mainWindow.setBottomInformation("Found " + cities.size() + " cities");
     }
 
     private void createNewCity() {
 
         if (validateField()) {
 
-            int result = City.create(nameField.getText());
-
-            if (result != 1) {
-                jLabel1.setText("Name has to bo unique");
-            }
-            else {
-                tableModel.addRow(new String[] {nameField.getText()});
-            }
+            Long id = cityService.createCity(new CityEntity(nameField.getText()));
+            tableModel.addRow(new String[] {String.valueOf(id), nameField.getText() });
         }
     }
 
@@ -273,27 +267,22 @@ public class CitiesPage extends JPanel {
 
         int selectedRow = jTable1.getSelectedRow();
         String cityName = tableModel.getValueAt(selectedRow, 1).toString();
+        Long entityId = Long.parseLong(tableModel.getValueAt(selectedRow, 0).toString());
 
-        int result = City.delete(cityName);
-
-        if (result > 0) {
-            tableModel.removeRow(selectedRow);
-            Main.mainWindow.setBottomInformation("City '"+ cityName +"' was deleted");
-        }
-        else {
-            Main.mainWindow.setBottomInformation("Couldn't delete City on row #"+ (selectedRow+1));
-        }
+        cityService.deleteCity(entityId);
+        tableModel.removeRow(selectedRow);
+        Main.mainWindow.setBottomInformation("City '"+ cityName +"' was deleted");
     }
 
     private boolean validateField() {
 
-        boolean valid = false;
+        boolean valid = true;
 
         if (nameField.getText().length() == 0) {
             jSeparator1.setBackground(new Color(153, 0, 0));
             jSeparator1.setBackground(new Color(153, 0, 0));
 
-            valid = true;
+            valid = false;
         }
         else {
             jSeparator1.setBackground(Main.colorUtilities.getMainColor());
